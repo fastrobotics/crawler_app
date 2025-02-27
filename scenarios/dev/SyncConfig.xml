@@ -1,0 +1,45 @@
+<?xml version="1.0" ?>
+<SyncConfigFile>
+    <Folders>
+        <Folder>
+            <Name>eROS</Name>
+            <Type>Source</Type>
+            <Directory>~/catkin_ws/src/eros/</Directory>
+            <Architecture>x86_64</Architecture>
+            <Architecture>armv7l</Architecture>
+            <Architecture>aarch64</Architecture>
+        </Folder>
+        <Folder>
+            <Name>ros_hats</Name>
+            <Type>Source</Type>
+            <Directory>~/catkin_ws/src/ros_hats/</Directory>
+            <Architecture>x86_64</Architecture>
+            <Architecture>armv7l</Architecture>
+            <Architecture>aarch64</Architecture>
+        </Folder>
+        <Folder>
+            <Name>main_config</Name>
+            <Type>Config</Type>
+            <Directory>~/catkin_ws/src/config/</Directory>
+            <Architecture>x86_64</Architecture>
+            <Architecture>armv7l</Architecture>
+            <Architecture>aarch64</Architecture>
+        </Folder>
+        <Folder>
+            <Name>main_devel</Name>
+            <Type>Binary</Type>
+            <Directory>~/catkin_ws/devel/</Directory>
+            <Architecture>x86_64</Architecture>
+            <Architecture>armv7l</Architecture>
+            <Architecture>aarch64</Architecture>
+        </Folder>
+        <Folder>
+            <Name>main_build</Name>
+            <Type>Binary</Type>
+            <Directory>~/catkin_ws/build/</Directory>
+            <Architecture>x86_64</Architecture>
+            <Architecture>armv7l</Architecture>
+            <Architecture>aarch64</Architecture>
+        </Folder>
+    </Folders>
+</SyncConfigFile>
