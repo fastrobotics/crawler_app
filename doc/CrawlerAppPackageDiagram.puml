@@ -1,0 +1,7 @@
+@startuml
+title Crawler App Package Diagram
+
+package crawler_app {
+}
+
+@enduml

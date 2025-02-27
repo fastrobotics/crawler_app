@@ -1,5 +1,5 @@
 @startuml
-title Sample Node Sequence Diagram
+title Tank Drive Node Sequence Diagram
 actor User as user
 participant TankDriveNode as node
 participant TankDriveNodeProcess as process
