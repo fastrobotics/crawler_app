@@ -23,7 +23,9 @@ class TankDriveNodeProcess : public eros::BaseNodeProcess
         std_msgs::UInt16 left_drive;
         std_msgs::UInt16 right_drive;
     };
-    TankDriveNodeProcess();
+    enum class Mode { UNKNOWN = 0, SIMPLE_ARCADE = 1, END_OF_LIST = 2 };
+    TankDriveNodeProcess() : mode(Mode::SIMPLE_ARCADE) {
+    }
     ~TankDriveNodeProcess();
     eros::eros_diagnostic::Diagnostic finish_initialization();
     void reset();
@@ -39,8 +41,12 @@ class TankDriveNodeProcess : public eros::BaseNodeProcess
     TankDriveNodeProcessContainer get_drive_command() {
         return drive_command;
     }
+    Mode get_mode() {
+        return mode;
+    }
 
    private:
     TankDriveNodeProcessContainer drive_command;
+    Mode mode;
 };
 }  // namespace crawler_app

@@ -1,7 +1,5 @@
 #include "TankDriveNodeProcess.h"
 namespace crawler_app {
-TankDriveNodeProcess::TankDriveNodeProcess() {
-}
 TankDriveNodeProcess::~TankDriveNodeProcess() {
 }
 eros::eros_diagnostic::Diagnostic TankDriveNodeProcess::finish_initialization() {
@@ -34,14 +32,54 @@ TankDriveNodeProcess::TankDriveNodeProcessContainer TankDriveNodeProcess::new_cm
     geometry_msgs::Twist cmd_vel_perc) {
     TankDriveNodeProcessContainer output;
     // Simple Convert from Arcade to Tank Drive
-    double forward_cmd = cmd_vel_perc.linear.x / 100.0;
-    double angular_cmd = cmd_vel_perc.angular.z / 100.0;
-    double left = forward_cmd + angular_cmd;
-    double right = forward_cmd - angular_cmd;
+    if (mode == Mode::SIMPLE_ARCADE) {
+        // Normalize Input to [-1,1]
+        double normalized_forward = cmd_vel_perc.linear.x / 100.0;
+        double normalized_rotate = cmd_vel_perc.angular.z / 100.0;
 
-    output.left_drive.data = (uint16_t)(left * 1000.0 + 1000);
-    output.right_drive.data = (uint16_t)(right * 1000.0 + 1000);
-    drive_command = output;
+        // Invert Rotate due to Right Hand Rule Conventions
+        double inverted_rotate = -1.0 * normalized_rotate;
+
+        // Throttle/Steer Mixing
+        double left_mixed = normalized_forward + inverted_rotate;
+        double right_mixed = normalized_forward - inverted_rotate;
+
+        // Invert Right Channel
+        double right_inverted = -1.0 * right_mixed;
+
+        // Scale back to Output range [1000,2000]
+        double m = 500.0;
+        double b = 1500.0;
+        double left_scaled = left_mixed * m + b;
+        double right_scaled = right_inverted * m + b;
+
+        // Clip to Min/Max
+        double MIN = 1000.0;
+        double MAX = 2000.0;
+        double left_clipped = left_scaled;
+        if (left_clipped > MAX) {
+            left_clipped = MAX;
+        }
+        if (left_clipped < MIN) {
+            left_clipped = MIN;
+        }
+
+        double right_clipped = right_scaled;
+        if (right_clipped > MAX) {
+            right_clipped = MAX;
+        }
+        if (right_clipped < MIN) {
+            right_clipped = MIN;
+        }
+
+        output.left_drive.data = (uint16_t)(left_clipped);
+        output.right_drive.data = (uint16_t)(right_clipped);
+
+        drive_command = output;
+    }
+    else {
+        logger->log_warn("Mode: " + std::to_string((uint8_t)mode) + " Not Supported!");
+    }
     return output;
 }
 }  // namespace crawler_app

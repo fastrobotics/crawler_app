@@ -7,6 +7,7 @@
     <group ns="$(arg robot_namespace)">
         <!-- Nodes that should be launched under a device HostName. -->
         <group  if="$(eval device_hostname == 'DevComputer2')">
+            <node pkg="rqt_plot" type="rqt_plot" output="screen" name="rqt_plot" args="/left_drive/data /right_drive/data"/>
             <group ns="$(arg device_hostname)">
                 
                 <include file="$(find config)/launch/NodeLaunch/Master_Node.launch">
