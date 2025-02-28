@@ -74,7 +74,10 @@ TankDriveNodeProcess::TankDriveNodeProcessContainer TankDriveNodeProcess::new_cm
 
         output.left_drive.data = (uint16_t)(left_clipped);
         output.right_drive.data = (uint16_t)(right_clipped);
-
+        update_diagnostic(eros::eros_diagnostic::DiagnosticType::REMOTE_CONTROL,
+                          eros::Level::Type::INFO,
+                          eros::eros_diagnostic::Message::NOERROR,
+                          "Output Updated");
         drive_command = output;
     }
     else {

@@ -80,6 +80,7 @@ TEST(BasicTest, TestArcadeDriveComputation) {
     diagnostic_types.push_back(eros::eros_diagnostic::DiagnosticType::DATA_STORAGE);
     diagnostic_types.push_back(eros::eros_diagnostic::DiagnosticType::SYSTEM_RESOURCE);
     diagnostic_types.push_back(eros::eros_diagnostic::DiagnosticType::COMMUNICATIONS);
+    diagnostic_types.push_back(eros::eros_diagnostic::DiagnosticType::REMOTE_CONTROL);
     tester->enable_diagnostics(diagnostic_types);
     EXPECT_TRUE(tester->get_logger()->log_warn("A Log to Write") ==
                 eros::Logger::LoggerStatus::LOG_WRITTEN);
@@ -161,8 +162,9 @@ TEST(BasicTest, TestArcadeDriveComputation) {
         EXPECT_EQ(output.left_drive.data, 1500);
         EXPECT_EQ(output.right_drive.data, 2000);
     }
-    EXPECT_TRUE(tester->get_diagnostic(eros_diagnostic::DiagnosticType::REMOTE_CONTROL).level <
-                eros::Level::Type::WARN);
+    EXPECT_TRUE(
+        tester->get_diagnostic(eros::eros_diagnostic::DiagnosticType::REMOTE_CONTROL).level <
+        eros::Level::Type::WARN);
 }
 int main(int argc, char** argv) {
     testing::InitGoogleTest(&argc, argv);
