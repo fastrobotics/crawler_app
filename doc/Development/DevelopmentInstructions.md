@@ -8,7 +8,7 @@
 
 ```
 git checkout master
-cd /home/robot/catkin_ws/src/eros
+cd /home/robot/catkin_ws/src/crawler_app
 doxygen Doxyfile
 git commit --allow-empty -m "Trigger rebuild"
 git push
