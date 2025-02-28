@@ -10,6 +10,14 @@
             <Architecture>aarch64</Architecture>
         </Folder>
         <Folder>
+            <Name>CrawlerApp</Name>
+            <Type>Source</Type>
+            <Directory>~/catkin_ws/src/crawler_app/</Directory>
+            <Architecture>x86_64</Architecture>
+            <Architecture>armv7l</Architecture>
+            <Architecture>aarch64</Architecture>
+        </Folder>
+        <Folder>
             <Name>ros_hats</Name>
             <Type>Source</Type>
             <Directory>~/catkin_ws/src/ros_hats/</Directory>
