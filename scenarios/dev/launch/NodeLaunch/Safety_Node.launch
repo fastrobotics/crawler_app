@@ -14,5 +14,6 @@
         <param name="ReadyToArm_Topic_000"   value="/diagnostic_node/ready_to_arm"/>
         <param name="ReadyToArm_Topic_001"   value="/$(arg device_hostname)/snapshot_node/ready_to_arm"/>
         <param name="ReadyToArm_Topic_002"   value="/$(arg device_hostname)/master_node/ready_to_arm"/>
+        <param name="ReadyToArm_Topic_003"   value="/teleop_gui/ready_to_arm"/>
 </node>
 </launch>

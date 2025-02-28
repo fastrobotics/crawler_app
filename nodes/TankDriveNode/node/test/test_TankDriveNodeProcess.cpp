@@ -1,9 +1,10 @@
 /*! \file test_TankDriveNodeProcess.cpp
  */
-#include <SamplePackage/TankDriveNode/TankDriveNodeProcess.h>
 #include <gtest/gtest.h>
 #include <stdio.h>
-using namespace eros;
+
+#include "../TankDriveNodeProcess.h"
+namespace crawler_app {
 class TankDriveNodeProcessTester : public TankDriveNodeProcess
 {
    public:
@@ -12,15 +13,17 @@ class TankDriveNodeProcessTester : public TankDriveNodeProcess
     ~TankDriveNodeProcessTester() {
     }
 };
+}  // namespace crawler_app
+using namespace crawler_app;
 TEST(BasicTest, TestOperation) {
-    Logger* logger = new Logger("DEBUG", "UnitTestTankDriveNodeProcess");
+    eros::Logger* logger = new eros::Logger("DEBUG", "UnitTestTankDriveNodeProcess");
     TankDriveNodeProcessTester* tester = new TankDriveNodeProcessTester;
     tester->initialize("UnitTestTankDriveNodeProcess",
                        "UnitTestTankDriveNodeProcess",
                        "MyHost",
-                       System::MainSystem::SIMROVER,
-                       System::SubSystem::ENTIRE_SYSTEM,
-                       System::Component::ENTIRE_SUBSYSTEM,
+                       eros::System::MainSystem::SIMROVER,
+                       eros::System::SubSystem::ENTIRE_SYSTEM,
+                       eros::System::Component::ENTIRE_SUBSYSTEM,
                        logger);
     std::vector<eros::eros_diagnostic::DiagnosticType> diagnostic_types;
     diagnostic_types.push_back(eros::eros_diagnostic::DiagnosticType::SOFTWARE);
@@ -29,7 +32,7 @@ TEST(BasicTest, TestOperation) {
     diagnostic_types.push_back(eros::eros_diagnostic::DiagnosticType::COMMUNICATIONS);
     tester->enable_diagnostics(diagnostic_types);
     EXPECT_TRUE(tester->get_logger()->log_warn("A Log to Write") ==
-                Logger::LoggerStatus::LOG_WRITTEN);
+                eros::Logger::LoggerStatus::LOG_WRITTEN);
 
     eros::eros_diagnostic::Diagnostic diag = tester->finish_initialization();
     logger->log_diagnostic(diag);

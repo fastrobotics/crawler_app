@@ -14,24 +14,10 @@ jobs:
       run: |
         cd ../
         rm -rf config/
-        rm -rf eros_dev_app
-
-    - name: Check out eros_dev_app
-      uses: actions/checkout@v1
-      with:
-        repository: fastrobotics/eros_dev_app
-        path: catkin_ws/src/eros_dev_app
-        ref: master
-    
-    - name: Setup eros_dev_app
-      run: |
-        cd ../
-        mv eros_dev_app/scenarios/dev/ config/
-        rm -rf eros_dev_app/
 
     - uses: actions/checkout@v1
       with:
-        path: catkin_ws/src/ros_hats
+        path: catkin_ws/src/crawler_app
 
     - name: Check out eros
       uses: actions/checkout@v1
@@ -63,7 +49,7 @@ jobs:
       run: |
         cd ../../
         source /opt/ros/noetic/setup.bash
-        catkin_make -j1 run_tests_ros_hats
+        catkin_make -j1 run_tests_crawler_app
         catkin_test_results build/test_results
       
     - name: Code Coverage

@@ -3,12 +3,26 @@
 #pragma once
 #include <eros/BaseNodeProcess.h>
 #include <eros_diagnostic/Diagnostic.h>
+#include <geometry_msgs/Twist.h>
+#include <std_msgs/UInt16.h>
+/**
+ * @brief crawler_app Namespace
+ *
+ */
+namespace crawler_app {
 /*! \class TankDriveNodeProcess TankDriveNodeProcess.h "TankDriveNodeProcess.h"
  *  \brief */
-namespace crawler_app {
 class TankDriveNodeProcess : public eros::BaseNodeProcess
 {
    public:
+    struct TankDriveNodeProcessContainer {
+        TankDriveNodeProcessContainer() {
+            left_drive.data = 1500;
+            right_drive.data = 1500;
+        }
+        std_msgs::UInt16 left_drive;
+        std_msgs::UInt16 right_drive;
+    };
     TankDriveNodeProcess();
     ~TankDriveNodeProcess();
     eros::eros_diagnostic::Diagnostic finish_initialization();
@@ -21,7 +35,12 @@ class TankDriveNodeProcess : public eros::BaseNodeProcess
         return;
     }
     std::string pretty() override;
+    TankDriveNodeProcessContainer new_cmd_vel(geometry_msgs::Twist cmd_vel_perc);
+    TankDriveNodeProcessContainer get_drive_command() {
+        return drive_command;
+    }
 
    private:
+    TankDriveNodeProcessContainer drive_command;
 };
 }  // namespace crawler_app

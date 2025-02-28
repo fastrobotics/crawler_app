@@ -22,13 +22,13 @@ class TankDriveNode : public eros::BaseNode
     const uint16_t MAJOR_RELEASE_VERSION = 0;
 
     /*! \brief The Minor Release Version of the Node.*/
-    const uint16_t MINOR_RELEASE_VERSION = 5;
+    const uint16_t MINOR_RELEASE_VERSION = 0;
 
     /*! \brief The Build Number of the Node.*/
     const uint16_t BUILD_NUMBER = 0;
 
     /*! \brief A Description of the Firmware.*/
-    const std::string FIRMWARE_DESCRIPTION = "Latest Rev: 16-July-2021";
+    const std::string FIRMWARE_DESCRIPTION = "Latest Rev: 27-Feb-2025";
 
     /*! \brief What System this Node falls under.*/
     const eros::System::MainSystem DIAGNOSTIC_SYSTEM = eros::System::MainSystem::ROVER;
@@ -37,7 +37,7 @@ class TankDriveNode : public eros::BaseNode
     const eros::System::SubSystem DIAGNOSTIC_SUBSYSTEM = eros::System::SubSystem::ENTIRE_SYSTEM;
 
     /*! \brief What Component this Node falls under.*/
-    const eros::System::Component DIAGNOSTIC_COMPONENT = eros::System::Component::ENTIRE_SUBSYSTEM;
+    const eros::System::Component DIAGNOSTIC_COMPONENT = eros::System::Component::NAVIGATION;
     TankDriveNode();
     ~TankDriveNode();
     TankDriveNodeProcess* get_process() {
@@ -60,12 +60,17 @@ class TankDriveNode : public eros::BaseNode
                                  eros::srv_change_nodestate::Response& res);
     void system_commandAction_Callback(const eros::system_commandGoalConstPtr& goal);
     void command_Callback(const eros::command::ConstPtr& t_msg);
+    void cmd_vel_Callback(const geometry_msgs::Twist::ConstPtr& t_msg);
     std::string pretty() override;
 
    private:
     eros::eros_diagnostic::Diagnostic read_launchparameters();
     TankDriveNodeProcess* process;
     actionlib::SimpleActionServer<eros::system_commandAction> system_command_action_server;
+    ros::Subscriber cmd_vel_sub;
+
+    ros::Publisher leftdrive_pub;
+    ros::Publisher rightdrive_pub;
 };
 
 }  // namespace crawler_app

@@ -23,6 +23,10 @@ void TankDriveNode::system_commandAction_Callback(const eros::system_commandGoal
             eros::Command::CommandString((eros::Command::Type)goal->Command));
     logger->log_diagnostic(diag);
 }
+void TankDriveNode::cmd_vel_Callback(const geometry_msgs::Twist::ConstPtr &t_msg) {
+    geometry_msgs::Twist cmd_vel = eros::eros_utility::ConvertUtility::convert_fromptr(t_msg);
+    process->new_cmd_vel(cmd_vel);
+}
 void TankDriveNode::command_Callback(const eros::command::ConstPtr &t_msg) {
     eros::command cmd = eros::eros_utility::ConvertUtility::convert_fromptr(t_msg);
     eros::eros_diagnostic::Diagnostic diag = process->get_root_diagnostic();
@@ -75,6 +79,8 @@ bool TankDriveNode::start() {
     diagnostic_types.push_back(eros::eros_diagnostic::DiagnosticType::DATA_STORAGE);
     diagnostic_types.push_back(eros::eros_diagnostic::DiagnosticType::SYSTEM_RESOURCE);
     diagnostic_types.push_back(eros::eros_diagnostic::DiagnosticType::COMMUNICATIONS);
+    diagnostic_types.push_back(eros::eros_diagnostic::DiagnosticType::REMOTE_CONTROL);
+
     process->enable_diagnostics(diagnostic_types);
     process->finish_initialization();
     diagnostic = finish_initialization();
@@ -106,6 +112,11 @@ eros::eros_diagnostic::Diagnostic TankDriveNode::read_launchparameters() {
     eros::eros_diagnostic::Diagnostic diag = diagnostic;
     command_sub = n->subscribe<eros::command>(
         get_robotnamespace() + "SystemCommand", 10, &TankDriveNode::command_Callback, this);
+    cmd_vel_sub = n->subscribe<geometry_msgs::Twist>(
+        get_robotnamespace() + "cmd_vel_perc", 10, &TankDriveNode::cmd_vel_Callback, this);
+    leftdrive_pub = n->advertise<std_msgs::UInt16>(robot_namespace + "/left_drive", 20);
+    rightdrive_pub = n->advertise<std_msgs::UInt16>(robot_namespace + "/right_drive", 20);
+
     get_logger()->log_notice("Configuration Files Loaded.");
     return diag;
 }
@@ -122,6 +133,10 @@ eros::eros_diagnostic::Diagnostic TankDriveNode::finish_initialization() {
                                       eros::Level::Type::INFO,
                                       eros::eros_diagnostic::Message::NOERROR,
                                       "Running");
+    diag = process->update_diagnostic(eros::eros_diagnostic::DiagnosticType::REMOTE_CONTROL,
+                                      eros::Level::Type::WARN,
+                                      eros::eros_diagnostic::Message::INITIALIZING,
+                                      "Remote Control Initializing.");
     diag = process->update_diagnostic(eros::eros_diagnostic::DiagnosticType::DATA_STORAGE,
                                       eros::Level::Type::INFO,
                                       eros::eros_diagnostic::Message::NOERROR,
@@ -179,6 +194,9 @@ bool TankDriveNode::run_1hz() {
     return true;
 }
 bool TankDriveNode::run_10hz() {
+    auto output = process->get_drive_command();
+    leftdrive_pub.publish(output.left_drive);
+    rightdrive_pub.publish(output.right_drive);
     update_diagnostics(process->get_diagnostics());
     update_ready_to_arm(process->get_ready_to_arm());
     return true;
