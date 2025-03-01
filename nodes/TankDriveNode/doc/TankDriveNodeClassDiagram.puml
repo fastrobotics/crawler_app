@@ -5,8 +5,17 @@ package eros {
   class BaseNode
   class BaseNodeProcess
 }
-
-package userPackage {
+package ros {
+  class Subscriber
+  class Publisher
+}
+package geometry_msgs {
+  class Twist <<(M,#FFFF00)>>
+}
+package std_msgs {
+  class UInt16 <<(M,#FFFF00)>>
+}
+package crawler_app {
 
   class TankDriveNode #LimeGreen {
       +const std::string BASE_NODE_NAME
@@ -33,8 +42,21 @@ package userPackage {
       +bool changenodestate_service(eros::srv_change_nodestate::Request& req, eros::srv_change_nodestate::Response& res)
       +system_commandAction_Callback(const eros::system_commandGoalConstPtr& goal)
       +command_Callback(const eros::command::ConstPtr& t_msg)
+      +cmd_vel_Callback(const geometry_msgs::Twist::ConstPtr& t_msg)
 
       -TankDriveNodeProcess* process;
+      -Subscriber cmd_vel_sub
+      -Publisher leftdrive_pub
+      -Publisher rightdrive_pub
+  }
+  struct TankDriveNodeProcessContainer #LimeGreen {
+    UInt16 left_drive
+    UIint16 right_drive
+  }
+  enum Mode #LimeGreen {
+    UNKNOWN=0,
+    SIMPLE_ARCADE=1,
+    END_OF_LIST=2
   }
   class TankDriveNodeProcess #LimeGreen {
       +eros::eros_diagnostic::Diagnostic finish_initialization()
@@ -42,9 +64,14 @@ package userPackage {
       +eros::eros_diagnostic::Diagnostic update(double t_dt, double t_ros_time)
       +std::vector<eros::eros_diagnostic::Diagnostic> new_commandmsg(eros::command msg)
       +std::vector<eros::eros_diagnostic::Diagnostic> check_programvariables()
+      +TankDriveNodeProcessContainer new_cmd_vel(Twist cmd_vel_perc)
+      +TankDriveNodeProcessContainer get_drive_command()
+      +Mode get_mode()
       +cleanup()
 
   }
+  TankDriveNodeProcess +-- TankDriveNodeProcessContainer
+  TankDriveNodeProcess +-- Mode
   BaseNode <|-- TankDriveNode
   BaseNodeProcess <|-- TankDriveNodeProcess
   TankDriveNode -> TankDriveNodeProcess

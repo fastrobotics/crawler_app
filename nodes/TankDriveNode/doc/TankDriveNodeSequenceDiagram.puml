@@ -20,6 +20,13 @@ alt initialize
 end
 
 alt message_callback
+alt cmd_vel
+    user -> node++: cmd_vel_Callback(cmd_vel)
+    node -> process++: new_cmd_vel(cmd_vel)
+    process --> node--
+    node--
+
+end
 end
 
 alt loops
@@ -54,6 +61,10 @@ alt loops
         node -> user: publish(latest_diagnostics)
     end
     alt run_10hz
+        node -> process++: get_drive_command()
+        process --> node--: output
+        node -> user: publish(output.left_drive)
+        node -> user: publish(output.right_drive)
         node -> process: update(0.1, now)
         process --> node: diag
         alt if diag.level >= NOTICE
