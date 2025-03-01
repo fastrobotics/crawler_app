@@ -51,8 +51,12 @@ function generate_plantuml {
     exit $status
 }
 function generate_dia {
-    # dia -e SoftwareDeploymentDiagram.png SoftwareDeploymentDiagram.dia -s 1920x
-    echo "Nothing Yet"
+    dia_files=($(find . -type f -name '*.dia'))
+    for dia_file in "${dia_files[@]}"; do
+        new_png_file="${dia_file%.*}".png
+        dia -e $new_png_file $dia_file -s 1920x
+
+    done
 }
 function generate_doxygen {
     doxygen Doxyfile.in
