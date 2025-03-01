@@ -2,7 +2,7 @@
 The Crawler Drive-Train consists of 2 tracks.  Therefore we need software to drive them.
 
 ## How It Works
-The Tank Drive Node receives as an input the ROS message "/cmd_vel_perc" of type "geometry_msgs/Twist".
+The Tank Drive Node receives as an input the ROS message "/cmd_vel_perc" of type "geometry_msgs/Twist".  The node reads these messages and then publishes 2 channels: left and right to control the drive train.
 
 ## Setup Instructions
 
@@ -11,10 +11,6 @@ The Tank Drive Node receives as an input the ROS message "/cmd_vel_perc" of type
 ### Tank Drive Node
 
 #### Configuration
-
-
-
-### Other Tools
 
 
 ## Software Design
