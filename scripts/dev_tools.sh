@@ -53,7 +53,12 @@ function generate_plantuml {
 function generate_dia {
     dia_files=($(find . -type f -name '*.dia'))
     for dia_file in "${dia_files[@]}"; do
-        new_png_file="${dia_file%.*}".png
+        filename=$(basename -- "$dia_file")
+        filename="${filename%.*}"
+        directory=$(dirname $dia_file)
+        new_directory=$directory"/output"/
+        mkdir -p $new_directory
+        new_png_file=$new_directory$filename".png"
         dia -e $new_png_file $dia_file -s 1920x
 
     done

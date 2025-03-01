@@ -8,7 +8,8 @@ __TOC__
 ## Overview
 This repo serves as a template for a typical development app that uses eROS content.
 
-![](doc/SystemDiagrams/SoftwareDeploymentDiagram.png)
+## [System Design](doc/SystemDesign/SystemDesign.md)
+
 ## Setup
 ### Scenario Management
 To set the scenario, perform the following:
