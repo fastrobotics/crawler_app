@@ -11,7 +11,8 @@ function print_usage()
         update: Update
         code_coverage: Run Code Coverage Scan
         plantuml: Generate plantuml Images
-        regression: Run Regression Tests"
+        regression: Run Regression Tests
+        dia: Generate Dia Diagrams"
     exit 1
 }
 # Code Coverage Scan
@@ -48,6 +49,10 @@ function generate_plantuml {
     plantuml -tpng -r -o output "*/**.puml"
     status=$?
     exit $status
+}
+function generate_dia {
+    # dia -e SoftwareDeploymentDiagram.png SoftwareDeploymentDiagram.dia -s 1920x
+    echo "Nothing Yet"
 }
 function generate_doxygen {
     doxygen Doxyfile.in
@@ -105,6 +110,7 @@ else
         "code_coverage") code_coverage_scan;;
         "plantuml") generate_plantuml;;
         "regression") run_regression;;
+        "dia") generate_dia;;
     esac
 fi
 exit 0
