@@ -19,14 +19,7 @@
                 <include file="$(find config)/launch/NodeLaunch/DataLogger_Node.launch"> 
                     <arg name="robot_namespace" value="$(arg robot_namespace)"/>
                 </include>
-            </group>
-            <include file="$(find config)/launch/NodeLaunch/Diagnostic_Node.launch">
-                <arg name="robot_namespace" value="$(arg robot_namespace)"/>
-            </include>
-            <include file="$(find config)/launch/NodeLaunch/Safety_Node.launch"> 
-                    <arg name="robot_namespace" value="$(arg robot_namespace)"/>
-                    <arg name="device_hostname" value="$(arg device_hostname)"/>
-            </include>                      
+            </group>                 
         </group>   <!-- EndGroup for DevComputer2--> 
         <group  if="$(eval device_hostname == 'ComputeModule1')">
             <group ns="$(arg device_hostname)">
@@ -47,6 +40,13 @@
             <include file="$(find crawler_app)/nodes/TankDriveNode/launch/tankdrive_node.launch"> 
                     <arg name="robot_namespace" value="$(arg robot_namespace)"/>
             </include>
+             <include file="$(find config)/launch/NodeLaunch/Diagnostic_Node.launch">
+                <arg name="robot_namespace" value="$(arg robot_namespace)"/>
+            </include>
+            <include file="$(find config)/launch/NodeLaunch/Safety_Node.launch"> 
+                    <arg name="robot_namespace" value="$(arg robot_namespace)"/>
+                    <arg name="device_hostname" value="$(arg device_hostname)"/>
+            </include>     
         </group>   <!-- EndGroup for ComputeModule1--> 
     </group>
 </launch>
