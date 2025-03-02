@@ -1,9 +1,9 @@
 # Crawler App
 __TOC__
 - [Overview](#overview)
+- [System Design](#system-design)
 - [Setup](#setup)
 - [Features](#features)
-- [Software Design](#software-design)
 
 ## Overview
 This repo serves as a template for a typical development app that uses eROS content.
@@ -28,7 +28,3 @@ ln ~/<location>/crawler_app/scenarios/<scenario>/ config
 ```
 
 ## [Features](doc/Features/Features.md)
-
-## Software Design
-![](doc/output/Legend.png)
-![](doc/output/CrawlerAppPackageDiagram.png)
