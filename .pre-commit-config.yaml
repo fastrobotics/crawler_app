@@ -11,6 +11,10 @@ repos:
         name: plantuml
         entry: ./scripts/dev_tools.sh plantuml
         language: script
+    -   id: dia
+        name: dia
+        entry: ./scripts/dev_tools.sh dia
+        language: script
     -   id: doxygen
         name: doxygen
         entry: doxygen Doxyfile.in
