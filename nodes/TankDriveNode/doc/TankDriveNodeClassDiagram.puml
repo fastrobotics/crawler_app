@@ -26,9 +26,12 @@ package crawler_app {
       +const eros::System::MainSystem DIAGNOSTIC_SYSTEM
       +const eros::System::SubSystem DIAGNOSTIC_SUBSYSTEM
       +const eros::System::Component DIAGNOSTIC_COMPONENT
-      +TankDriveNodeProcess* get_process()
+   
+      -- Initialization Functions --
       +bool start()
       +eros::eros_diagnostic::Diagnostic finish_initialization()
+
+      -- Update Functions --
       +bool run_loop1()
       +bool run_loop2()
       +bool run_loop3()
@@ -38,11 +41,28 @@ package crawler_app {
       +bool run_1hz()
       +bool run_10hz()
       +thread_loop()
-      +cleanup()
+
+      -- Attribute Functions --
+      +TankDriveNodeProcess* get_process()
+
+      -- Data Functions --
+
+      -- Message Functions --
       +bool changenodestate_service(eros::srv_change_nodestate::Request& req, eros::srv_change_nodestate::Response& res)
       +system_commandAction_Callback(const eros::system_commandGoalConstPtr& goal)
       +command_Callback(const eros::command::ConstPtr& t_msg)
       +cmd_vel_Callback(const geometry_msgs::Twist::ConstPtr& t_msg)
+
+      -- Support Functions --
+
+      -- Convert Functions --
+      
+      -- Printing Functions --
+
+      -- Destructors --
+      +cleanup()
+
+      -- Printing Functions --
 
       -TankDriveNodeProcess* process;
       -Subscriber cmd_vel_sub
@@ -59,15 +79,38 @@ package crawler_app {
     END_OF_LIST=2
   }
   class TankDriveNodeProcess #LimeGreen {
+      +const uint16_t LEFTDRIVE_DEFAULT
+      +const uint16_t RIGHTDRIVE_DEFAULT
+      
+      -- Initialization Functions --
       +eros::eros_diagnostic::Diagnostic finish_initialization()
       +reset()
+
+      -- Update Functions --
       +eros::eros_diagnostic::Diagnostic update(double t_dt, double t_ros_time)
-      +std::vector<eros::eros_diagnostic::Diagnostic> new_commandmsg(eros::command msg)
+
+      -- Attribute Functions --
       +std::vector<eros::eros_diagnostic::Diagnostic> check_programvariables()
-      +TankDriveNodeProcessContainer new_cmd_vel(Twist cmd_vel_perc)
-      +TankDriveNodeProcessContainer get_drive_command()
+        +TankDriveNodeProcessContainer get_drive_command()
       +Mode get_mode()
+
+      -- Data Functions --
+
+      -- Message Functions --
+      +std::vector<eros::eros_diagnostic::Diagnostic> new_commandmsg(eros::command msg)
+      +TankDriveNodeProcessContainer new_cmd_vel(Twist cmd_vel_perc)
+      void update_armedstate(eros::ArmDisarm::State armed_state)
+
+      -- Support Functions --
+
+      -- Convert Functions --
+      
+      -- Printing Functions --
+
+      -- Destructors --
       +cleanup()
+
+      -- Printing Functions --
 
   }
   TankDriveNodeProcess +-- TankDriveNodeProcessContainer
