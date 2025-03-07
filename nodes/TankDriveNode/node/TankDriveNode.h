@@ -15,6 +15,9 @@ namespace crawler_app {
 class TankDriveNode : public eros::BaseNode
 {
    public:
+    TankDriveNode();
+    ~TankDriveNode();
+    // Constants
     /*! \brief The base name of the Node.*/
     const std::string BASE_NODE_NAME = "tankdrive_node";
 
@@ -25,10 +28,10 @@ class TankDriveNode : public eros::BaseNode
     const uint16_t MINOR_RELEASE_VERSION = 0;
 
     /*! \brief The Build Number of the Node.*/
-    const uint16_t BUILD_NUMBER = 1;
+    const uint16_t BUILD_NUMBER = 2;
 
     /*! \brief A Description of the Firmware.*/
-    const std::string FIRMWARE_DESCRIPTION = "Latest Rev: 28-Feb-2025";
+    const std::string FIRMWARE_DESCRIPTION = "Latest Rev: 5-Mar-2025";
 
     /*! \brief What System this Node falls under.*/
     const eros::System::MainSystem DIAGNOSTIC_SYSTEM = eros::System::MainSystem::ROVER;
@@ -38,13 +41,16 @@ class TankDriveNode : public eros::BaseNode
 
     /*! \brief What Component this Node falls under.*/
     const eros::System::Component DIAGNOSTIC_COMPONENT = eros::System::Component::NAVIGATION;
-    TankDriveNode();
-    ~TankDriveNode();
-    TankDriveNodeProcess* get_process() {
-        return process;
-    }
+
+    // Enums
+
+    // Structs
+
+    // Initialization Functions
     bool start();
     eros::eros_diagnostic::Diagnostic finish_initialization();
+
+    // Update Functions
     bool run_loop1();
     bool run_loop2();
     bool run_loop3();
@@ -54,13 +60,27 @@ class TankDriveNode : public eros::BaseNode
     bool run_1hz();
     bool run_10hz();
     void thread_loop();
-    void cleanup();
 
+    // Attribute Functions
+    TankDriveNodeProcess* get_process() {
+        return process;
+    }
+
+    // Utility Functions
+
+    // Support Functions
+
+    // Message Functions
     bool changenodestate_service(eros::srv_change_nodestate::Request& req,
                                  eros::srv_change_nodestate::Response& res);
     void system_commandAction_Callback(const eros::system_commandGoalConstPtr& goal);
     void command_Callback(const eros::command::ConstPtr& t_msg);
     void cmd_vel_Callback(const geometry_msgs::Twist::ConstPtr& t_msg);
+
+    // Destructors
+    void cleanup();
+
+    // Printing Functions
     std::string pretty() override;
 
    private:

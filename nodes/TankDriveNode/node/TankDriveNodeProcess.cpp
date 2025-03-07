@@ -1,5 +1,7 @@
 #include "TankDriveNodeProcess.h"
 namespace crawler_app {
+constexpr uint16_t TankDriveNodeProcess::LEFTDRIVE_DEFAULT;
+constexpr uint16_t TankDriveNodeProcess::RIGHTDRIVE_DEFAULT;
 TankDriveNodeProcess::~TankDriveNodeProcess() {
 }
 eros::eros_diagnostic::Diagnostic TankDriveNodeProcess::finish_initialization() {
@@ -10,6 +12,15 @@ void TankDriveNodeProcess::reset() {
 }
 eros::eros_diagnostic::Diagnostic TankDriveNodeProcess::update(double t_dt, double t_ros_time) {
     eros::eros_diagnostic::Diagnostic diag = base_update(t_dt, t_ros_time);
+    if (armed_state_.state == eros::ArmDisarm::Type::ARMED) {
+        // Do Nothing
+    }
+    else {
+        TankDriveNodeProcessContainer output;
+        output.left_drive.data = TankDriveNodeProcess::LEFTDRIVE_DEFAULT;
+        output.right_drive.data = TankDriveNodeProcess::RIGHTDRIVE_DEFAULT;
+        drive_command = output;
+    }
     return diag;
 }
 std::vector<eros::eros_diagnostic::Diagnostic> TankDriveNodeProcess::new_commandmsg(
@@ -31,6 +42,10 @@ std::string TankDriveNodeProcess::pretty() {
 TankDriveNodeProcess::TankDriveNodeProcessContainer TankDriveNodeProcess::new_cmd_vel(
     geometry_msgs::Twist cmd_vel_perc) {
     TankDriveNodeProcessContainer output;
+    if (armed_state_.state != eros::ArmDisarm::Type::ARMED) {
+        return output;
+    }
+
     // Simple Convert from Arcade to Tank Drive
     if (mode == Mode::SIMPLE_ARCADE) {
         // Normalize Input to [-1,1]
