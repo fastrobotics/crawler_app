@@ -99,9 +99,6 @@ Collaboration diagram for crawler_app::TankDriveNode:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a0252ae7be7463b3668c9517c540ee696"><td class="memItemLeft" align="right" valign="top"><a id="a0252ae7be7463b3668c9517c540ee696"></a>
-<a class="el" href="classcrawler__app_1_1TankDriveNodeProcess.html">TankDriveNodeProcess</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>get_process</b> ()</td></tr>
-<tr class="separator:a0252ae7be7463b3668c9517c540ee696"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaa4a7ada70f04dc3124eb86112820653"><td class="memItemLeft" align="right" valign="top"><a id="aaa4a7ada70f04dc3124eb86112820653"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>start</b> ()</td></tr>
 <tr class="separator:aaa4a7ada70f04dc3124eb86112820653"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -135,9 +132,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>run_10hz</b> ()</td><
 <tr class="memitem:a7bab0809c7ebb5ae497744ea9a456d14"><td class="memItemLeft" align="right" valign="top"><a id="a7bab0809c7ebb5ae497744ea9a456d14"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>thread_loop</b> ()</td></tr>
 <tr class="separator:a7bab0809c7ebb5ae497744ea9a456d14"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae75f7b1539148b27aadf8af077caa6cb"><td class="memItemLeft" align="right" valign="top"><a id="ae75f7b1539148b27aadf8af077caa6cb"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>cleanup</b> ()</td></tr>
-<tr class="separator:ae75f7b1539148b27aadf8af077caa6cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0252ae7be7463b3668c9517c540ee696"><td class="memItemLeft" align="right" valign="top"><a id="a0252ae7be7463b3668c9517c540ee696"></a>
+<a class="el" href="classcrawler__app_1_1TankDriveNodeProcess.html">TankDriveNodeProcess</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>get_process</b> ()</td></tr>
+<tr class="separator:a0252ae7be7463b3668c9517c540ee696"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a50e2b4a03a85b7af0a5e4eef9dd5b224"><td class="memItemLeft" align="right" valign="top"><a id="a50e2b4a03a85b7af0a5e4eef9dd5b224"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>changenodestate_service</b> (eros::srv_change_nodestate::Request &amp;req, eros::srv_change_nodestate::Response &amp;res)</td></tr>
 <tr class="separator:a50e2b4a03a85b7af0a5e4eef9dd5b224"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -150,6 +147,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>command_Callback</b> 
 <tr class="memitem:a8ad8229946b89ba1294b3c4a53109ac9"><td class="memItemLeft" align="right" valign="top"><a id="a8ad8229946b89ba1294b3c4a53109ac9"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>cmd_vel_Callback</b> (const geometry_msgs::Twist::ConstPtr &amp;t_msg)</td></tr>
 <tr class="separator:a8ad8229946b89ba1294b3c4a53109ac9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae75f7b1539148b27aadf8af077caa6cb"><td class="memItemLeft" align="right" valign="top"><a id="ae75f7b1539148b27aadf8af077caa6cb"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>cleanup</b> ()</td></tr>
+<tr class="separator:ae75f7b1539148b27aadf8af077caa6cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a33a8add04df8d2e4b4002fa6f0c89b54"><td class="memItemLeft" align="right" valign="top"><a id="a33a8add04df8d2e4b4002fa6f0c89b54"></a>
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>pretty</b> () override</td></tr>
 <tr class="separator:a33a8add04df8d2e4b4002fa6f0c89b54"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -169,11 +169,11 @@ const uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <tr class="memdesc:a24d6464ab3255612e5c6be3e5fdd0cdd"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Minor Release Version of the Node. <br /></td></tr>
 <tr class="separator:a24d6464ab3255612e5c6be3e5fdd0cdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a014075b413cf0b20f5aa3859d80d95ad"><td class="memItemLeft" align="right" valign="top"><a id="a014075b413cf0b20f5aa3859d80d95ad"></a>
-const uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrawler__app_1_1TankDriveNode.html#a014075b413cf0b20f5aa3859d80d95ad">BUILD_NUMBER</a> = 1</td></tr>
+const uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrawler__app_1_1TankDriveNode.html#a014075b413cf0b20f5aa3859d80d95ad">BUILD_NUMBER</a> = 2</td></tr>
 <tr class="memdesc:a014075b413cf0b20f5aa3859d80d95ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Build Number of the Node. <br /></td></tr>
 <tr class="separator:a014075b413cf0b20f5aa3859d80d95ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aed3a888ddf9fe3623572a3438dc052c1"><td class="memItemLeft" align="right" valign="top"><a id="aed3a888ddf9fe3623572a3438dc052c1"></a>
-const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrawler__app_1_1TankDriveNode.html#aed3a888ddf9fe3623572a3438dc052c1">FIRMWARE_DESCRIPTION</a> = &quot;Latest Rev: 28-Feb-2025&quot;</td></tr>
+const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrawler__app_1_1TankDriveNode.html#aed3a888ddf9fe3623572a3438dc052c1">FIRMWARE_DESCRIPTION</a> = &quot;Latest Rev: 5-Mar-2025&quot;</td></tr>
 <tr class="memdesc:aed3a888ddf9fe3623572a3438dc052c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">A Description of the Firmware. <br /></td></tr>
 <tr class="separator:aed3a888ddf9fe3623572a3438dc052c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a98b78694845b021cd8e6678c03e0dc6f"><td class="memItemLeft" align="right" valign="top"><a id="a98b78694845b021cd8e6678c03e0dc6f"></a>
