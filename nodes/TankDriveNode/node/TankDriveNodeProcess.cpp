@@ -1,7 +1,5 @@
 #include "TankDriveNodeProcess.h"
 namespace crawler_app {
-constexpr uint16_t TankDriveNodeProcess::LEFTDRIVE_DEFAULT;
-constexpr uint16_t TankDriveNodeProcess::RIGHTDRIVE_DEFAULT;
 TankDriveNodeProcess::~TankDriveNodeProcess() {
 }
 eros::eros_diagnostic::Diagnostic TankDriveNodeProcess::finish_initialization() {
@@ -16,9 +14,8 @@ eros::eros_diagnostic::Diagnostic TankDriveNodeProcess::update(double t_dt, doub
         // Do Nothing
     }
     else {
-        TankDriveNodeProcessContainer output;
-        output.left_drive.data = TankDriveNodeProcess::LEFTDRIVE_DEFAULT;
-        output.right_drive.data = TankDriveNodeProcess::RIGHTDRIVE_DEFAULT;
+        TankDriveNodeProcessContainer output(left_drive_config.neutral_value,
+                                             right_drive_config.neutral_value);
         drive_command = output;
     }
     return diag;
@@ -41,7 +38,8 @@ std::string TankDriveNodeProcess::pretty() {
 }
 TankDriveNodeProcess::TankDriveNodeProcessContainer TankDriveNodeProcess::new_cmd_vel(
     geometry_msgs::Twist cmd_vel_perc) {
-    TankDriveNodeProcessContainer output;
+    TankDriveNodeProcessContainer output(left_drive_config.neutral_value,
+                                         right_drive_config.neutral_value);
     if (armed_state_.state != eros::ArmDisarm::Type::ARMED) {
         return output;
     }
@@ -58,37 +56,41 @@ TankDriveNodeProcess::TankDriveNodeProcessContainer TankDriveNodeProcess::new_cm
         // Throttle/Steer Mixing
         double left_mixed = normalized_forward + inverted_rotate;
         double right_mixed = normalized_forward - inverted_rotate;
-
         // Invert Right Channel
         double right_inverted = -1.0 * right_mixed;
 
-        // Scale back to Output range [1000,2000]
-        double m = 500.0;
-        double b = 1500.0;
-        double left_scaled = left_mixed * m + b;
-        double right_scaled = right_inverted * m + b;
+        // Scale back to Output range
+        double m_left = (left_drive_config.max_value - left_drive_config.min_value) / (2.0);
+        double m_right = (right_drive_config.max_value - right_drive_config.min_value) / (2.0);
 
+        double b_left = left_drive_config.neutral_value - (m_left * 0.0);
+        double b_right = right_drive_config.neutral_value - (m_right * 0.0);
+
+        double left_scaled = left_mixed * m_left + b_left;
+        double right_scaled = right_inverted * m_right + b_right;
         // Clip to Min/Max
-        double MIN = 1000.0;
-        double MAX = 2000.0;
-        double left_clipped = left_scaled;
-        if (left_clipped > MAX) {
-            left_clipped = MAX;
+        uint16_t left_clipped = (uint16_t)left_scaled;
+        if (left_drive_config.max_value > left_drive_config.min_value) {
+            left_clipped =
+                clip(left_clipped, left_drive_config.min_value, left_drive_config.max_value);
         }
-        if (left_clipped < MIN) {
-            left_clipped = MIN;
-        }
-
-        double right_clipped = right_scaled;
-        if (right_clipped > MAX) {
-            right_clipped = MAX;
-        }
-        if (right_clipped < MIN) {
-            right_clipped = MIN;
+        else {
+            left_clipped =
+                clip(left_clipped, left_drive_config.max_value, left_drive_config.min_value);
         }
 
-        output.left_drive.data = (uint16_t)(left_clipped);
-        output.right_drive.data = (uint16_t)(right_clipped);
+        uint16_t right_clipped = (uint16_t)right_scaled;
+        if (right_drive_config.max_value > right_drive_config.min_value) {
+            right_clipped =
+                clip(right_clipped, right_drive_config.min_value, right_drive_config.max_value);
+        }
+        else {
+            right_clipped =
+                clip(right_clipped, right_drive_config.max_value, right_drive_config.min_value);
+        }
+
+        output.left_drive.data = left_clipped;
+        output.right_drive.data = right_clipped;
         update_diagnostic(eros::eros_diagnostic::DiagnosticType::REMOTE_CONTROL,
                           eros::Level::Type::INFO,
                           eros::eros_diagnostic::Message::NOERROR,
@@ -97,6 +99,16 @@ TankDriveNodeProcess::TankDriveNodeProcessContainer TankDriveNodeProcess::new_cm
     }
     else {
         logger->log_warn("Mode: " + std::to_string((uint8_t)mode) + " Not Supported!");
+    }
+    return output;
+}
+uint16_t TankDriveNodeProcess::clip(uint16_t value, uint16_t min_value, uint16_t max_value) {
+    uint16_t output = value;
+    if (value > max_value) {
+        output = max_value;
+    }
+    if (value < min_value) {
+        output = min_value;
     }
     return output;
 }

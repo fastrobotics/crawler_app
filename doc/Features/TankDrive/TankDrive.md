@@ -13,7 +13,13 @@ Note that the Tank Drive Node will only publish a non-default value for left and
 ### Tank Drive Node
 
 #### Configuration
-
+Provide a configuration yaml for Left and Drive Channels.
+Samples:
+```yaml
+"minimum": 1000
+"neutral": 1500
+"maximum": 2000
+```
 
 ## Software Design
 ![](../../output/Legend.png)

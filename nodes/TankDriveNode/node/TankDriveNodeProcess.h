@@ -19,14 +19,13 @@ class TankDriveNodeProcess : public eros::BaseNodeProcess
     }
     ~TankDriveNodeProcess();
     // Constants
-    /*! \brief Default Output value for Left Drive */
-    static constexpr uint16_t LEFTDRIVE_DEFAULT = 1500;
-
-    /*! \brief Default Output value for Right Drive */
-    static constexpr uint16_t RIGHTDRIVE_DEFAULT = 1500;
 
     // Enums
 
+    /**
+     * @brief Tank Drive Mode
+     *
+     */
     enum class Mode {
         UNKNOWN = 0,       /*!< Uninitialized value. */
         SIMPLE_ARCADE = 1, /*!< Simple Arcade.  Will have issues at extreme ranges of controls due
@@ -35,13 +34,36 @@ class TankDriveNodeProcess : public eros::BaseNodeProcess
     };
 
     // Structs
+    /**
+     * @brief Standard output container for Process
+     *
+     */
     struct TankDriveNodeProcessContainer {
         TankDriveNodeProcessContainer() {
-            left_drive.data = TankDriveNodeProcess::LEFTDRIVE_DEFAULT;
-            right_drive.data = TankDriveNodeProcess::RIGHTDRIVE_DEFAULT;
+            left_drive.data = 1500;
+            right_drive.data = 1500;
+        }
+        TankDriveNodeProcessContainer(uint16_t left_drive_cmd, uint16_t right_drive_cmd) {
+            left_drive.data = left_drive_cmd;
+            right_drive.data = right_drive_cmd;
         }
         std_msgs::UInt16 left_drive;
         std_msgs::UInt16 right_drive;
+    };
+
+    /**
+     * @brief Config Container for Drive Channel
+     *
+     */
+    struct DriveChannelConfig {
+        DriveChannelConfig() : min_value(1000), neutral_value(1500), max_value(2000) {
+        }
+        uint16_t min_value; /*!< Minimum Output value for Output.  Note that if this value is higher
+                               than max_value, output is inverted. */
+        uint16_t neutral_value; /*!< Neutral/Default Value output.  Will be set when robot is
+                                   disarmed. */
+        uint16_t max_value; /*!< Maximum Output value for Outpu.  Note that if this value is lower
+                               than min_value, output is inverted. */
     };
 
     // Initialization Functions
@@ -61,6 +83,18 @@ class TankDriveNodeProcess : public eros::BaseNodeProcess
     }
     void update_armedstate(eros::ArmDisarm::State armed_state) {
         armed_state_ = armed_state;
+    }
+    void set_left_drive_config(DriveChannelConfig config) {
+        left_drive_config = config;
+    }
+    void set_right_drive_config(DriveChannelConfig config) {
+        right_drive_config = config;
+    }
+    DriveChannelConfig get_left_drive_config() {
+        return left_drive_config;
+    }
+    DriveChannelConfig get_right_drive_config() {
+        return right_drive_config;
     }
 
     // Utility Functions
@@ -82,6 +116,9 @@ class TankDriveNodeProcess : public eros::BaseNodeProcess
     std::string pretty() override;
 
    private:
+    uint16_t clip(uint16_t value, uint16_t min_value, uint16_t max_value);
+    DriveChannelConfig left_drive_config;
+    DriveChannelConfig right_drive_config;
     TankDriveNodeProcessContainer drive_command;
     Mode mode;
     eros::ArmDisarm::State armed_state_;

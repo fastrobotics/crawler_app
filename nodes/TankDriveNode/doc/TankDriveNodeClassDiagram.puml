@@ -69,9 +69,15 @@ package crawler_app {
       -Publisher leftdrive_pub
       -Publisher rightdrive_pub
   }
+  
   struct TankDriveNodeProcessContainer #LimeGreen {
     UInt16 left_drive
     UIint16 right_drive
+  }
+  struct DriveChannelConfig #LimeGreen {
+    uint16_t min_value
+    uint16_t neutral_value
+    uint16_t max_value
   }
   enum Mode #LimeGreen {
     UNKNOWN=0,
@@ -79,8 +85,6 @@ package crawler_app {
     END_OF_LIST=2
   }
   class TankDriveNodeProcess #LimeGreen {
-      +const uint16_t LEFTDRIVE_DEFAULT
-      +const uint16_t RIGHTDRIVE_DEFAULT
       
       -- Initialization Functions --
       +eros::eros_diagnostic::Diagnostic finish_initialization()
@@ -91,8 +95,12 @@ package crawler_app {
 
       -- Attribute Functions --
       +std::vector<eros::eros_diagnostic::Diagnostic> check_programvariables()
-        +TankDriveNodeProcessContainer get_drive_command()
+      +TankDriveNodeProcessContainer get_drive_command()
       +Mode get_mode()
+      +void set_left_drive_config(DriveChannelConfig config)
+      +void set_right_drive_config(DriveChannelConfig config)
+      +DriveChannelConfig get_left_drive_config()
+      +DriveChannelConfig get_right_drive_config() 
 
       -- Data Functions --
 
@@ -114,6 +122,7 @@ package crawler_app {
 
   }
   TankDriveNodeProcess +-- TankDriveNodeProcessContainer
+  TankDriveNodeProcess +-- DriveChannelConfig
   TankDriveNodeProcess +-- Mode
   BaseNode <|-- TankDriveNode
   BaseNodeProcess <|-- TankDriveNodeProcess
