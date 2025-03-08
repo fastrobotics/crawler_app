@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['major_5frelease_5fversion_38',['MAJOR_RELEASE_VERSION',['../classcrawler__app_1_1TankDriveNode.html#a8ec70b459fbc4b19da5b2f95fb1aa6fd',1,'crawler_app::TankDriveNode']]],
-  ['minor_5frelease_5fversion_39',['MINOR_RELEASE_VERSION',['../classcrawler__app_1_1TankDriveNode.html#a24d6464ab3255612e5c6be3e5fdd0cdd',1,'crawler_app::TankDriveNode']]]
+  ['neutral_5fvalue_44',['neutral_value',['../structcrawler__app_1_1TankDriveNodeProcess_1_1DriveChannelConfig_a27073f03b85eb9c35135f782eb0f9d55.html#a27073f03b85eb9c35135f782eb0f9d55',1,'crawler_app::TankDriveNodeProcess::DriveChannelConfig']]]
 ];

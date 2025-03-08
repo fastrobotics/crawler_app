@@ -89,11 +89,12 @@ Collaboration diagram for crawler_app::TankDriveNode:</div>
 <div class="dyncontent">
 <div class="center"><img src="classcrawler__app_1_1TankDriveNode__coll__graph.png" border="0" usemap="#crawler__app_1_1TankDriveNode_coll__map" alt="Collaboration graph"/></div>
 <map name="crawler__app_1_1TankDriveNode_coll__map" id="crawler__app_1_1TankDriveNode_coll__map">
-<area shape="rect" title=" " alt="" coords="765,35,973,61"/>
-<area shape="rect" title=" " alt="" coords="497,5,621,32"/>
-<area shape="rect" href="classcrawler__app_1_1TankDriveNodeProcess.html" title=" " alt="" coords="455,57,663,98"/>
-<area shape="rect" title=" " alt="" coords="64,35,239,61"/>
-<area shape="rect" href="structcrawler__app_1_1TankDriveNodeProcess_1_1TankDriveNodeProcessContainer.html" title=" " alt="" coords="5,86,297,127"/>
+<area shape="rect" title=" " alt="" coords="773,35,981,61"/>
+<area shape="rect" title=" " alt="" coords="505,5,629,32"/>
+<area shape="rect" href="classcrawler__app_1_1TankDriveNodeProcess.html" title=" " alt="" coords="463,57,671,98"/>
+<area shape="rect" title=" " alt="" coords="64,5,239,32"/>
+<area shape="rect" href="structcrawler__app_1_1TankDriveNodeProcess_1_1TankDriveNodeProcessContainer.html" title="Standard output container for Process." alt="" coords="5,57,297,98"/>
+<area shape="rect" href="structcrawler__app_1_1TankDriveNodeProcess_1_1DriveChannelConfig.html" title="Config Container for Drive Channel." alt="" coords="46,122,257,163"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -169,11 +170,11 @@ const uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <tr class="memdesc:a24d6464ab3255612e5c6be3e5fdd0cdd"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Minor Release Version of the Node. <br /></td></tr>
 <tr class="separator:a24d6464ab3255612e5c6be3e5fdd0cdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a014075b413cf0b20f5aa3859d80d95ad"><td class="memItemLeft" align="right" valign="top"><a id="a014075b413cf0b20f5aa3859d80d95ad"></a>
-const uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrawler__app_1_1TankDriveNode.html#a014075b413cf0b20f5aa3859d80d95ad">BUILD_NUMBER</a> = 2</td></tr>
+const uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrawler__app_1_1TankDriveNode.html#a014075b413cf0b20f5aa3859d80d95ad">BUILD_NUMBER</a> = 3</td></tr>
 <tr class="memdesc:a014075b413cf0b20f5aa3859d80d95ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Build Number of the Node. <br /></td></tr>
 <tr class="separator:a014075b413cf0b20f5aa3859d80d95ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aed3a888ddf9fe3623572a3438dc052c1"><td class="memItemLeft" align="right" valign="top"><a id="aed3a888ddf9fe3623572a3438dc052c1"></a>
-const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrawler__app_1_1TankDriveNode.html#aed3a888ddf9fe3623572a3438dc052c1">FIRMWARE_DESCRIPTION</a> = &quot;Latest Rev: 5-Mar-2025&quot;</td></tr>
+const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrawler__app_1_1TankDriveNode.html#aed3a888ddf9fe3623572a3438dc052c1">FIRMWARE_DESCRIPTION</a> = &quot;Latest Rev: 7-Mar-2025&quot;</td></tr>
 <tr class="memdesc:aed3a888ddf9fe3623572a3438dc052c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">A Description of the Firmware. <br /></td></tr>
 <tr class="separator:aed3a888ddf9fe3623572a3438dc052c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a98b78694845b021cd8e6678c03e0dc6f"><td class="memItemLeft" align="right" valign="top"><a id="a98b78694845b021cd8e6678c03e0dc6f"></a>
@@ -191,6 +192,9 @@ const eros::System::Component&#160;</td><td class="memItemRight" valign="bottom"
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
+<tr class="memitem:ab9bde50b38d54ea6c1740daccbd0f572"><td class="memItemLeft" align="right" valign="top"><a id="ab9bde50b38d54ea6c1740daccbd0f572"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>load_drive_parameters</b> (std::string drive_name)</td></tr>
+<tr class="separator:ab9bde50b38d54ea6c1740daccbd0f572"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af5871520b6333d3d0e03eb06270b3910"><td class="memItemLeft" align="right" valign="top"><a id="af5871520b6333d3d0e03eb06270b3910"></a>
 eros::eros_diagnostic::Diagnostic&#160;</td><td class="memItemRight" valign="bottom"><b>read_launchparameters</b> ()</td></tr>
 <tr class="separator:af5871520b6333d3d0e03eb06270b3910"><td class="memSeparator" colspan="2">&#160;</td></tr>

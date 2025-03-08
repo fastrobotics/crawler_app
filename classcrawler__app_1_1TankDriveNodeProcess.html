@@ -69,7 +69,7 @@ $(function() {
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classcrawler__app_1_1TankDriveNodeProcess-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -91,15 +91,20 @@ Collaboration diagram for crawler_app::TankDriveNodeProcess:</div>
 <div class="dyncontent">
 <div class="center"><img src="classcrawler__app_1_1TankDriveNodeProcess__coll__graph.png" border="0" usemap="#crawler__app_1_1TankDriveNodeProcess_coll__map" alt="Collaboration graph"/></div>
 <map name="crawler__app_1_1TankDriveNodeProcess_coll__map" id="crawler__app_1_1TankDriveNodeProcess_coll__map">
-<area shape="rect" title=" " alt="" coords="455,27,663,69"/>
+<area shape="rect" title=" " alt="" coords="463,57,671,98"/>
 <area shape="rect" title=" " alt="" coords="64,5,239,32"/>
-<area shape="rect" href="structcrawler__app_1_1TankDriveNodeProcess_1_1TankDriveNodeProcessContainer.html" title=" " alt="" coords="5,57,297,98"/>
+<area shape="rect" href="structcrawler__app_1_1TankDriveNodeProcess_1_1TankDriveNodeProcessContainer.html" title="Standard output container for Process." alt="" coords="5,57,297,98"/>
+<area shape="rect" href="structcrawler__app_1_1TankDriveNodeProcess_1_1DriveChannelConfig.html" title="Config Container for Drive Channel." alt="" coords="46,122,257,163"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcrawler__app_1_1TankDriveNodeProcess_1_1DriveChannelConfig.html">DriveChannelConfig</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Config Container for Drive Channel.  <a href="structcrawler__app_1_1TankDriveNodeProcess_1_1DriveChannelConfig.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcrawler__app_1_1TankDriveNodeProcess_1_1TankDriveNodeProcessContainer.html">TankDriveNodeProcessContainer</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Standard output container for Process.  <a href="structcrawler__app_1_1TankDriveNodeProcess_1_1TankDriveNodeProcessContainer.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
@@ -112,6 +117,7 @@ Public Types</h2></td></tr>
 &#160;&#160;<a class="el" href="classcrawler__app_1_1TankDriveNodeProcess_a04e31d54b82d610289e948da1ff5b644.html#a04e31d54b82d610289e948da1ff5b644ac2b0b4a580050a88a759ac7c20ce853c">Mode::END_OF_LIST</a> = 2
 <br />
  }</td></tr>
+<tr class="memdesc:a04e31d54b82d610289e948da1ff5b644"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tank Drive Mode.  <a href="classcrawler__app_1_1TankDriveNodeProcess_a04e31d54b82d610289e948da1ff5b644.html#a04e31d54b82d610289e948da1ff5b644">More...</a><br /></td></tr>
 <tr class="separator:a04e31d54b82d610289e948da1ff5b644"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -134,6 +140,18 @@ eros::eros_diagnostic::Diagnostic&#160;</td><td class="memItemRight" valign="bot
 <tr class="memitem:af917f6ec721cb1e38961ad2fda26bcbc"><td class="memItemLeft" align="right" valign="top"><a id="af917f6ec721cb1e38961ad2fda26bcbc"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>update_armedstate</b> (eros::ArmDisarm::State armed_state)</td></tr>
 <tr class="separator:af917f6ec721cb1e38961ad2fda26bcbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9cf6a3135674377abb56bc4813176f05"><td class="memItemLeft" align="right" valign="top"><a id="a9cf6a3135674377abb56bc4813176f05"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_left_drive_config</b> (<a class="el" href="structcrawler__app_1_1TankDriveNodeProcess_1_1DriveChannelConfig.html">DriveChannelConfig</a> config)</td></tr>
+<tr class="separator:a9cf6a3135674377abb56bc4813176f05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98ff533ad023a7f766d65b45901ba3c7"><td class="memItemLeft" align="right" valign="top"><a id="a98ff533ad023a7f766d65b45901ba3c7"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_right_drive_config</b> (<a class="el" href="structcrawler__app_1_1TankDriveNodeProcess_1_1DriveChannelConfig.html">DriveChannelConfig</a> config)</td></tr>
+<tr class="separator:a98ff533ad023a7f766d65b45901ba3c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63e23938178b4a182a12393f60eac6a0"><td class="memItemLeft" align="right" valign="top"><a id="a63e23938178b4a182a12393f60eac6a0"></a>
+<a class="el" href="structcrawler__app_1_1TankDriveNodeProcess_1_1DriveChannelConfig.html">DriveChannelConfig</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get_left_drive_config</b> ()</td></tr>
+<tr class="separator:a63e23938178b4a182a12393f60eac6a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a616ae6af2163dbb873fdbad71e8588"><td class="memItemLeft" align="right" valign="top"><a id="a6a616ae6af2163dbb873fdbad71e8588"></a>
+<a class="el" href="structcrawler__app_1_1TankDriveNodeProcess_1_1DriveChannelConfig.html">DriveChannelConfig</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get_right_drive_config</b> ()</td></tr>
+<tr class="separator:a6a616ae6af2163dbb873fdbad71e8588"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c7c06160023dda2aa8ffa7485b3a11f"><td class="memItemLeft" align="right" valign="top"><a id="a3c7c06160023dda2aa8ffa7485b3a11f"></a>
 std::vector&lt; eros::eros_diagnostic::Diagnostic &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>check_programvariables</b> ()</td></tr>
 <tr class="separator:a3c7c06160023dda2aa8ffa7485b3a11f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -150,19 +168,20 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>cleanup</b> ()</td></
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>pretty</b> () override</td></tr>
 <tr class="separator:a818410b32affbd7ca8d49cd87cfe7888"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
-Static Public Attributes</h2></td></tr>
-<tr class="memitem:a4c2ce44bbda0267a829bda82bd09c848"><td class="memItemLeft" align="right" valign="top"><a id="a4c2ce44bbda0267a829bda82bd09c848"></a>
-static constexpr uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrawler__app_1_1TankDriveNodeProcess.html#a4c2ce44bbda0267a829bda82bd09c848">LEFTDRIVE_DEFAULT</a> = 1500</td></tr>
-<tr class="memdesc:a4c2ce44bbda0267a829bda82bd09c848"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default Output value for Left Drive. <br /></td></tr>
-<tr class="separator:a4c2ce44bbda0267a829bda82bd09c848"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4028b190841a9a0f6ee653fd5f7d25ea"><td class="memItemLeft" align="right" valign="top"><a id="a4028b190841a9a0f6ee653fd5f7d25ea"></a>
-static constexpr uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrawler__app_1_1TankDriveNodeProcess.html#a4028b190841a9a0f6ee653fd5f7d25ea">RIGHTDRIVE_DEFAULT</a> = 1500</td></tr>
-<tr class="memdesc:a4028b190841a9a0f6ee653fd5f7d25ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default Output value for Right Drive. <br /></td></tr>
-<tr class="separator:a4028b190841a9a0f6ee653fd5f7d25ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:ac21b306e81282e16244e12e6e79f56df"><td class="memItemLeft" align="right" valign="top"><a id="ac21b306e81282e16244e12e6e79f56df"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>clip</b> (uint16_t value, uint16_t min_value, uint16_t max_value)</td></tr>
+<tr class="separator:ac21b306e81282e16244e12e6e79f56df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
+<tr class="memitem:af587aa99196a40aacd897a6c92297fd4"><td class="memItemLeft" align="right" valign="top"><a id="af587aa99196a40aacd897a6c92297fd4"></a>
+<a class="el" href="structcrawler__app_1_1TankDriveNodeProcess_1_1DriveChannelConfig.html">DriveChannelConfig</a>&#160;</td><td class="memItemRight" valign="bottom"><b>left_drive_config</b></td></tr>
+<tr class="separator:af587aa99196a40aacd897a6c92297fd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4645cb858fd480533b0c8f465f730ad"><td class="memItemLeft" align="right" valign="top"><a id="af4645cb858fd480533b0c8f465f730ad"></a>
+<a class="el" href="structcrawler__app_1_1TankDriveNodeProcess_1_1DriveChannelConfig.html">DriveChannelConfig</a>&#160;</td><td class="memItemRight" valign="bottom"><b>right_drive_config</b></td></tr>
+<tr class="separator:af4645cb858fd480533b0c8f465f730ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2863e50d6585bbed86baa08a9f48542a"><td class="memItemLeft" align="right" valign="top"><a id="a2863e50d6585bbed86baa08a9f48542a"></a>
 <a class="el" href="structcrawler__app_1_1TankDriveNodeProcess_1_1TankDriveNodeProcessContainer.html">TankDriveNodeProcessContainer</a>&#160;</td><td class="memItemRight" valign="bottom"><b>drive_command</b></td></tr>
 <tr class="separator:a2863e50d6585bbed86baa08a9f48542a"><td class="memSeparator" colspan="2">&#160;</td></tr>

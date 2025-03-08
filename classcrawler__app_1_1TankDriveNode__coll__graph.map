@@ -1,7 +1,8 @@
 <map id="crawler_app::TankDriveNode" name="crawler_app::TankDriveNode">
-<area shape="rect" id="node1" title=" " alt="" coords="765,35,973,61"/>
-<area shape="rect" id="node2" title=" " alt="" coords="497,5,621,32"/>
-<area shape="rect" id="node3" href="$classcrawler__app_1_1TankDriveNodeProcess.html" title=" " alt="" coords="455,57,663,98"/>
-<area shape="rect" id="node4" title=" " alt="" coords="64,35,239,61"/>
-<area shape="rect" id="node5" href="$structcrawler__app_1_1TankDriveNodeProcess_1_1TankDriveNodeProcessContainer.html" title=" " alt="" coords="5,86,297,127"/>
+<area shape="rect" id="node1" title=" " alt="" coords="773,35,981,61"/>
+<area shape="rect" id="node2" title=" " alt="" coords="505,5,629,32"/>
+<area shape="rect" id="node3" href="$classcrawler__app_1_1TankDriveNodeProcess.html" title=" " alt="" coords="463,57,671,98"/>
+<area shape="rect" id="node4" title=" " alt="" coords="64,5,239,32"/>
+<area shape="rect" id="node5" href="$structcrawler__app_1_1TankDriveNodeProcess_1_1TankDriveNodeProcessContainer.html" title="Standard output container for Process." alt="" coords="5,57,297,98"/>
+<area shape="rect" id="node6" href="$structcrawler__app_1_1TankDriveNodeProcess_1_1DriveChannelConfig.html" title="Config Container for Drive Channel." alt="" coords="46,122,257,163"/>
 </map>

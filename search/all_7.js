@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['rightdrive_5fdefault_13',['RIGHTDRIVE_DEFAULT',['../classcrawler__app_1_1TankDriveNodeProcess.html#a4028b190841a9a0f6ee653fd5f7d25ea',1,'crawler_app::TankDriveNodeProcess']]]
+  ['simple_5farcade_16',['SIMPLE_ARCADE',['../classcrawler__app_1_1TankDriveNodeProcess_a04e31d54b82d610289e948da1ff5b644.html#a04e31d54b82d610289e948da1ff5b644aaa7ccae6f5950589bd1e6ad8c0cdd92a',1,'crawler_app::TankDriveNodeProcess']]]
 ];
