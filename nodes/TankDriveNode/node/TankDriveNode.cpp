@@ -110,6 +110,25 @@ bool TankDriveNode::start() {
 }
 eros::eros_diagnostic::Diagnostic TankDriveNode::read_launchparameters() {
     eros::eros_diagnostic::Diagnostic diag = diagnostic;
+    bool status = load_drive_parameters("left_drive");
+    if (status == false) {
+        diag = process->update_diagnostic(eros::eros_diagnostic::DiagnosticType::DATA_STORAGE,
+                                          eros::Level::Type::ERROR,
+                                          eros::eros_diagnostic::Message::INITIALIZING_ERROR,
+                                          "Unable to load config for left_drive");
+        logger->log_diagnostic(diag);
+        return diag;
+    }
+    status = load_drive_parameters("right_drive");
+    if (status == false) {
+        diag = process->update_diagnostic(eros::eros_diagnostic::DiagnosticType::DATA_STORAGE,
+                                          eros::Level::Type::ERROR,
+                                          eros::eros_diagnostic::Message::INITIALIZING_ERROR,
+                                          "Unable to load config for right_drive");
+        logger->log_diagnostic(diag);
+        return diag;
+    }
+
     command_sub = n->subscribe<eros::command>(
         get_robotnamespace() + "SystemCommand", 10, &TankDriveNode::command_Callback, this);
     cmd_vel_sub = n->subscribe<geometry_msgs::Twist>(
@@ -210,6 +229,40 @@ void TankDriveNode::cleanup() {
     process->cleanup();
     delete process;
     base_cleanup();
+}
+bool TankDriveNode::load_drive_parameters(std::string drive_name) {
+    TankDriveNodeProcess::DriveChannelConfig config;
+    int min_value;
+    if (!n->getParam(drive_name + "/minimum", min_value)) {
+        return false;
+    }
+    else {
+        config.min_value = (uint16_t)min_value;
+    }
+    int neutral_value;
+    if (!n->getParam(drive_name + "/neutral", neutral_value)) {
+        return false;
+    }
+    else {
+        config.neutral_value = (uint16_t)neutral_value;
+    }
+    int max_value;
+    if (!n->getParam(drive_name + "/maximum", max_value)) {
+        return false;
+    }
+    else {
+        config.max_value = (uint16_t)max_value;
+    }
+    if (drive_name == "left_drive") {
+        process->set_left_drive_config(config);
+    }
+    else if (drive_name == "right_drive") {
+        process->set_right_drive_config(config);
+    }
+    else {
+        return false;
+    }
+    return true;
 }
 }  // namespace crawler_app
 // No practical way to unit test

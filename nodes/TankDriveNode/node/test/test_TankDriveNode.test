@@ -3,7 +3,9 @@
     <arg name="robot_namespace" value="/test" />
     <group ns="test">
         <include file="$(find crawler_app)/nodes/TankDriveNode/launch/tankdrive_node.launch"> 
-                    <arg name="robot_namespace" value="$(arg robot_namespace)"/>
+            <arg name="robot_namespace" value="$(arg robot_namespace)"/>
+            <arg name="left_drive_config" value="$(find crawler_app)/nodes/TankDriveNode/node/test/left_drive.yaml"/> 
+            <arg name="right_drive_config" value="$(find crawler_app)/nodes/TankDriveNode/node/test/right_drive.yaml"/> 
         </include>
         <test test-name="test_TankDriveNode" pkg="crawler_app" type="test_TankDriveNode"/>
     </group>

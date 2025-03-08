@@ -28,10 +28,10 @@ class TankDriveNode : public eros::BaseNode
     const uint16_t MINOR_RELEASE_VERSION = 0;
 
     /*! \brief The Build Number of the Node.*/
-    const uint16_t BUILD_NUMBER = 2;
+    const uint16_t BUILD_NUMBER = 3;
 
     /*! \brief A Description of the Firmware.*/
-    const std::string FIRMWARE_DESCRIPTION = "Latest Rev: 5-Mar-2025";
+    const std::string FIRMWARE_DESCRIPTION = "Latest Rev: 7-Mar-2025";
 
     /*! \brief What System this Node falls under.*/
     const eros::System::MainSystem DIAGNOSTIC_SYSTEM = eros::System::MainSystem::ROVER;
@@ -84,6 +84,7 @@ class TankDriveNode : public eros::BaseNode
     std::string pretty() override;
 
    private:
+    bool load_drive_parameters(std::string drive_name);
     eros::eros_diagnostic::Diagnostic read_launchparameters();
     TankDriveNodeProcess* process;
     actionlib::SimpleActionServer<eros::system_commandAction> system_command_action_server;
