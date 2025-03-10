@@ -26,6 +26,14 @@
             <Architecture>aarch64</Architecture>
         </Folder>
         <Folder>
+            <Name>sonar_array</Name>
+            <Type>Source</Type>
+            <Directory>~/catkin_ws/src/sonar_array/</Directory>
+            <Architecture>x86_64</Architecture>
+            <Architecture>armv7l</Architecture>
+            <Architecture>aarch64</Architecture>
+        </Folder>
+        <Folder>
             <Name>main_config</Name>
             <Type>Config</Type>
             <Directory>~/catkin_ws/src/config/</Directory>
