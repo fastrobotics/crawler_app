@@ -61,6 +61,7 @@ alt loops
         node -> user: publish(latest_diagnostics)
     end
     alt run_10hz
+        node -> process: update()
         node -> process++: get_drive_command()
         process --> node--: output
         node -> user: publish(output.left_drive)
