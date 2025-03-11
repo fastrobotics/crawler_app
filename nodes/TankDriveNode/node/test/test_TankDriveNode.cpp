@@ -28,7 +28,7 @@ void rightchannel_Callback(const std_msgs::UInt16& msg) {
     right_channel_rx_count++;
     right_drive_value = msg.data;
 }
-TEST(TankDriveNode, DISABLED_TestBasics) {
+TEST(TankDriveNode, TestBasics) {
     ros::NodeHandle nh("~");
     eros::Logger* logger = new eros::Logger("DEBUG", "test_TankDriveNode");
     logger->enable_ROS_logger();
