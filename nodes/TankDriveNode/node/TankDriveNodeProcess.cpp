@@ -1,6 +1,11 @@
 #include "TankDriveNodeProcess.h"
 namespace crawler_app {
 TankDriveNodeProcess::~TankDriveNodeProcess() {
+    /*
+    TankDriveNodeProcessContainer output(left_drive_config.neutral_value,
+                                         right_drive_config.neutral_value);
+    drive_command = output;
+    */
 }
 eros::eros_diagnostic::Diagnostic TankDriveNodeProcess::finish_initialization() {
     eros::eros_diagnostic::Diagnostic diag = get_root_diagnostic();

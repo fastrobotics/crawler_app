@@ -213,6 +213,7 @@ bool TankDriveNode::run_1hz() {
     return true;
 }
 bool TankDriveNode::run_10hz() {
+    process->update(0.1, ros::Time::now().toSec());
     process->update_armedstate(eros::eros_utility::ConvertUtility::convert(armed_state));
     auto output = process->get_drive_command();
     leftdrive_pub.publish(output.left_drive);
