@@ -7,7 +7,9 @@
     <group ns="$(arg robot_namespace)">
         <!-- Nodes that should be launched under a device HostName. -->
         <group  if="$(eval device_hostname == 'DevComputer2')">
-            <node pkg="rqt_plot" type="rqt_plot" output="screen" name="rqt_plot" args="/left_drive/data /right_drive/data"/>
+            <!--<node pkg="rqt_plot" type="rqt_plot" output="screen" name="rqt_plot" args="/left_drive/data /right_drive/data"/>-->
+            <node pkg="rviz" type="rviz" output="screen" name="rviz" args="-d $(find crawler_app)/doc/Development/rviz.rviz"/>
+
             <group ns="$(arg device_hostname)">
                 
                 <include file="$(find config)/launch/NodeLaunch/Master_Node.launch">
@@ -48,7 +50,10 @@
             <include file="$(find config)/launch/NodeLaunch/Safety_Node.launch"> 
                     <arg name="robot_namespace" value="$(arg robot_namespace)"/>
                     <arg name="device_hostname" value="$(arg device_hostname)"/>
-            </include>      
+            </include>
+            <include file="$(find config)/launch/NodeLaunch/SonarArray_Node.launch"> 
+                    <arg name="robot_namespace" value="$(arg robot_namespace)"/>
+            </include>        
         </group>   <!-- EndGroup for ComputeModule1--> 
     </group>
 </launch>
