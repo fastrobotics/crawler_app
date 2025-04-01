@@ -24,7 +24,7 @@
                     <arg name="robot_namespace" value="$(arg robot_namespace)"/>
             </include>
             <!-- DEBUG -->
-            <!--
+            
             <include file="$(find crawler_app)/nodes/TankDriveNode/launch/tankdrive_node.launch"> 
                     <arg name="robot_namespace" value="$(arg robot_namespace)"/>
                     <arg name="left_drive_config" value="$(find config)/launch/Drive/left_drive.yaml"/>
@@ -37,7 +37,7 @@
                     <arg name="robot_namespace" value="$(arg robot_namespace)"/>
                     <arg name="device_hostname" value="$(arg device_hostname)"/>
             </include> 
-            -->
+        
         </group>   <!-- EndGroup for DevComputer2--> 
         <group  if="$(eval device_hostname == 'ComputeModule1')">
             <group ns="$(arg device_hostname)">
