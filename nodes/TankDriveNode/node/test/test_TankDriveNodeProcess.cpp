@@ -49,12 +49,6 @@ TEST(BasicTest, TestOperation) {
         timer += dt;
     }
 
-    logger->log_warn("Testing Unsupported Command Message");
-    {
-        eros::command cmd;
-        std::vector<eros::eros_diagnostic::Diagnostic> diag_list = tester->new_commandmsg(cmd);
-        EXPECT_EQ(diag_list.size(), 0);
-    }
     logger->log_warn("Testing Unsupported Program Variables Check");
     {
         std::vector<eros::eros_diagnostic::Diagnostic> diag_list = tester->check_programvariables();
@@ -328,6 +322,41 @@ TEST(BasicTest, TestArcadeDriveComputation_Invert) {
     EXPECT_TRUE(
         tester->get_diagnostic(eros::eros_diagnostic::DiagnosticType::REMOTE_CONTROL).level <
         eros::Level::Type::WARN);
+}
+TEST(TestCommands, TestAllCommands) {
+    eros::Logger* logger = new eros::Logger("DEBUG", "UnitTestTankDriveNodeProcess");
+    TankDriveNodeProcessTester* tester = new TankDriveNodeProcessTester;
+    tester->initialize("UnitTestTankDriveNodeProcess",
+                       "UnitTestTankDriveNodeProcess",
+                       "MyHost",
+                       eros::System::MainSystem::SIMROVER,
+                       eros::System::SubSystem::ENTIRE_SYSTEM,
+                       eros::System::Component::ENTIRE_SUBSYSTEM,
+                       logger);
+    std::vector<eros::eros_diagnostic::DiagnosticType> diagnostic_types;
+    diagnostic_types.push_back(eros::eros_diagnostic::DiagnosticType::SOFTWARE);
+    diagnostic_types.push_back(eros::eros_diagnostic::DiagnosticType::DATA_STORAGE);
+    diagnostic_types.push_back(eros::eros_diagnostic::DiagnosticType::SYSTEM_RESOURCE);
+    diagnostic_types.push_back(eros::eros_diagnostic::DiagnosticType::COMMUNICATIONS);
+    diagnostic_types.push_back(eros::eros_diagnostic::DiagnosticType::REMOTE_CONTROL);
+    tester->enable_diagnostics(diagnostic_types);
+    EXPECT_TRUE(tester->get_logger()->log_warn("A Log to Write") ==
+                eros::Logger::LoggerStatus::LOG_WRITTEN);
+
+    eros::eros_diagnostic::Diagnostic diag = tester->finish_initialization();
+    EXPECT_TRUE(diag.level <= eros::Level::Type::NOTICE);
+    for (uint8_t i = (uint16_t)eros::Command::Type::UNKNOWN;
+         i < (uint16_t)eros::Command::Type::END_OF_LIST;
+         ++i) {
+        eros::command new_cmd;
+        new_cmd.Command = i;
+        std::vector<eros::eros_diagnostic::Diagnostic> diag_list = tester->new_commandmsg(new_cmd);
+        EXPECT_GT(diag_list.size(), 0);
+        for (auto diag : diag_list) { EXPECT_TRUE(diag.level < eros::Level::Type::WARN); }
+    }
+
+    delete tester;
+    delete logger;
 }
 int main(int argc, char** argv) {
     testing::InitGoogleTest(&argc, argv);

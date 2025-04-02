@@ -29,14 +29,8 @@ void TankDriveNode::cmd_vel_Callback(const geometry_msgs::Twist::ConstPtr &t_msg
 }
 void TankDriveNode::command_Callback(const eros::command::ConstPtr &t_msg) {
     eros::command cmd = eros::eros_utility::ConvertUtility::convert_fromptr(t_msg);
-    eros::eros_diagnostic::Diagnostic diag = process->get_root_diagnostic();
-    diag = process->update_diagnostic(
-        eros::eros_diagnostic::DiagnosticType::COMMUNICATIONS,
-        eros::Level::Type::WARN,
-        eros::eros_diagnostic::Message::DROPPING_PACKETS,
-        "Received unsupported Command: " +
-            eros::Command::CommandString((eros::Command::Type)cmd.Command));
-    logger->log_diagnostic(diag);
+    auto diag_list = process->new_commandmsg(cmd);
+    for (auto diag : diag_list) { logger->log_diagnostic(diag); }
 }
 bool TankDriveNode::changenodestate_service(eros::srv_change_nodestate::Request &req,
                                             eros::srv_change_nodestate::Response &res) {
@@ -153,9 +147,9 @@ eros::eros_diagnostic::Diagnostic TankDriveNode::finish_initialization() {
                                       eros::eros_diagnostic::Message::NOERROR,
                                       "Running");
     diag = process->update_diagnostic(eros::eros_diagnostic::DiagnosticType::REMOTE_CONTROL,
-                                      eros::Level::Type::WARN,
-                                      eros::eros_diagnostic::Message::INITIALIZING,
-                                      "Remote Control Initializing.");
+                                      eros::Level::Type::INFO,
+                                      eros::eros_diagnostic::Message::NOERROR,
+                                      "Remote Control Initialized.");
     diag = process->update_diagnostic(eros::eros_diagnostic::DiagnosticType::DATA_STORAGE,
                                       eros::Level::Type::INFO,
                                       eros::eros_diagnostic::Message::NOERROR,

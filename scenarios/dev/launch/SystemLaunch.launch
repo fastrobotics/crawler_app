@@ -9,7 +9,7 @@
         <group  if="$(eval device_hostname == 'DevComputer2')">
             <!--<node pkg="rqt_plot" type="rqt_plot" output="screen" name="rqt_plot" args="/left_drive/data /right_drive/data"/>-->
             <node pkg="rviz" type="rviz" output="screen" name="rviz" args="-d $(find crawler_app)/doc/Development/rviz.rviz"/>
-
+            <node pkg="rqt_plot" type="rqt_plot" output="screen" name="rqt_plot_drive_command" args="/left_drive/data /right_drive/data"/>
             <group ns="$(arg device_hostname)">
                 
                 <include file="$(find config)/launch/NodeLaunch/Master_Node.launch">
@@ -22,6 +22,24 @@
                     <arg name="robot_namespace" value="$(arg robot_namespace)"/>
                 </include>
             </group>
+            <include file="$(find config)/launch/NodeLaunch/TeleopJoy_Node.launch"> 
+                    <arg name="robot_namespace" value="$(arg robot_namespace)"/>
+            </include>
+            <!-- DEBUG -->
+            <!--
+            <include file="$(find crawler_app)/nodes/TankDriveNode/launch/tankdrive_node.launch"> 
+                    <arg name="robot_namespace" value="$(arg robot_namespace)"/>
+                    <arg name="left_drive_config" value="$(find config)/launch/Drive/left_drive.yaml"/>
+                    <arg name="right_drive_config" value="$(find config)/launch/Drive/right_drive.yaml"/>
+            </include>
+            <include file="$(find config)/launch/NodeLaunch/Diagnostic_Node.launch">
+                <arg name="robot_namespace" value="$(arg robot_namespace)"/>
+            </include>
+            <include file="$(find config)/launch/NodeLaunch/Safety_Node.launch"> 
+                    <arg name="robot_namespace" value="$(arg robot_namespace)"/>
+                    <arg name="device_hostname" value="$(arg device_hostname)"/>
+            </include>  
+            -->
         </group>   <!-- EndGroup for DevComputer2--> 
         <group  if="$(eval device_hostname == 'ComputeModule1')">
             <group ns="$(arg device_hostname)">
