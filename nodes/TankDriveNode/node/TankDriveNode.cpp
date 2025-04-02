@@ -147,9 +147,9 @@ eros::eros_diagnostic::Diagnostic TankDriveNode::finish_initialization() {
                                       eros::eros_diagnostic::Message::NOERROR,
                                       "Running");
     diag = process->update_diagnostic(eros::eros_diagnostic::DiagnosticType::REMOTE_CONTROL,
-                                      eros::Level::Type::WARN,
-                                      eros::eros_diagnostic::Message::INITIALIZING,
-                                      "Remote Control Initializing.");
+                                      eros::Level::Type::INFO,
+                                      eros::eros_diagnostic::Message::NOERROR,
+                                      "Remote Control Initialized.");
     diag = process->update_diagnostic(eros::eros_diagnostic::DiagnosticType::DATA_STORAGE,
                                       eros::Level::Type::INFO,
                                       eros::eros_diagnostic::Message::NOERROR,
