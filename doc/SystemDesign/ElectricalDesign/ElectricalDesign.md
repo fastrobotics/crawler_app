@@ -5,4 +5,4 @@
 ## Power Circut Design
 [Power Design Calculations](PowerDesign.ods)
 
-![](output/PowerCircuits.png)
+![](dia/PowerCircuits.png)

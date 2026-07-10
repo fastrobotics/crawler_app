@@ -3,14 +3,14 @@
 # Software Design
 
 ## Software Deployment
-![](output/SoftwareDeploymentDiagram.png)
+![](dia/SoftwareDeploymentDiagram.png)
 
 ## Remote Control Flow
-![](output/RemoteControlSoftwareDiagram.png)
+![](dia/RemoteControlSoftwareDiagram.png)
 
 ## Safety Comms Flow
-![](output/SafetyCommsDiagram.png)
+![](dia/SafetyCommsDiagram.png)
 
 ## Crawler App Software
-![](../../output/Legend.png)
-![](../../output/CrawlerAppPackageDiagram.png)
+![](../../../Legend.png)
+![](puml/CrawlerAppPackageDiagram.png)

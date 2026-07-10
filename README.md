@@ -1,9 +1,9 @@
 # Crawler App
-__TOC__
+
 - [Crawler App](#crawler-app)
   - [Overview](#overview)
 - [Architecture](#architecture)
-- [Systems](#systems)
+- [System Design](#system-design)
 - [Features](#features)
 - [ToDo](#todo)
   - [This PR](#this-pr)
@@ -14,22 +14,20 @@ __TOC__
 - [Execution](#execution)
 - [Documentation](#documentation)
 
+
 ## Overview
 This repo serves as a template for a typical development app that uses eROS content.
 
 # Architecture
 ![](Legend.png)
 
-# Systems
-| Status | System |
-| ------ | ------ |
-
+# System Design
+[System Design](doc/SystemDesign/SystemDesign.md)
 
 
 # Features
 | Status | Feature |
 | ------ | ------- |
-
 
 
 # ToDo
@@ -66,6 +64,7 @@ git submodule update --remote
 cd <repo>
 ./scripts/setup_ide.sh
 ./scripts/setup_robot.sh
+pre-commit install
 ```
 
 # Build
