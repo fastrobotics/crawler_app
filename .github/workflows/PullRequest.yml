@@ -1,8 +1,0 @@
-name: PullRequest
-
-on:
-  pull_request:
-
-jobs:
-  call_BuildTest:
-    uses: ./.github/workflows/buildtest.yml
