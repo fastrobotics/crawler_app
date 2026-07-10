@@ -1,0 +1,10 @@
+@startuml
+title Crawler App Package Diagram
+
+package crawler_app {
+    class TankDriveNode #LimeGreen
+    class TankDriveNodeProcess #LimeGreen
+    TankDriveNode --> TankDriveNodeProcess
+}
+
+@enduml
