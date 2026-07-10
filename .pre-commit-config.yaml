@@ -1,21 +1,27 @@
-# See https://pre-commit.com for more information
-# See https://pre-commit.com/hooks.html for more hooks
 repos:
--   repo: local
+  - repo: local
     hooks:
-    -   id: check-format
-        name: check-format
-        entry: ./scripts/formatter.sh dry-run
+      - id: pre-commit-code-format
+        name: Code Formatting
+        entry: ./scripts/pre_commit/format_code.sh
         language: script
-    -   id: plantuml
-        name: plantuml
-        entry: ./scripts/dev_tools.sh plantuml
+      
+      - id: pre-commit-generate-doxygen
+        name: Generate Doxygen
+        entry: ./scripts/pre_commit/generate_doxygen.sh
         language: script
-    -   id: dia
-        name: dia
-        entry: ./scripts/dev_tools.sh dia
+
+      - id: pre-commit-plantuml-conversion
+        name: Plantuml Conversion
+        entry: ./scripts/pre_commit/plantuml_conversion.sh
         language: script
-    -   id: doxygen
-        name: doxygen
-        entry: doxygen Doxyfile.in
-        language: system
+
+      - id: pre-commit-dia-conversion
+        name: Dia Conversion
+        entry: ./scripts/pre_commit/dia_conversion.sh
+        language: script
+
+      - id: pre-commit-markdown-check
+        name: Check Markdown
+        entry: ./scripts/pre_commit/check_markdown.sh
+        language: script

@@ -7,13 +7,21 @@ function print_usage()
 {
     echo "Usage Instructions"
     echo -e "<mode>:
-        doxygen: Run Doxygen
-        update: Update
+        doxygen: (NOT SUPPORTED) Run Doxygen
+        update: (NOT SUPPORTED) Update
         code_coverage: Run Code Coverage Scan
-        plantuml: Generate plantuml Images
-        regression: Run Regression Tests
-        dia: Generate Dia Diagrams"
+        plantuml: (NOT SUPPORTED) Generate plantuml Images
+        regression: (NOT SUPPORTED) Run Regression Tests
+        regen: (NOT SUPPORTED) Auto-Code"
     exit 1
+}
+function update {
+    ./scripts/create_from_template.py -t auto_template/class/ -o sample/SampleClass/ -i 0
+    ./scripts/create_from_template.py -t auto_template/node/ -o sample/SampleNode/ -i 0
+}
+function regen_autocode {
+    cookiecutter -f auto_template/node -o auto_code --no-input
+    cookiecutter -f auto_template/class -o auto_code --no-input
 }
 # Code Coverage Scan
 function code_coverage_scan {
@@ -23,8 +31,7 @@ function code_coverage_scan {
     rm -r -f $coverage_dir
     fi
     mkdir $coverage_dir
-    #gcov_cmd="gcovr $bin_dir/ros_hats -x $coverage_dir/coverage.xml -s --html-details -o $coverage_dir/coverage.html  --exclude ^src.*/test_[^/]*.cpp  --exclude ^nodes.*/test_[^/]*.cpp --exclude devel --fail-under-line $LINE_COVERAGE_THRESHOLD --fail-under-branch $BRANCH_COVERAGE_THRESHOLD --exclude-throw-branches --exclude-unreachable-branches"
-    gcov_cmd="gcovr $bin_dir/crawler_app -x $coverage_dir/coverage.xml -s --html-details -o $coverage_dir/coverage.html  --exclude ^src.*/test_[^/]*.cpp  --exclude ^nodes.*/test_[^/]*.cpp --exclude ^nodes.*/exec_[^/]*.cpp --exclude devel"
+    gcov_cmd="gcovr $bin_dir/robot_framework_ros -x $coverage_dir/coverage.xml -s --html-details -o $coverage_dir/coverage.html  --exclude ^src.*/test_[^/]*.cpp  --exclude ^core.*/test_[^/]*.cpp --exclude ^nodes.*/test_[^/]*.cpp --exclude ^auto_code.*/test_[^/]*.cpp --exclude devel --fail-under-line $LINE_COVERAGE_THRESHOLD --fail-under-branch $BRANCH_COVERAGE_THRESHOLD --exclude-throw-branches --exclude-unreachable-branches"
     
     echo $gcov_cmd
     eval "$gcov_cmd"
@@ -46,22 +53,9 @@ function code_coverage_scan {
 }
 function generate_plantuml {
 
-    plantuml -tpng -r -o output "*/**.puml"
+    plantuml -x "auto_template*/**/*.puml" -tpng -r  -o output "*/**.puml"
     status=$?
     exit $status
-}
-function generate_dia {
-    dia_files=($(find . -type f -name '*.dia'))
-    for dia_file in "${dia_files[@]}"; do
-        filename=$(basename -- "$dia_file")
-        filename="${filename%.*}"
-        directory=$(dirname $dia_file)
-        new_directory=$directory"/output"/
-        mkdir -p $new_directory
-        new_png_file=$new_directory$filename".png"
-        dia -e $new_png_file $dia_file -s 1920x
-
-    done
 }
 function generate_doxygen {
     doxygen Doxyfile.in
@@ -115,11 +109,12 @@ if [ $# -eq 0 ]; then
     print_usage
 else
     case $1 in
-        "doxygen") generate_doxygen;;
+        #"doxygen") generate_doxygen;;
+        #"update") update;;
         "code_coverage") code_coverage_scan;;
-        "plantuml") generate_plantuml;;
-        "regression") run_regression;;
-        "dia") generate_dia;;
+        #"plantuml") generate_plantuml;;
+        #"regression") run_regression;;
+        #"regen") regen_autocode;;
     esac
 fi
 exit 0

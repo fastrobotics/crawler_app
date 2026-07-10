@@ -1,8 +1,9 @@
 {
     "recommendations": [
-        "bierner.markdown-mermaid",
+        "yzhang.markdown-all-in-one",
+        "cschlosser.doxdocgen",
         "jebbs.plantuml",
-        "xaver.clang-format",
-        "cschlosser.doxdocgen"
+        "sonarsource.sonarlint-vscode",
+        "ms-python.black-formatter"
     ]
 }
