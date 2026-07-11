@@ -5,3 +5,5 @@
 ## [Software Design](SoftwareDesign/SoftwareDesign.md)
 
 ## [Electrical Design](ElectricalDesign/ElectricalDesign.md)
+
+## [Network Design](NetworkDesign/NetworkDesign.md)

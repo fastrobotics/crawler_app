@@ -12,7 +12,7 @@
 - [Build](#build)
   - [Build and run Unit Tests](#build-and-run-unit-tests)
 - [Execution](#execution)
-- [Documentation](#documentation)
+- [Device Support](#device-support)
 
 
 ## Overview
@@ -42,10 +42,10 @@ This repo serves as a template for a typical development app that uses eROS cont
 
 ## Devices
 
-| Device         | IP            | OS               |
-| -------------- | ------------- | ---------------- |
-| DevComputer2   | 192.168.86.21 | x86 Ubuntu 20.04 |
-| ComputeModule1 | 192.168.86.40 | Raspbian 10      |
+| Device       | IP            | OS               |
+| ------------ | ------------- | ---------------- |
+| DevComputer2 | 192.168.86.21 | x86 Ubuntu 20.04 |
+
 
 # Setup
 
@@ -90,4 +90,5 @@ cd <workspace>
 #roslaunch robot_framework_ros robot.launch
 ```
 
-# Documentation
+# Device Support
+[Device Support](doc/DeviceSupport/DeviceSupport.md)
