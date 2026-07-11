@@ -38,18 +38,19 @@ Use this when you have an Image available, and want to commission a new SD Card.
 sudo fdisk -l
 ```
 2. Determine the appropriate device name.  For example:
+
 | Partition        | Whole Device Name to Use | Umount Command               |
 | ---------------- | ------------------------ | ---------------------------- |
 | `/dev/mmcblk0p1` | `/dev/mmcblk0`           | `sudo umount /dev/mmcblk0p*` |
 | `/dev/mmcblk0p2` | `/dev/mmcblk0`           | `sudo umount /dev/mmcblk0p*` |
 
-3. Unmount the card with the above Umount command given in the previous table.
-4. Copy the Image to the Host with:
+1. Unmount the card with the above Umount command given in the previous table.
+2. Copy the Image to the Host with:
 ```bash
 sudo dd if=<Whole Device Name Above> of=<Image File Location>.img bs=4M status=progress
 ```
 
-5. Shrink the image with Pishrink
+1. Shrink the image with Pishrink
 ```bash
 sudo pishrink <Old Image>.img <Shrinked Image>.img
 ```

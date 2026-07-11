@@ -10,7 +10,8 @@
   - [Devices](#devices)
 - [Setup](#setup)
 - [Build](#build)
-  - [Build and run Unit Tests](#build-and-run-unit-tests)
+  - [Other Devices](#other-devices)
+  - [Host](#host)
 - [Software Sync](#software-sync)
 - [Execution](#execution)
 - [Device Support](#device-support)
@@ -70,13 +71,14 @@ pre-commit install
 ```
 
 # Build
-To build, run the following:
-```bash
-cd <workspace>
-catkin_make
-```
+## Other Devices
+For other Device Build information, see:
+| Device       | Build Instructions                                                       |
+| ------------ | ------------------------------------------------------------------------ |
+| Raspberry Pi | [Build Instructions](doc/DeviceSupport/RaspberriPi/BuildInstructions.md) |
 
-## Build and run Unit Tests
+## Host
+To build on the host, run the following:
 ```bash
 cd <workspace>
 catkin_make
@@ -85,16 +87,21 @@ catkin_make run_tests
 ```
 
 # Software Sync
+To sync software to other devices, run the following:
+
 ```bash
-cd ~/catkin_ws/
-ln -s src/crawler_app/scenarios/dev config
+cd ~/catkin_ws/src/crawler_app
+./scripts/sync/syncSoftware.py -s remote -d ComputeModule1 -c scenarios/dev/
 ```
+
+Note that after this, you will need to build the content on that device.  See [Build-Other Devices](#other-devices).
+
 # Execution
 To launch the main content, run the following (after following [Build](#build))
 ```bash
 cd <workspace>
-#source devel/setup.bash
-#roslaunch robot_framework_ros robot.launch
+source devel/setup.bash
+roslaunch crawler_app SystemLaunch.launch
 ```
 
 # Device Support
