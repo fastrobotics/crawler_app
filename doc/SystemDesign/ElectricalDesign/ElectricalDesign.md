@@ -1,4 +1,4 @@
-![](../SystemDesign.md)
+![](../../SystemDesign/
 
 # Electrical Design
 
