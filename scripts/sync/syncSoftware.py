@@ -25,7 +25,7 @@ def sync_remote(syncconfig_file, device_name):
                 + device_name
                 + ":"
                 + folder.Directory
-                + " --exclude=*.html --exclude=*.js --exclude=*.png --exclude=*.map --exclude=*.md5 | grep '^<' | awk '{ print $2 }'",
+                + " --include='*/' --include='*.msg' --include='package.xml' --include='CMakeLists.txt' --include='*.hpp' --include='*.cpp' --exclude='*' | grep '^<' | awk '{ print $2 }'",
                 shell=True,
             )
     print(CGREEN + "Sync Completed to: " + device_name + CEND)

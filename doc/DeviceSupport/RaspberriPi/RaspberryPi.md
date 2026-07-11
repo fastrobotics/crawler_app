@@ -22,10 +22,10 @@ This guide currently supports the following Raspberry Pi Models:
 | ComputeModule1 | Raspberry Pi 4 Model B Rev 1.5 | 192.168.86.40 | Raspbian 10 | 10000000359457da |
 
 # Guides
-| Guide                                    |
-| ---------------------------------------- |
-| [Image Management](ImageManagement.md)   |
-| [Cross Compilation](CrossCompilation.md) |
+| Guide                                      |
+| ------------------------------------------ |
+| [Image Management](ImageManagement.md)     |
+| [Build Instructions](BuildInstructions.md) |
 
 # Command Reference
 ## What version of Raspberry Pi is it

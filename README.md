@@ -11,6 +11,7 @@
 - [Setup](#setup)
 - [Build](#build)
   - [Build and run Unit Tests](#build-and-run-unit-tests)
+- [Software Sync](#software-sync)
 - [Execution](#execution)
 - [Device Support](#device-support)
 
@@ -56,6 +57,7 @@ Pre-Requisites:
 1. Clone this repo using:
 ```bash
 git clone --recurse-submodules https://github.com/fastrobotics/crawler_app.git
+cd crawler_app
 git submodule update --remote
 ```
 2. Run the following:
@@ -82,6 +84,11 @@ catkin_make tests
 catkin_make run_tests
 ```
 
+# Software Sync
+```bash
+cd ~/catkin_ws/
+ln -s src/crawler_app/scenarios/dev config
+```
 # Execution
 To launch the main content, run the following (after following [Build](#build))
 ```bash
