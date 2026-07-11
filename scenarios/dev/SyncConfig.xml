@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<SyncConfigFile>
+    <Folders>
+        <Folder>
+            <Name>crawler_app</Name>
+            <Type>Source</Type>
+            <Directory>~/catkin_ws/src/crawler_app/</Directory>
+            <Architecture>x86_64</Architecture>
+            <Architecture>armv7l</Architecture>
+            <Architecture>aarch64</Architecture>
+        </Folder>
+        <Folder>
+            <Name>robot_framework_ros</Name>
+            <Type>Source</Type>
+            <Directory>~/catkin_ws/src/robot_framework_ros/</Directory>
+            <Architecture>x86_64</Architecture>
+            <Architecture>armv7l</Architecture>
+            <Architecture>aarch64</Architecture>
+        </Folder>
+        <Folder>
+            <Name>main_config</Name>
+            <Type>Config</Type>
+            <Directory>~/catkin_ws/src/config/</Directory>
+            <Architecture>x86_64</Architecture>
+            <Architecture>armv7l</Architecture>
+            <Architecture>aarch64</Architecture>
+        </Folder>
+    </Folders>
+</SyncConfigFile>
