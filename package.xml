@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>crawlwer_app</name>
+  <name>crawler_app</name>
   <version>0.0.0</version>
   <description>The Robot Framework ROS package</description>
   <maintainer email="davidgitz@gmail.com">David Gitz</maintainer>
