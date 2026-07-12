@@ -9,6 +9,7 @@
   - [OS Information](#os-information)
   - [Serial Number](#serial-number)
   - [Network Scan](#network-scan)
+  - [Get Architecture](#get-architecture)
 
 # Raspberry Pi
 # Raspberry Pi Model Support
@@ -17,9 +18,9 @@ This guide currently supports the following Raspberry Pi Models:
 | ----- |
 
 # Device Information 
-| Hostname       | Model Information              | IP Address    | OS          | Serial Number    |
-| -------------- | ------------------------------ | ------------- | ----------- | ---------------- |
-| ComputeModule1 | Raspberry Pi 4 Model B Rev 1.5 | 192.168.86.40 | Raspbian 10 | 10000000359457da |
+| Hostname       | Model Information              | Architecture | IP Address    | OS          | Serial Number    |
+| -------------- | ------------------------------ | ------------ | ------------- | ----------- | ---------------- |
+| ComputeModule1 | Raspberry Pi 4 Model B Rev 1.5 | `armv7l`     | 192.168.86.40 | Raspbian 10 | 10000000359457da |
 
 # Guides
 | Guide                                      |
@@ -39,3 +40,6 @@ This guide currently supports the following Raspberry Pi Models:
 
 ## Network Scan
 `nmap -sP 192.168.86.0/23`
+
+## Get Architecture
+`uname -m`
