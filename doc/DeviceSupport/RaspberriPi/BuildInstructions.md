@@ -8,5 +8,5 @@
 SSH into the Raspberry Pi and run:
 ```bash
 cd ~/catkin_ws/
-catkin_make -j2 -DCATKIN_ENABLE_TESTING=0
+catkin_make -j2 -DCATKIN_ENABLE_TESTING=0 install --force-cmake
 ```
