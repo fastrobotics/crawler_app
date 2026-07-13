@@ -61,5 +61,7 @@ When the command completes, you may remove the card.
 # Copy Image on Host to Card (after Following [Setup](#setup))
 Use Raspberry Pi Imager to copy the Image to the Card.
 
+When prompted to make OS customization settings, either click "NO", or edit the settings and change the Hostname.
+
 
 
