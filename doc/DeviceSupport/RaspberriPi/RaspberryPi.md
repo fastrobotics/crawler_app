@@ -14,13 +14,16 @@
 # Raspberry Pi
 # Raspberry Pi Model Support
 This guide currently supports the following Raspberry Pi Models:
-| Model |
-| ----- |
+| Model                  |
+| ---------------------- |
+| Raspberry Pi 4 Model B |
 
 # Device Information 
 | Hostname       | Model Information              | Architecture | IP Address    | OS          | Serial Number    |
 | -------------- | ------------------------------ | ------------ | ------------- | ----------- | ---------------- |
 | ComputeModule1 | Raspberry Pi 4 Model B Rev 1.5 | `armv7l`     | 192.168.86.40 | Raspbian 10 | 10000000359457da |
+
+![](artifacts/RaspberryPi4.png)
 
 # Guides
 | Guide                                      |
