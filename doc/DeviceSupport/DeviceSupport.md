@@ -9,3 +9,4 @@
 | Device                                     |
 | ------------------------------------------ |
 | [Raspberry Pi](RaspberriPi/RaspberryPi.md) |
+| [Propeller 2](Propeller2/Propeller2.md)    |
