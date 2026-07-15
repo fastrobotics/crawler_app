@@ -22,5 +22,17 @@
 
  @licend  The above is the entire license notice for the JavaScript code in this file
 */
-var menudata={children:[
-{text:"Main Page",url:"index.html"}]}
+var NAVTREE =
+[
+  [ "crawler_app", "index.html", [
+    [ "FAST Robotics: Crawler App", "index.html", "index" ]
+  ] ]
+];
+
+var NAVTREEINDEX =
+[
+"index.html"
+];
+
+var SYNCONMSG = 'click to disable panel synchronisation';
+var SYNCOFFMSG = 'click to enable panel synchronisation';
