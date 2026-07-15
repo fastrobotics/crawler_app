@@ -1,3 +1,5 @@
+[![Build and Test CI](https://github.com/fastrobotics/crawler_app/actions/workflows/build-test.yml/badge.svg)](https://github.com/fastrobotics/crawler_app/actions/workflows/build-test.yml)
+
 # Crawler App
 
 - [Crawler App](#crawler-app)
@@ -5,13 +7,11 @@
 - [Architecture](#architecture)
 - [System Design](#system-design)
 - [Features](#features)
-- [ToDo](#todo)
-  - [This PR](#this-pr)
-  - [Devices](#devices)
 - [Setup](#setup)
 - [Build](#build)
   - [Other Devices](#other-devices)
-  - [Host](#host)
+  - [Host (Plus Testing)](#host-plus-testing)
+- [Generate Code Coverage (after running Host Build and Unit Tests)](#generate-code-coverage-after-running-host-build-and-unit-tests)
 - [Software Sync](#software-sync)
 - [Execution](#execution)
 - [Device Support](#device-support)
@@ -30,24 +30,6 @@ This repo serves as a template for a typical development app that uses eROS cont
 # Features
 | Status | Feature |
 | ------ | ------- |
-
-
-# ToDo
-| Item |
-| ---- |
-
-
-
-## This PR
-| Item |
-| ---- |
-
-## Devices
-
-| Device       | IP            | OS               |
-| ------------ | ------------- | ---------------- |
-| DevComputer2 | 192.168.86.21 | x86 Ubuntu 20.04 |
-
 
 # Setup
 
@@ -77,13 +59,21 @@ For other Device Build information, see:
 | ------------ | ------------------------------------------------------------------------ |
 | Raspberry Pi | [Build Instructions](doc/DeviceSupport/RaspberriPi/BuildInstructions.md) |
 
-## Host
+## Host (Plus Testing)
 To build on the host, run the following:
 ```bash
 cd <workspace>
 catkin_make
 catkin_make tests
 catkin_make run_tests
+```
+
+# Generate Code Coverage (after running [Host Build and Unit Tests](#host-plus-testing))
+
+```bash
+cd <repo>
+source repo_config
+./dev_tools/scripts/dev_tools.sh code_coverage
 ```
 
 # Software Sync
@@ -97,7 +87,10 @@ cd ~/catkin_ws/src/crawler_app
 Note that after this, you will need to build the content on that device.  See [Build-Other Devices](#other-devices).
 
 # Execution
-To launch the main content, run the following (after following [Build](#build))
+To launch the main content, run the following (after following [Build](#build)).  Do this for every device required:
+- `ComputeModule1
+- `DevComputer2`
+  
 ```bash
 cd <workspace>
 source devel/setup.bash

@@ -1,6 +1,5 @@
 [Raspberry Pi](RaspberryPi.md)
 - [Image Management](#image-management)
-- [ToDo](#todo)
 - [Setup](#setup)
   - [Raspberry Pi Imager](#raspberry-pi-imager)
   - [Pishrink](#pishrink)
@@ -8,10 +7,6 @@
 - [Copy Image on Host to Card (after Following Setup)](#copy-image-on-host-to-card-after-following-setup)
 
 # Image Management
-
-# ToDo
-| ToDo |
-| ---- |
 
 # Setup
 Setup the following tools:
