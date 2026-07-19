@@ -10,7 +10,9 @@
     <group ns="$(arg robot_namespace)">
         <group  if="$(eval device_hostname == 'DevComputer2')">
             <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot" args="/robot/cmd_throttle/linear/x /robot/cmd_throttle/angular/z" />
-            <node name="joy_node" pkg="joy" type="joy_node" output="screen" clear_params="true"></node>
+            <node name="joy_node" pkg="joy" type="joy_node" output="screen" clear_params="true">
+                <param name="autorepeat_rate" value="10.0"/>
+            </node>
         </group>
         <group  if="$(eval device_hostname == 'ComputeModule1')">
             <include file="$(find robot_framework_ros)/Systems/UserInterface/Subsystems/RemoteControl/Nodes/TeleopControl/BasicTeleopControlNode/launch/basicTeleopControl_node.launch">
