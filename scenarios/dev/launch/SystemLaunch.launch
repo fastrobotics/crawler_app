@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
     <arg name="robot_namespace" value="/robot" />
-    <arg name="verbosity_level" default="WARN"/>
+    <arg name="verbosity_level" default="NOTICE"/>
     <arg name="topic_joystick_command" value ="joy"/>
     <arg name="topic_command_throttle" value="cmd_throttle"/> 
     <arg name="topic_left_drive" value ="left_drive"/>
@@ -42,6 +42,10 @@
 
                     <!-- Output Topics -->
                     
+            </include>
+            <include file="$(find robot_framework_ros)/Systems/Safety/Subsystems/ModeManager/Nodes/ArmedStateManager/launch/ArmedStateManager_node.launch">
+                <arg name="robot_namespace" value="$(arg robot_namespace)"/>
+                <arg name="verbosity_level"       value="$(arg verbosity_level)"/>
             </include>
         </group>
     </group>
