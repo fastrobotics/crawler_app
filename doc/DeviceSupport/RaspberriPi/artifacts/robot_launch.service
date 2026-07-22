@@ -1,0 +1,15 @@
+[Unit]
+Description=Start Robot at Boot
+After=network.target
+
+[Service]
+Type=forking
+ExecStart=/home/robot/robot_launch/robot_launch.sh
+WorkingDirectory=/home/robot/
+StandardOutput=inherit
+Restart=on-failure
+StandardError=inherit
+User=robot
+
+[Install]
+WantedBy=multi-user.target
