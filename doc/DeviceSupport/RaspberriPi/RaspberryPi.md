@@ -30,6 +30,7 @@ This guide currently supports the following Raspberry Pi Models:
 | ------------------------------------------ |
 | [Image Management](ImageManagement.md)     |
 | [Build Instructions](BuildInstructions.md) |
+| [Auto Launch](AutoLaunch.md)               |
 
 # Command Reference
 ## What version of Raspberry Pi is it

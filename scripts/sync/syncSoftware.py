@@ -13,9 +13,17 @@ CBLUE = "\33[34m"
 CEND = "\033[0m"
 
 
-def sync_remote(syncconfig_file, device_name):
+def sync_remote(syncconfig_dir, device_name):
     print(CGREEN + "Sync Started to: " + device_name + CEND)
-    folders = ReadSyncConfig(syncconfig_file)
+
+    devices = ReadDeviceList(syncconfig_dir +  "DeviceList.json")
+    my_device = None
+    for device in devices:
+        if device.Name == device_name:
+            my_device = device
+    if my_device == None:
+        return False
+    folders = ReadSyncConfig(syncconfig_dir + "SyncConfig.xml")
     for folder in folders:
         if (folder.Type == "Source") or (folder.Type == "Config"):
             subprocess.call(
@@ -28,6 +36,16 @@ def sync_remote(syncconfig_file, device_name):
                 + " --include='*/' --include='*.launch' --include='*.msg' --include='*.srv' --include='package.xml' --include='CMakeLists.txt' --include='*.hpp' --include='*.cpp' --exclude='*' | grep '^<' | awk '{ print $2 }'",
                 shell=True,
             )
+    robot_launch_dir = syncconfig_dir + "scripts/robot_launch/" + device.DeviceType
+    subprocess.call(
+            "rsync -iart "
+            + robot_launch_dir
+            + "/* robot@"
+            + device_name
+            + ":"
+            + "robot_launch/",
+            shell=True,
+    )
     print(CGREEN + "Sync Completed to: " + device_name + CEND)
 
 
@@ -63,7 +81,7 @@ def main():
         remotes = devices
         for device in remotes:
             print(CGREEN + "Syncing Remote: " + device + CEND)
-            sync_remote(opts.config_dir + "SyncConfig.xml", device)
+            sync_remote(opts.config_dir,device)
     else:
         print(CRED + "Sync Mode: " + opts.syncmode + " Not Supported." + CEND)
 

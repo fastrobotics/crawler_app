@@ -53,8 +53,7 @@ def ReadSyncConfig(file_path):
             newFolder.Architectures=Architectures
             FolderList.append(newFolder)
     return FolderList
-def ReadDeviceList(file_path,Capability):
-    #global devicefile
+def ReadDeviceList(file_path):
     DeviceList = []
     with open(file_path) as f:
          data = json.load(f)
@@ -62,20 +61,16 @@ def ReadDeviceList(file_path,Capability):
          for device_name in data:
             obj = data[device_name]
             try:
-                if(obj['Capability'] == 'ROS'):
-                    try:
-                        newDevice = Device()
-                        newDevice.Name = device_name
-                        newDevice.Capability = 'ROS'
-                        newDevice.CatkinWS = obj['CatkinWS']
-                        newDevice.Architecture = obj['Architecture']
-                        newDevice.Jobs = int(obj['Jobs'])
-                        newDevice.DeviceType = obj['Type']
-                        DeviceList.append(newDevice)
-                    except KeyError as err:
-                        print("Device: " + device_name + " Missing Key! with error: ",err)
-            except KeyError:
-                 a = 1 # Do Nothing
+                newDevice = Device()
+                newDevice.Name = device_name
+                newDevice.Capability = 'ROS'
+                newDevice.CatkinWS = obj['CatkinWS']
+                newDevice.Architecture = obj['Architecture']
+                newDevice.Jobs = int(obj['Jobs'])
+                newDevice.DeviceType = obj['Type']
+                DeviceList.append(newDevice)
+            except KeyError as err:
+                print("Device: " + device_name + " Missing Key! with error: ",err)
     return DeviceList
 
     
