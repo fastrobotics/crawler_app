@@ -3,6 +3,8 @@
   - [Systemctl auto launch service](#systemctl-auto-launch-service)
   - [Auto Launch Script](#auto-launch-script)
 - [Troubleshooting](#troubleshooting)
+  - [An error in the robot boot launch script](#an-error-in-the-robot-boot-launch-script)
+  - [An error in the ROS Launch file](#an-error-in-the-ros-launch-file)
 
 # Auto Launch
 The Raspberry Pi auto launches content at boot.  This is performed by the following:
@@ -22,3 +24,13 @@ An Auto Launch script is specified for a given scenario.  This is dictated by th
 
 # Troubleshooting
 You can inspect the status of this launch by running: `journalctl -u robot_launch.service -f`
+
+Common Problems:
+
+## An error in the robot boot launch script
+A syntax error in the robot launch script will prevent the system from starting the application.  This can be seen by investigating the journal file with: `journalctl -u robot_launch.service -f`
+
+## An error in the ROS Launch file
+A syntax error in the launch file will prevent the system from starting the application.  This can be seen in by looking at the file: `~/var/log/output/app_launch.out`
+
+
