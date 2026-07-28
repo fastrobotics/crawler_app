@@ -6,6 +6,7 @@
   - [Overview](#overview)
 - [Architecture](#architecture)
 - [System Design](#system-design)
+- [Troubleshooting](#troubleshooting)
 - [Features](#features)
 - [Setup](#setup)
 - [Build](#build)
@@ -25,6 +26,9 @@ This repo serves as a template for a typical development app that uses eROS cont
 
 # System Design
 [System Design](doc/SystemDesign/SystemDesign.md)
+
+# Troubleshooting
+[Troubleshooting](doc/Troubleshooting/Troubleshooting.md)
 
 
 # Features

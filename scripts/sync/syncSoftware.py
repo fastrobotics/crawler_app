@@ -33,7 +33,7 @@ def sync_remote(syncconfig_dir, device_name):
                 + device_name
                 + ":"
                 + folder.Directory
-                + " --include='*/' --include='*.launch' --include='*.msg' --include='*.srv' --include='package.xml' --include='CMakeLists.txt' --include='*.hpp' --include='*.cpp' --exclude='*' | grep '^<' | awk '{ print $2 }'",
+                + " --include='*/' --include='*.yaml' --include='*.launch' --include='*.msg' --include='*.srv' --include='package.xml' --include='CMakeLists.txt' --include='*.hpp' --include='*.cpp' --exclude='*' | grep '^<' | awk '{ print $2 }'",
                 shell=True,
             )
     robot_launch_dir = syncconfig_dir + "scripts/robot_launch/" + device.DeviceType
