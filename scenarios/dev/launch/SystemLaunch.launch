@@ -1,12 +1,13 @@
 <?xml version="1.0"?>
 <launch>
     <arg name="robot_namespace" value="/robot" />
-    <arg name="verbosity_level" default="NOTICE"/>
+    <arg name="verbosity_level" default="INFO"/>
     <arg name="topic_joystick_command" value ="joy"/>
     <arg name="topic_command_throttle" value="cmd_throttle"/> 
     <arg name="topic_left_drive" value ="left_drive"/>
     <arg name="topic_right_drive" value="right_drive"/>
     <arg name="device_hostname" default="$(env ROS_HOSTNAME)"/>
+    <arg name="imu1_type" value="RAZOR9DOF"
     <group ns="$(arg robot_namespace)">
         <group  if="$(eval device_hostname == 'DevComputer2')">
             <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot" args="/robot/cmd_throttle/linear/x /robot/cmd_throttle/angular/z" />
@@ -41,6 +42,16 @@
                     <arg name="topic_right_drive" value="$(arg topic_right_drive)"/>
 
                     <!-- Output Topics -->
+                    
+            </include>
+            <include file="$(find robot_framework_ros)/Systems/Pose/Subsystems/InertialSensor/Nodes/IMU/launch/IMU_node.launch">
+                <arg name="node_name" value="my_custom_node_name" />
+                <arg name="robot_namespace" value="$(arg robot_namespace)"/>
+                <arg name="verbosity_level"       value="$(arg verbosity_level)"/>
+                <arg name="imu_type" value="$(arg imu1_type)"/>
+                <!-- Input Topics -->
+
+                <!-- Output Topics -->
                     
             </include>
             <include file="$(find robot_framework_ros)/Systems/Safety/Subsystems/ModeManager/Nodes/ArmedStateManager/launch/ArmedStateManager_node.launch">
