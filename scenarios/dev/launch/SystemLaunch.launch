@@ -14,6 +14,7 @@
             <node name="joy_node" pkg="joy" type="joy_node" output="screen" clear_params="true">
                 <param name="autorepeat_rate" value="10.0"/>
             </node>
+            <node pkg="rosbag" type="record" name="recorder" output="screen" args="-a -o $(env HOME)/Documents/Logs/Bags/" />
         </group>
         <group  if="$(eval device_hostname == 'ComputeModule1')">
             <include file="$(find robot_framework_ros)/Systems/UserInterface/Subsystems/RemoteControl/Nodes/TeleopControl/BasicTeleopControlNode/launch/basicTeleopControl_node.launch">
