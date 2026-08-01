@@ -8,6 +8,7 @@ echo "Starting roscore"
 roscore &
 echo "roscore Started."
 sleep 5 # Leave enough time for ROS to start
+echo "-----HARDWARE MODIFICATIONS-----"
 echo "-----LAUNCHING APPLICATION-----"
 cd /home/robot/catkin_ws/
 source devel/setup.bash
