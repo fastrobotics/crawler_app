@@ -23,6 +23,8 @@
         <group  if="$(eval device_hostname == 'DevComputer2')">
             <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_joy" args="/robot/cmd_throttle/linear/x /robot/cmd_throttle/angular/z" />
             <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_imu1" args="/robot/raw_imu1/linear_acceleration/x /robot/raw_imu1/linear_acceleration/y /robot/raw_imu1/linear_acceleration/z" />
+            <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_imu2" args="/robot/raw_imu2/linear_acceleration/x /robot/raw_imu2/linear_acceleration/y /robot/raw_imu2/linear_acceleration/z" />
+            <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_imu3" args="/robot/raw_imu3/linear_acceleration/x /robot/raw_imu3/linear_acceleration/y /robot/raw_imu3/linear_acceleration/z" />
             <node name="joy_node" pkg="joy" type="joy_node" output="screen" clear_params="true">
                 <param name="autorepeat_rate" value="10.0"/>
             </node>
@@ -60,10 +62,10 @@
             <include file="$(find robot_framework_ros)/Systems/Pose/Subsystems/InertialSensor/Nodes/IMU/launch/IMU_node.launch">
                 <arg name="robot_namespace" value="$(arg robot_namespace)"/>
                 <arg name="verbosity_level"       value="$(arg verbosity_level)"/>
-                <arg name="imu_type" value="$(arg imu2_type)"/>
-                <arg name="imu_device_name" value="$(arg imu2_device_name)"/>
-                <arg name="topic_imu" value="$(arg imu2_topic)"/>
-                <arg name="topic_magnetometer" value="$(arg imu2magnetometer_topic)"/>
+                <arg name="imu_type" value="$(arg imu3_type)"/>
+                <arg name="imu_device_name" value="$(arg imu3_device_name)"/>
+                <arg name="topic_imu" value="$(arg imu3_topic)"/>
+                <arg name="topic_magnetometer" value="$(arg imu3magnetometer_topic)"/>
                 <!-- Input Topics -->
 
                 <!-- Output Topics -->
