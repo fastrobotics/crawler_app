@@ -4,6 +4,8 @@ info:
   full_serial_number: 375D36663435
   manufacturer: STMicroelectronics
   name: IMU_RobotshopTM151_3435
+  type: SYDTM151
+date_generated: '2026-08-05 16:44:16'
 orientation_covariance_matrix:
 - 0.0006797544318990381
 - 0.0001648235976246101

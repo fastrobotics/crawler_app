@@ -4,6 +4,8 @@ info:
   full_serial_number: D3CF0EEF514E325437202020FF13183F
   manufacturer: Sparkfun
   name: IMU_Sparkfun_183F
+  type: RAZOR9DOF
+date_generated: '2026-08-05 16:31:29'
 orientation_covariance_matrix:
 - 0.002843817861296052
 - -0.0001024180710413089

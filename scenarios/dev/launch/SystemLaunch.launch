@@ -7,16 +7,19 @@
     <arg name="topic_left_drive" value ="left_drive"/>
     <arg name="topic_right_drive" value="right_drive"/>
     <arg name="device_hostname" default="$(env ROS_HOSTNAME)"/>
-    <arg name="imu1_type" value="RAZOR9DOF"/>
-    <arg name="imu1_device_name" value="/dev/imu_SparkFun_183F"/>
+
+    <arg name="imu1_device_config_file" value="$(find crawler_app)/scenarios/dev/DeviceConfig/IMU_Sparkfun_183F.yaml"/>  
+    <arg name="imu1_frame" value="/base_link/raw_imu1"/>      
     <arg name="imu1_topic" value="raw_imu1"/>
     <arg name="imu1magnetometer_topic" value="raw_imu1_magnetometer"/>
-    <arg name="imu2_type" value="RAZOR9DOF"/>
-    <arg name="imu2_device_name" value="/dev/imu_SparkFun_2115"/>
+
+    <arg name="imu2_device_config_file" value="$(find crawler_app)/scenarios/dev/DeviceConfig/IMU_Sparkfun_2115.yaml"/>
+    <arg name="imu2_frame" value="/base_link/raw_imu2"/>    
     <arg name="imu2_topic" value="raw_imu2"/>
     <arg name="imu2magnetometer_topic" value="raw_imu2_magnetometer"/>
-    <arg name="imu3_type" value="SYDTM151"/>
-    <arg name="imu3_device_name" value="/dev/imu_STMicroelectronics_3435"/>
+
+    <arg name="imu3_device_config_file" value="$(find crawler_app)/scenarios/dev/DeviceConfig/IMU_RobotshopTM151_3435.yaml"/>
+    <arg name="imu3_frame" value="/base_link/raw_imu3"/>
     <arg name="imu3_topic" value="raw_imu3"/>
     <arg name="imu3magnetometer_topic" value="raw_imu3_magnetometer"/>
     <group ns="$(arg robot_namespace)">
@@ -62,13 +65,15 @@
             <include file="$(find robot_framework_ros)/Systems/Pose/Subsystems/InertialSensor/Nodes/IMU/launch/IMU_node.launch">
                 <arg name="robot_namespace" value="$(arg robot_namespace)"/>
                 <arg name="verbosity_level"       value="$(arg verbosity_level)"/>
-                <arg name="imu_type" value="$(arg imu3_type)"/>
-                <arg name="imu_device_name" value="$(arg imu3_device_name)"/>
-                <arg name="topic_imu" value="$(arg imu3_topic)"/>
-                <arg name="topic_magnetometer" value="$(arg imu3magnetometer_topic)"/>
+                <arg name="imu_frame" value="$(arg imu3_frame)" />
+                <arg name="imu_device_config_file" value="$(arg imu3_device_config_file)" />
+
+               
                 <!-- Input Topics -->
 
                 <!-- Output Topics -->
+                <arg name="topic_imu" value="$(arg imu3_topic)"/>
+                <arg name="topic_magnetometer" value="$(arg imu3magnetometer_topic)"/>
                     
             </include>
             <include file="$(find robot_framework_ros)/Systems/Safety/Subsystems/ModeManager/Nodes/ArmedStateManager/launch/ArmedStateManager_node.launch">
