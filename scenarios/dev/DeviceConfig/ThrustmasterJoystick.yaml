@@ -1,0 +1,12 @@
+config_file_type: Joystick Calibration Configuration
+date_generated: 2026-08-06 17:47:23
+calibration:
+  x_deadband: 0.200000
+  x_min: inf
+  x_max: -inf
+  y_deadband: 0.200000
+  y_min: inf
+  y_max: -inf
+  throttle_deadband: 0.200000
+  throttle_min: inf
+  throttle_max: -inf
