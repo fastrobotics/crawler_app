@@ -8,35 +8,45 @@
     <arg name="topic_right_drive" value="right_drive"/>
     <arg name="device_hostname" default="$(env ROS_HOSTNAME)"/>
 
+    <arg name="joy_calibration_config_file" value="$(find crawler_app)/scenarios/dev/DeviceConfig/ThrustmasterJoystick.yaml"/>
+
     <arg name="imu1_device_config_file" value="$(find crawler_app)/scenarios/dev/DeviceConfig/IMU_Sparkfun_183F.yaml"/>  
-    <arg name="imu1_frame" value="/base_link/raw_imu1"/>      
+    <arg name="imu1_frame" value="base_link/raw_imu1"/>      
     <arg name="imu1_topic" value="raw_imu1"/>
     <arg name="imu1magnetometer_topic" value="raw_imu1_magnetometer"/>
 
     <arg name="imu2_device_config_file" value="$(find crawler_app)/scenarios/dev/DeviceConfig/IMU_Sparkfun_2115.yaml"/>
-    <arg name="imu2_frame" value="/base_link/raw_imu2"/>    
+    <arg name="imu2_frame" value="base_link/raw_imu2"/>    
     <arg name="imu2_topic" value="raw_imu2"/>
     <arg name="imu2magnetometer_topic" value="raw_imu2_magnetometer"/>
 
     <arg name="imu3_device_config_file" value="$(find crawler_app)/scenarios/dev/DeviceConfig/IMU_RobotshopTM151_3435.yaml"/>
-    <arg name="imu3_frame" value="/base_link/raw_imu3"/>
+    <arg name="imu3_frame" value="base_link/raw_imu3"/>
     <arg name="imu3_topic" value="raw_imu3"/>
     <arg name="imu3magnetometer_topic" value="raw_imu3_magnetometer"/>
     <group ns="$(arg robot_namespace)">
         <group  if="$(eval device_hostname == 'DevComputer2')">
+            <node type="rviz" name="rviz" pkg="rviz" args="-d $(find crawler_app)/scenarios/dev/launch/rviz/rviz_config.rviz" />
+             <!--
             <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_joy" args="/robot/cmd_throttle/linear/x /robot/cmd_throttle/angular/z" />
+           
             <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_imu1" args="/robot/raw_imu1/linear_acceleration/x /robot/raw_imu1/linear_acceleration/y /robot/raw_imu1/linear_acceleration/z" />
             <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_imu2" args="/robot/raw_imu2/linear_acceleration/x /robot/raw_imu2/linear_acceleration/y /robot/raw_imu2/linear_acceleration/z" />
+            
             <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_imu3" args="/robot/raw_imu3/linear_acceleration/x /robot/raw_imu3/linear_acceleration/y /robot/raw_imu3/linear_acceleration/z" />
+            -->
             <node name="joy_node" pkg="joy" type="joy_node" output="screen" clear_params="true">
                 <param name="autorepeat_rate" value="10.0"/>
             </node>
+            <!--
             <node pkg="rosbag" type="record" name="recorder" output="screen" args="-a -o $(env HOME)/Documents/Logs/Bags/" />
+            -->
         </group>
         <group  if="$(eval device_hostname == 'ComputeModule1')">
             <include file="$(find robot_framework_ros)/Systems/UserInterface/Subsystems/RemoteControl/Nodes/TeleopControl/BasicTeleopControlNode/launch/basicTeleopControl_node.launch">
                 <arg name="robot_namespace" value="$(arg robot_namespace)"/>
                 <arg name="verbosity_level"       value="$(arg verbosity_level)"/>
+                <arg name="joystick_calibration_config_file" value="$(arg joy_calibration_config_file)"/>
                 <!-- Input Topics -->
                 <arg name="topic_joystick_command" value ="$(arg topic_joystick_command)"/>
                 <!-- Output Topics -->
