@@ -24,9 +24,23 @@
     <arg name="imu3_frame" value="base_link/raw_imu3"/>
     <arg name="imu3_topic" value="raw_imu3"/>
     <arg name="imu3magnetometer_topic" value="raw_imu3_magnetometer"/>
+    
     <group ns="$(arg robot_namespace)">
+
         <group  if="$(eval device_hostname == 'DevComputer2')">
             <node type="rviz" name="rviz" pkg="rviz" args="-d $(find crawler_app)/scenarios/dev/launch/rviz/rviz_config.rviz" />
+            <node pkg="imu_transformer" type="imu_transformer_node" name="imu3_transformer" output="screen"> <!-- Have to run this on x86.  Create Follow-up-->
+                <!-- Remap to your actual source IMU topic -->
+                <remap from="imu_in/data" to="$(arg imu3_topic)"/>
+                <remap from="imu_in/mag" to="$(arg imu3magnetometer_topic)"/>
+                
+                <!-- Remap to your desired output IMU topic -->
+                <remap from="imu_out/data" to="imu3"/>
+                <remap from="imu_out/mag" to="imu3_magnetometer"/>
+                
+                <!-- Target frame you want the data to be expressed in -->
+                <param name="target_frame" value="base_link"/>
+            </node>
              <!--
             <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_joy" args="/robot/cmd_throttle/linear/x /robot/cmd_throttle/angular/z" />
            
@@ -43,6 +57,8 @@
             -->
         </group>
         <group  if="$(eval device_hostname == 'ComputeModule1')">
+            <!-- Frames -->
+            <node pkg="tf2_ros" type="static_transform_publisher" name="link1_broadcaster" args="0 0 0 0 3.14159 0 base_link $(arg imu3_frame)" />
             <include file="$(find robot_framework_ros)/Systems/UserInterface/Subsystems/RemoteControl/Nodes/TeleopControl/BasicTeleopControlNode/launch/basicTeleopControl_node.launch">
                 <arg name="robot_namespace" value="$(arg robot_namespace)"/>
                 <arg name="verbosity_level"       value="$(arg verbosity_level)"/>
