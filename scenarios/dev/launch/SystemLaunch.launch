@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
     <arg name="robot_namespace" value="/robot" />
-    <arg name="verbosity_level" default="NOTICE"/>
+    <arg name="verbosity_level" default="ERROR"/>
     <arg name="topic_joystick_command" value ="joy"/>
     <arg name="topic_command_throttle" value="cmd_throttle"/> 
     <arg name="topic_left_drive" value ="left_drive"/>
@@ -12,41 +12,45 @@
 
     <arg name="imu1_device_config_file" value="$(find crawler_app)/scenarios/dev/DeviceConfig/IMU_Sparkfun_183F.yaml"/>  
     <arg name="imu1_frame" value="base_link/raw_imu1"/>      
-    <arg name="imu1_topic" value="raw_imu1"/>
-    <arg name="imu1magnetometer_topic" value="raw_imu1_magnetometer"/>
+    <arg name="raw_imu1_topic" value="raw_imu1"/>
+    <arg name="imu1_topic" value="imu1"/>
+    <arg name="raw_imu1magnetometer_topic" value="raw_imu1_magnetometer"/>
 
     <arg name="imu2_device_config_file" value="$(find crawler_app)/scenarios/dev/DeviceConfig/IMU_Sparkfun_2115.yaml"/>
-    <arg name="imu2_frame" value="base_link/raw_imu2"/>    
-    <arg name="imu2_topic" value="raw_imu2"/>
-    <arg name="imu2magnetometer_topic" value="raw_imu2_magnetometer"/>
+    <arg name="raw_imu2_frame" value="base_link/raw_imu2"/>    
+    <arg name="raw_imu2_topic" value="raw_imu2"/>
+    <arg name="imu2_topic" value="imu2"/>
+    <arg name="raw_imu2magnetometer_topic" value="raw_imu2_magnetometer"/>
 
     <arg name="imu3_device_config_file" value="$(find crawler_app)/scenarios/dev/DeviceConfig/IMU_RobotshopTM151_3435.yaml"/>
     <arg name="imu3_frame" value="base_link/raw_imu3"/>
-    <arg name="imu3_topic" value="raw_imu3"/>
-    <arg name="imu3magnetometer_topic" value="raw_imu3_magnetometer"/>
+    <arg name="raw_imu3_topic" value="raw_imu3"/>
+    <arg name="imu3_topic" value="imu3"/>
+    <arg name="raw_imu3magnetometer_topic" value="raw_imu3_magnetometer"/>
+
+    <arg name="machine_inertial_topic" value="imu"/>
+    <arg name="local_pose_topic" value="local_pose"/>
     
     <group ns="$(arg robot_namespace)">
 
         <group  if="$(eval device_hostname == 'DevComputer2')">
-            <!--
             <node type="rviz" name="rviz" pkg="rviz" args="-d $(find crawler_app)/scenarios/dev/launch/rviz/rviz_config.rviz" />
-            -->
             <node pkg="imu_transformer" type="imu_transformer_node" name="imu3_transformer" output="screen"> <!-- Have to run this on x86.  Resolve during AB#1810 -->
                 <!-- Remap to your actual source IMU topic -->
-                <remap from="imu_in/data" to="$(arg imu3_topic)"/>
-                <remap from="imu_in/mag" to="$(arg imu3magnetometer_topic)"/>
+                <remap from="imu_in/data" to="$(arg raw_imu3_topic)"/>
+                <remap from="imu_in/mag" to="$(arg raw_imu3magnetometer_topic)"/>
                 
                 <!-- Remap to your desired output IMU topic -->
-                <remap from="imu_out/data" to="imu3"/>
+                <remap from="imu_out/data" to="$(arg imu3_topic)"/>
                 <remap from="imu_out/mag" to="imu3_magnetometer"/>
                 
                 <!-- Target frame you want the data to be expressed in -->
                 <param name="target_frame" value="base_link"/>
             </node>
-             
+              <!--
             <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_rotate" args="/robot/imu3/angular_velocity/z /robot/cmd_throttle/angular/z" />
             <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_fwd" args="/robot/cmd_throttle/linear/x" />
-           <!--
+          
             <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_imu1" args="/robot/raw_imu1/linear_acceleration/x /robot/raw_imu1/linear_acceleration/y /robot/raw_imu1/linear_acceleration/z" />
             <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_imu2" args="/robot/raw_imu2/linear_acceleration/x /robot/raw_imu2/linear_acceleration/y /robot/raw_imu2/linear_acceleration/z" />
             
@@ -101,10 +105,27 @@
                 <!-- Input Topics -->
 
                 <!-- Output Topics -->
-                <arg name="topic_imu" value="$(arg imu3_topic)"/>
-                <arg name="topic_magnetometer" value="$(arg imu3magnetometer_topic)"/>
+                <arg name="topic_imu" value="$(arg raw_imu3_topic)"/>
+                <arg name="topic_magnetometer" value="$(arg raw_imu3magnetometer_topic)"/>
                     
             </include>
+            <include file="$(find robot_framework_ros)/Systems/Pose/Subsystems/LocalPose/Nodes/InertialSensorFuser/launch/InertialSensorFuser_node.launch">
+                <arg name="robot_namespace" value="$(arg robot_namespace)"/>
+                <arg name="verbosity_level" value="$(arg verbosity_level)"/>
+                <!-- Input Topics -->
+                <arg name="topic_imu1_input" value="$(arg imu3_topic)"/>
+                <!-- Output Topics -->
+                <arg name="topic_machine_inertial_output" value="$(arg machine_inertial_topic)"/>
+            </include> 
+            <include file="$(find robot_framework_ros)/Systems/Pose/Subsystems/LocalPose/Nodes/LocalPoseFuser/launch/LocalPoseFuser_node.launch">
+                <arg name="robot_namespace" value="$(arg robot_namespace)"/>
+                <arg name="verbosity_level" value="$(arg verbosity_level)"/>
+                <!-- Input Topics -->
+                <arg name="topic_machine_inertial_input" value="$(arg machine_inertial_topic)"/>
+                <!-- Output Topics -->
+                <arg name="topic_local_pose_output" value="$(arg local_pose_topic)"/>
+            </include>
+
             <include file="$(find robot_framework_ros)/Systems/Safety/Subsystems/ModeManager/Nodes/ArmedStateManager/launch/ArmedStateManager_node.launch">
                 <arg name="robot_namespace" value="$(arg robot_namespace)"/>
                 <arg name="verbosity_level"       value="$(arg verbosity_level)"/>
