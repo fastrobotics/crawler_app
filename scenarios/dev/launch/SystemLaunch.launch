@@ -118,9 +118,10 @@
             </include>
              <include file="$(find robot_framework_ros)/Systems/Navigation/Subsystems/NavigationExecutor/Nodes/TrajectoryController/launch/TrajectoryController_node.launch">
                     <arg name="robot_namespace" value="$(arg robot_namespace)"/>
+
                     <arg name="verbosity_level"       value="$(arg verbosity_level)"/>
                     <!-- Input Topics -->
-                    <arg name="topic_pose_input" value="pose" />
+                    <arg name="topic_pose_input" value="$(arg local_pose_topic)" />
                     <arg name="topic_command_throttle_input" value="$(arg topic_command_desired_throttle)"/> 
 
                     <!-- Output Topics -->
