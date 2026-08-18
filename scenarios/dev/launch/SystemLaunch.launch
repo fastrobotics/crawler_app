@@ -31,6 +31,7 @@
 
     <arg name="machine_inertial_topic" value="imu"/>
     <arg name="local_pose_topic" value="local_pose"/>
+    <arg name="local_pose_angular_accel_topic" value="local_pose_angular_accel"/>
     
     <group ns="$(arg robot_namespace)">
 
@@ -57,6 +58,7 @@
             
             <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_imu3" args="/robot/raw_imu3/linear_acceleration/x /robot/raw_imu3/linear_acceleration/y /robot/raw_imu3/linear_acceleration/z" />
             -->
+             <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_angular_accel" args="/robot/local_pose_angular_accel/accel/accel/angular/x /robot/local_pose_angular_accel/accel/accel/angular/y /robot/local_pose_angular_accel/accel/accel/angular/z" />
             <node name="joy_node" pkg="joy" type="joy_node" output="screen" clear_params="true">
                 <param name="autorepeat_rate" value="10.0"/>
             </node>
@@ -115,6 +117,8 @@
                 <arg name="topic_machine_inertial_input" value="$(arg machine_inertial_topic)"/>
                 <!-- Output Topics -->
                 <arg name="topic_local_pose_output" value="$(arg local_pose_topic)"/>
+                <arg name="topic_local_pose_angular_accel_output" value="$(arg local_pose_angular_accel_topic)"/>
+                
             </include>
              <include file="$(find robot_framework_ros)/Systems/Navigation/Subsystems/NavigationExecutor/Nodes/TrajectoryController/launch/TrajectoryController_node.launch">
                     <arg name="robot_namespace" value="$(arg robot_namespace)"/>
@@ -131,7 +135,7 @@
                     <arg name="robot_namespace" value="$(arg robot_namespace)"/>
                     <arg name="verbosity_level"       value="$(arg verbosity_level)"/>
                     <!-- Input Topics -->
-                    <arg name="topic_command_throttle" value="$(arg topic_command_throttle)"/> 
+                    <arg name="topic_command_throttle" value="$(arg topic_command_desired_throttle)"/> <!-- Change this to topic_command_throttle during AB#1815 -->
 
                     <!-- Output Topics -->
                     <arg name="topic_left_drive" value="$(arg topic_left_drive)"/>
