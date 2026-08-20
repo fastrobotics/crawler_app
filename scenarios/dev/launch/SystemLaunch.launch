@@ -33,6 +33,7 @@
     <arg name="local_pose_topic" value="local_pose"/>
     <arg name="local_pose_angular_accel_topic" value="local_pose_angular_accel"/>
     
+    <include file="$(find robot_framework_ros)/Systems/launch/config_loader.launch" ns="$(arg robot_namespace)/config/"/>
     <group ns="$(arg robot_namespace)">
 
         <group  if="$(eval device_hostname == 'DevComputer2')">
