@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="robot_namespace" value="/robot" />
+    <arg name="verbosity_level" default="INFO"/>
+    <arg name="topic_joystick_command" value ="joy"/>
+    <arg name="topic_command_throttle" value="cmd_throttle"/> 
+    <arg name="topic_left_drive" value ="left_drive"/>
+    <arg name="topic_right_drive" value="right_drive"/>
+    
+    <include file="$(find robot_framework_ros)/Systems/launch/config_loader.launch" ns="$(arg robot_namespace)/config/"/>
+    <group ns="$(arg robot_namespace)">
+        <node name="pid_tuner_gui" 
+            pkg="rqt_gui" 
+            type="rqt_gui" 
+            args="-s robot_framework_ros/PIDTunerPlugin" 
+            output="screen" />
+        <node pkg="topic_tools" type="transform" name="transformer_sensor_input"
+            args="local_pose/twist/twist/angular/z pidtuner_sensor std_msgs/Float32 'm' --wait-for-start"
+            output="screen"/>
+        <node pkg="topic_tools" type="relay_field" name="transformer_command_output"
+            args="$(arg robot_namespace)/pidtuner_command $(arg robot_namespace)/cmd_desired_throttle geometry_msgs/Twist 'angular: {z: m.data}' --wait-for-start"
+            output="screen"/>
+            
+            
+    </group>
+</launch>
