@@ -34,6 +34,8 @@
     <arg name="local_pose_angular_accel_topic" value="local_pose_angular_accel"/>
     
     <include file="$(find robot_framework_ros)/Systems/launch/config_loader.launch" ns="$(arg robot_namespace)/config/"/>
+    <!-- Overwrite with application configuration -->
+    <rosparam command="load" file="$(find crawler_app)/scenarios/dev/config/SystemConfig.yaml" ns="$(arg robot_namespace)/config/" /> 
     <group ns="$(arg robot_namespace)">
 
         <group  if="$(eval device_hostname == 'DevComputer2')">
@@ -145,7 +147,7 @@
 
             <include file="$(find robot_framework_ros)/Systems/Safety/Subsystems/ModeManager/Nodes/ArmedStateManager/launch/ArmedStateManager_node.launch">
                 <arg name="robot_namespace" value="$(arg robot_namespace)"/>
-                <arg name="verbosity_level"       value="$(arg verbosity_level)"/>
+                <arg name="verbosity_level"       value="$(arg robot_namespace)"/>
             </include>
         </group>
     </group>
