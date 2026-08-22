@@ -18,7 +18,7 @@
             args="local_pose/twist/twist/angular/z pidtuner_sensor std_msgs/Float32 'm' --wait-for-start"
             output="screen"/>
         <node pkg="topic_tools" type="relay_field" name="transformer_command_output"
-            args="$(arg robot_namespace)/pidtuner_command $(arg robot_namespace)/cmd_desired_throttle geometry_msgs/Twist 'angular: {z: m.data}' --wait-for-start"
+            args="$(arg robot_namespace)/pidtuner_command $(arg robot_namespace)/$(arg topic_command_throttle) geometry_msgs/Twist 'angular: {z: m.data}' --wait-for-start"
             output="screen"/>
             
             

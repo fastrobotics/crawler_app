@@ -125,27 +125,31 @@
                 <arg name="topic_local_pose_angular_accel_output" value="$(arg local_pose_angular_accel_topic)"/>
                 
             </include>
-             <include file="$(find robot_framework_ros)/Systems/Navigation/Subsystems/NavigationExecutor/Nodes/TrajectoryController/launch/TrajectoryController_node.launch">
-                    <arg name="robot_namespace" value="$(arg robot_namespace)"/>
+            <group if="false">
+                <include file="$(find robot_framework_ros)/Systems/Navigation/Subsystems/NavigationExecutor/Nodes/TrajectoryController/launch/TrajectoryController_node.launch">
+                        <arg name="robot_namespace" value="$(arg robot_namespace)"/>
 
-                    <arg name="verbosity_level"       value="$(arg verbosity_level)"/>
-                    <!-- Input Topics -->
-                    <arg name="topic_pose_input" value="$(arg local_pose_topic)" />
-                    <arg name="topic_command_throttle_input" value="$(arg topic_command_desired_throttle)"/> 
+                        <arg name="verbosity_level"       value="$(arg verbosity_level)"/>
+                        <!-- Input Topics -->
+                        <arg name="topic_pose_input" value="$(arg local_pose_topic)" />
+                        <arg name="topic_command_throttle_input" value="$(arg topic_command_desired_throttle)"/> 
 
-                    <!-- Output Topics -->
-                    <arg name="topic_command_robot_output" value="$(arg topic_command_throttle)" />
-            </include>
+                        <!-- Output Topics -->
+                        <arg name="topic_command_robot_output" value="$(arg topic_command_throttle)" />
+                </include>
+            </group>
+            
             <include file="$(find robot_framework_ros)/Systems/Navigation/Subsystems/NavigationExecutor/Nodes/DriveExecutor/TankDriveExecutorNode/launch/tankDriveExecutor_node.launch">
                     <arg name="robot_namespace" value="$(arg robot_namespace)"/>
                     <arg name="verbosity_level"       value="$(arg verbosity_level)"/>
                     <!-- Input Topics -->
-                    <arg name="topic_command_throttle" value="$(arg topic_command_desired_throttle)"/> <!-- Change this to topic_command_throttle during AB#1815 -->
+                    <arg name="topic_command_throttle" value="$(arg topic_command_throttle)"/> <!-- Change this to topic_command_throttle during AB#1815 -->
 
                     <!-- Output Topics -->
                     <arg name="topic_left_drive" value="$(arg topic_left_drive)"/>
                     <arg name="topic_right_drive" value="$(arg topic_right_drive)"/>
             </include>
+
 
             <include file="$(find robot_framework_ros)/Systems/Safety/Subsystems/ModeManager/Nodes/ArmedStateManager/launch/ArmedStateManager_node.launch">
                 <arg name="robot_namespace" value="$(arg robot_namespace)"/>
