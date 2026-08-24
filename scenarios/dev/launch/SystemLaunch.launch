@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <launch>
+    <arg name="special_mode" value="trajectory_controller_tuning"/> <!-- normal, trajectory_controller_tuning-->
     <arg name="enable_visualization" value="false"/>
     <arg name="robot_namespace" value="/robot" />
     <arg name="verbosity_level" default="ERROR"/>
@@ -65,7 +66,6 @@
             
             <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_imu3" args="/robot/raw_imu3/linear_acceleration/x /robot/raw_imu3/linear_acceleration/y /robot/raw_imu3/linear_acceleration/z" />
             -->
-            
             <node name="joy_node" pkg="joy" type="joy_node" output="screen" clear_params="true">
                 <param name="autorepeat_rate" value="10.0"/>
             </node>
@@ -127,7 +127,7 @@
                 <arg name="topic_local_pose_angular_accel_output" value="$(arg local_pose_angular_accel_topic)"/>
                 
             </include>
-            <group if="false">
+            <group if="$(eval special_mode == 'normal')">
                 <include file="$(find robot_framework_ros)/Systems/Navigation/Subsystems/NavigationExecutor/Nodes/TrajectoryController/launch/TrajectoryController_node.launch">
                         <arg name="robot_namespace" value="$(arg robot_namespace)"/>
 
