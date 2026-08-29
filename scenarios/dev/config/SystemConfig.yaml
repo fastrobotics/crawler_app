@@ -1,10 +1,21 @@
 safety: # System
-  mode_manager: #Subsystem
+  mode_manager: # Subsystem
     armed_state_manager: #Generic Process
       nodeArmedStateManager: # Node Configuration
         nodes_to_monitor: # Nodes to Monitor for Ready to Arm State
         - nodeBasicTeleopControl
         - nodeServoHat
         - nodeTankDriveExecutor
+        - nodeIMU
         #- nodeTrajectoryController
         - nodeLocalPoseFuser
+navigation: # System
+  navigation_executor: # Subsystem
+    trajectory_controller: #Generic Process
+      nodeTrajectoryController: # Node Configuration
+        max_output: 100.0
+        min_output: -100.0
+        K_P: 1.0
+        K_I: 0.0
+        K_D: 0.0
+        sensor_scale: 1.0
