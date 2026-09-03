@@ -4,7 +4,7 @@ safety: # System
       nodeArmedStateManager: # Node Configuration
         nodes_to_monitor: # Nodes to Monitor for Ready to Arm State
         - nodeBasicTeleopControl
-        - nodeServoHat
+        #- nodeServoHat
         - nodeTankDriveExecutor
         - nodeIMU
         #- nodeTrajectoryController
