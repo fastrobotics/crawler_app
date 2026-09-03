@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 <launch>
-    <arg name="special_mode" value="trajectory_controller_tuning"/> <!-- normal, trajectory_controller_tuning-->
-    <arg name="enable_visualization" value="false"/>
+    <arg name="special_mode" value="normal"/> <!-- normal, trajectory_controller_tuning-->
+    <arg name="enable_visualization" value="true"/>
+    <arg name="enable_logging" value="false"/>
     <arg name="robot_namespace" value="/robot" />
     <arg name="verbosity_level" default="ERROR"/>
     <arg name="topic_joystick_command" value ="joy"/>
@@ -43,7 +44,9 @@
         <group  if="$(eval device_hostname == 'DevComputer2')">
              <group if="$(arg enable_visualization)">
                 <node type="rviz" name="rviz" pkg="rviz" args="-d $(find crawler_app)/scenarios/dev/launch/rviz/rviz_config.rviz" />
-                 <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_angular_accel" args="/robot/local_pose_angular_accel/accel/accel/angular/x /robot/local_pose_angular_accel/accel/accel/angular/y /robot/local_pose_angular_accel/accel/accel/angular/z" />
+                <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_angular_accel" args="/robot/local_pose_angular_accel/accel/accel/angular/x /robot/local_pose_angular_accel/accel/accel/angular/y /robot/local_pose_angular_accel/accel/accel/angular/z" />
+                <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_rotate" args="/robot/imu3/angular_velocity/z /robot/cmd_throttle/angular/z" />
+                <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_fwd" args="/robot/cmd_throttle/linear/x" />
             </group>
             <node pkg="imu_transformer" type="imu_transformer_node" name="imu3_transformer" output="screen"> <!-- Have to run this on x86.  Resolve during AB#1810 -->
                 <!-- Remap to your actual source IMU topic -->
@@ -57,19 +60,12 @@
                 <!-- Target frame you want the data to be expressed in -->
                 <param name="target_frame" value="base_link"/>
             </node>
-              <!--
-            <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_rotate" args="/robot/imu3/angular_velocity/z /robot/cmd_throttle/angular/z" />
-            <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_fwd" args="/robot/cmd_throttle/linear/x" />
-          
-            <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_imu1" args="/robot/raw_imu1/linear_acceleration/x /robot/raw_imu1/linear_acceleration/y /robot/raw_imu1/linear_acceleration/z" />
-            <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_imu2" args="/robot/raw_imu2/linear_acceleration/x /robot/raw_imu2/linear_acceleration/y /robot/raw_imu2/linear_acceleration/z" />
-            
-            <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_imu3" args="/robot/raw_imu3/linear_acceleration/x /robot/raw_imu3/linear_acceleration/y /robot/raw_imu3/linear_acceleration/z" />
-            -->
             <node name="joy_node" pkg="joy" type="joy_node" output="screen" clear_params="true">
                 <param name="autorepeat_rate" value="10.0"/>
             </node>
-            <node pkg="rosbag" type="record" name="recorder" output="screen" args="-a -o $(env HOME)/Documents/Logs/Bags/" />
+            <group if="$(arg enable_logging)">
+                <node pkg="rosbag" type="record" name="recorder" output="screen" args="-a -o $(env HOME)/Documents/Logs/Bags/" />
+            </group>
         </group>
         <group  if="$(eval device_hostname == 'ComputeModule1')">
             <!-- Frames -->

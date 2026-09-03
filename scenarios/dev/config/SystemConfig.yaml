@@ -15,7 +15,7 @@ navigation: # System
       nodeTrajectoryController: # Node Configuration
         max_output: 100.0
         min_output: -100.0
-        K_P: 1.0
-        K_I: 0.0
+        K_P: 1.396
+        K_I: 0.059700
         K_D: 0.0
-        sensor_scale: 1.0
+        sensor_scale: 21.386719
