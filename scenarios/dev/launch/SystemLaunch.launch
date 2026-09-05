@@ -1,15 +1,26 @@
 <?xml version="1.0"?>
 <launch>
-    <arg name="robot_namespace" value="/robot" />
+    <!-- User space typical config -->
     <arg name="verbosity_level" default="ERROR"/>
+    <arg name="enable_visualization" value="true"/>
+    <arg name="enable_logging" value="true"/>
+
+    <!-- Robot config -->
+    <arg name="robot_namespace" value="/robot" />
+    <arg name="device_hostname" default="$(env ROS_HOSTNAME)"/>
+    <arg name="joy_calibration_config_file" value="$(find crawler_app)/scenarios/dev/DeviceConfig/ThrustmasterJoystick.yaml"/>
+    
+    <!-- Topics -->
+
+    
     <arg name="topic_joystick_command" value ="joy"/>
     <arg name="topic_command_desired_throttle" value="cmd_desired_throttle"/> 
     <arg name="topic_command_throttle" value="cmd_throttle"/> 
     <arg name="topic_left_drive" value ="left_drive"/>
     <arg name="topic_right_drive" value="right_drive"/>
-    <arg name="device_hostname" default="$(env ROS_HOSTNAME)"/>
+    
 
-    <arg name="joy_calibration_config_file" value="$(find crawler_app)/scenarios/dev/DeviceConfig/ThrustmasterJoystick.yaml"/>
+   
 
     <arg name="imu1_device_config_file" value="$(find crawler_app)/scenarios/dev/DeviceConfig/IMU_Sparkfun_183F.yaml"/>  
     <arg name="imu1_frame" value="base_link/raw_imu1"/>      
@@ -37,119 +48,182 @@
     <!-- Overwrite with application configuration -->
     <rosparam command="load" file="$(find crawler_app)/scenarios/dev/config/SystemConfig.yaml" ns="$(arg robot_namespace)/config/" /> 
     <group ns="$(arg robot_namespace)">
-
-        <group  if="$(eval device_hostname == 'DevComputer2')">
-            <node type="rviz" name="rviz" pkg="rviz" args="-d $(find crawler_app)/scenarios/dev/launch/rviz/rviz_config.rviz" />
-            <node pkg="imu_transformer" type="imu_transformer_node" name="imu3_transformer" output="screen"> <!-- Have to run this on x86.  Resolve during AB#1810 -->
-                <!-- Remap to your actual source IMU topic -->
-                <remap from="imu_in/data" to="$(arg raw_imu3_topic)"/>
-                <remap from="imu_in/mag" to="$(arg raw_imu3magnetometer_topic)"/>
-                
-                <!-- Remap to your desired output IMU topic -->
-                <remap from="imu_out/data" to="$(arg imu3_topic)"/>
-                <remap from="imu_out/mag" to="imu3_magnetometer"/>
-                
-                <!-- Target frame you want the data to be expressed in -->
-                <param name="target_frame" value="base_link"/>
-            </node>
-              <!--
-            <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_rotate" args="/robot/imu3/angular_velocity/z /robot/cmd_throttle/angular/z" />
-            <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_fwd" args="/robot/cmd_throttle/linear/x" />
-          
-            <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_imu1" args="/robot/raw_imu1/linear_acceleration/x /robot/raw_imu1/linear_acceleration/y /robot/raw_imu1/linear_acceleration/z" />
-            <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_imu2" args="/robot/raw_imu2/linear_acceleration/x /robot/raw_imu2/linear_acceleration/y /robot/raw_imu2/linear_acceleration/z" />
-            
-            <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_imu3" args="/robot/raw_imu3/linear_acceleration/x /robot/raw_imu3/linear_acceleration/y /robot/raw_imu3/linear_acceleration/z" />
-            -->
-             <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_angular_accel" args="/robot/local_pose_angular_accel/accel/accel/angular/x /robot/local_pose_angular_accel/accel/accel/angular/y /robot/local_pose_angular_accel/accel/accel/angular/z" />
-            <node name="joy_node" pkg="joy" type="joy_node" output="screen" clear_params="true">
-                <param name="autorepeat_rate" value="10.0"/>
-            </node>
-            <node pkg="rosbag" type="record" name="recorder" output="screen" args="-a -o $(env HOME)/Documents/Logs/Bags/" />
+        <group if="$(arg enable_visualization)">
+            <group  if="$(eval device_hostname == 'DevComputer2')">
+                <node type="rviz" name="rviz" pkg="rviz" args="-d $(find crawler_app)/scenarios/dev/launch/rviz/rviz_config.rviz" />
+                <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_rotate" args="/robot/imu3/angular_velocity/z /robot/cmd_throttle/angular/z" />
+                <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_fwd" args="/robot/cmd_throttle/linear/x" />
+                <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_imu1" args="/robot/raw_imu1/linear_acceleration/x /robot/raw_imu1/linear_acceleration/y /robot/raw_imu1/linear_acceleration/z" />
+                <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_imu2" args="/robot/raw_imu2/linear_acceleration/x /robot/raw_imu2/linear_acceleration/y /robot/raw_imu2/linear_acceleration/z" />
+                <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_imu3" args="/robot/raw_imu3/linear_acceleration/x /robot/raw_imu3/linear_acceleration/y /robot/raw_imu3/linear_acceleration/z" />
+                <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot_angular_accel" args="/robot/local_pose_angular_accel/accel/accel/angular/x /robot/local_pose_angular_accel/accel/accel/angular/y /robot/local_pose_angular_accel/accel/accel/angular/z" />
+            </group>
         </group>
-        <group  if="$(eval device_hostname == 'ComputeModule1')">
-            <!-- Frames -->
-            <node pkg="tf2_ros" type="static_transform_publisher" name="link1_broadcaster" args="0.0635 0.00635 0 0 3.14159 0 base_link $(arg imu3_frame)" />
-            <include file="$(find robot_framework_ros)/Systems/UserInterface/Subsystems/RemoteControl/Nodes/TeleopControl/BasicTeleopControlNode/launch/basicTeleopControl_node.launch">
-                <arg name="robot_namespace" value="$(arg robot_namespace)"/>
-                <arg name="verbosity_level"       value="$(arg verbosity_level)"/>
-                <arg name="joystick_calibration_config_file" value="$(arg joy_calibration_config_file)"/>
-                <!-- Input Topics -->
-                <arg name="topic_joystick_command" value ="$(arg topic_joystick_command)"/>
-                <!-- Output Topics -->
-                <arg name="topic_command_throttle" value="$(arg topic_command_desired_throttle)"/> 
-            </include>
-            <include file="$(find robot_framework_ros)/Systems/BaseMachine/Subsystems/BaseMachine/Nodes/HatNodes/ServoHat/launch/ServoHat_node.launch">
+        <group ns="awareness">
+        </group>
+        <group ns="base_machine">
+            <group ns="base_machine">
+                <group ns="hat_driver">
+                    <group  if="$(eval device_hostname == 'ComputeModule1')">
+                        <include file="$(find robot_framework_ros)/Systems/BaseMachine/Subsystems/BaseMachine/Nodes/HatNodes/ServoHat/launch/ServoHat_node.launch">
+                            <arg name="robot_namespace" value="$(arg robot_namespace)"/>
+                            <arg name="verbosity_level"       value="$(arg verbosity_level)"/>
+                            <!-- Input Topics -->
+                            <arg name="topic_left_drive" value="$(arg topic_left_drive)"/>
+                            <arg name="topic_right_drive" value="$(arg topic_right_drive)"/>
+
+                            <!-- Output Topics -->
+                        
+                        </include>
+                    </group>
+                </group>
+            </group>
+        </group>
+        <group ns="comms">
+        </group>
+        <group ns="data_storage">
+            <group if="$(arg enable_logging)">
+                <group  if="$(eval device_hostname == 'DevComputer2')">
+                    <node pkg="rosbag" type="record" name="recorder" output="screen" args="-a -o $(env HOME)/Documents/Logs/Bags/" />
+                </group>
+            </group>
+        </group>
+        <group ns="goal_planning">
+        </group>
+        <group ns="implement_control">
+        </group>
+        <group ns="pose">
+            <group  if="$(eval device_hostname == 'ComputeModule1')">
+                <!-- Frames -->
+                <node pkg="tf2_ros" type="static_transform_publisher" name="link1_broadcaster" args="0.0635 0.00635 0 0 3.14159 0 base_link $(arg imu3_frame)" />
+                <include file="$(find robot_framework_ros)/Systems/UserInterface/Subsystems/RemoteControl/Nodes/TeleopControl/BasicTeleopControlNode/launch/basicTeleopControl_node.launch">
                     <arg name="robot_namespace" value="$(arg robot_namespace)"/>
                     <arg name="verbosity_level"       value="$(arg verbosity_level)"/>
+                    <arg name="joystick_calibration_config_file" value="$(arg joy_calibration_config_file)"/>
                     <!-- Input Topics -->
-                    <arg name="topic_left_drive" value="$(arg topic_left_drive)"/>
-                    <arg name="topic_right_drive" value="$(arg topic_right_drive)"/>
-
+                    <arg name="topic_joystick_command" value ="$(arg topic_joystick_command)"/>
                     <!-- Output Topics -->
+                    <arg name="topic_command_throttle" value="$(arg topic_command_desired_throttle)"/> 
+                </include>
+            </group>
+            <group ns="inertial_sensor">
+                <group ns="imu">
+                    <group  if="$(eval device_hostname == 'ComputeModule1')">
+                        <include file="$(find robot_framework_ros)/Systems/Pose/Subsystems/InertialSensor/Nodes/IMU/launch/IMU_node.launch">
+                            <arg name="robot_namespace" value="$(arg robot_namespace)"/>
+                            <arg name="verbosity_level"       value="$(arg verbosity_level)"/>
+                            <arg name="imu_frame" value="$(arg imu3_frame)" />
+                            <arg name="imu_device_config_file" value="$(arg imu3_device_config_file)" />
+                            <!-- Input Topics -->
+                            <!-- Output Topics -->
+                            <arg name="topic_imu" value="$(arg raw_imu3_topic)"/>
+                            <arg name="topic_magnetometer" value="$(arg raw_imu3magnetometer_topic)"/> 
+                        </include>
+                    </group>
+                </group>
+            </group>
+            <group ns="local_pose">
+                <group ns="inertial_sensor_fuser">
+                    <group  if="$(eval device_hostname == 'ComputeModule1')">
+                        <include file="$(find robot_framework_ros)/Systems/Pose/Subsystems/LocalPose/Nodes/InertialSensorFuser/launch/InertialSensorFuser_node.launch">
+                            <arg name="robot_namespace" value="$(arg robot_namespace)"/>
+                            <arg name="verbosity_level" value="$(arg verbosity_level)"/>
+                            <!-- Input Topics -->
+                            <arg name="topic_imu1_input" value="$(arg imu3_topic)"/>
+                            <!-- Output Topics -->
+                            <arg name="topic_machine_inertial_output" value="$(arg machine_inertial_topic)"/>
+                        </include> 
+                    </group>
+                </group>
+                <group ns="local_pose_fuser">
+                    <group  if="$(eval device_hostname == 'ComputeModule1')">
+                        <include file="$(find robot_framework_ros)/Systems/Pose/Subsystems/LocalPose/Nodes/LocalPoseFuser/launch/LocalPoseFuser_node.launch">
+                            <arg name="robot_namespace" value="$(arg robot_namespace)"/>
+                            <arg name="verbosity_level" value="$(arg verbosity_level)"/>
+                            <!-- Input Topics -->
+                            <arg name="topic_machine_inertial_input" value="$(arg machine_inertial_topic)"/>
+                            <!-- Output Topics -->
+                            <arg name="topic_local_pose_output" value="$(arg local_pose_topic)"/>
+                            <arg name="topic_local_pose_angular_accel_output" value="$(arg local_pose_angular_accel_topic)"/>
+                            
+                        </include>
+                    </group>
+                </group>
+            </group>
+            <group  if="$(eval device_hostname == 'DevComputer2')">
+                <node pkg="imu_transformer" type="imu_transformer_node" name="imu3_transformer" output="screen"> <!-- Have to run this on x86.  Resolve during AB#1810 -->
+                    <!-- Remap to your actual source IMU topic -->
+                    <remap from="imu_in/data" to="$(arg raw_imu3_topic)"/>
+                    <remap from="imu_in/mag" to="$(arg raw_imu3magnetometer_topic)"/>
                     
-            </include>
-            <include file="$(find robot_framework_ros)/Systems/Pose/Subsystems/InertialSensor/Nodes/IMU/launch/IMU_node.launch">
-                <arg name="robot_namespace" value="$(arg robot_namespace)"/>
-                <arg name="verbosity_level"       value="$(arg verbosity_level)"/>
-                <arg name="imu_frame" value="$(arg imu3_frame)" />
-                <arg name="imu_device_config_file" value="$(arg imu3_device_config_file)" />
-
-               
-                <!-- Input Topics -->
-
-                <!-- Output Topics -->
-                <arg name="topic_imu" value="$(arg raw_imu3_topic)"/>
-                <arg name="topic_magnetometer" value="$(arg raw_imu3magnetometer_topic)"/>
+                    <!-- Remap to your desired output IMU topic -->
+                    <remap from="imu_out/data" to="$(arg imu3_topic)"/>
+                    <remap from="imu_out/mag" to="imu3_magnetometer"/>
                     
-            </include>
-            <include file="$(find robot_framework_ros)/Systems/Pose/Subsystems/LocalPose/Nodes/InertialSensorFuser/launch/InertialSensorFuser_node.launch">
-                <arg name="robot_namespace" value="$(arg robot_namespace)"/>
-                <arg name="verbosity_level" value="$(arg verbosity_level)"/>
-                <!-- Input Topics -->
-                <arg name="topic_imu1_input" value="$(arg imu3_topic)"/>
-                <!-- Output Topics -->
-                <arg name="topic_machine_inertial_output" value="$(arg machine_inertial_topic)"/>
-            </include> 
-            <include file="$(find robot_framework_ros)/Systems/Pose/Subsystems/LocalPose/Nodes/LocalPoseFuser/launch/LocalPoseFuser_node.launch">
-                <arg name="robot_namespace" value="$(arg robot_namespace)"/>
-                <arg name="verbosity_level" value="$(arg verbosity_level)"/>
-                <!-- Input Topics -->
-                <arg name="topic_machine_inertial_input" value="$(arg machine_inertial_topic)"/>
-                <!-- Output Topics -->
-                <arg name="topic_local_pose_output" value="$(arg local_pose_topic)"/>
-                <arg name="topic_local_pose_angular_accel_output" value="$(arg local_pose_angular_accel_topic)"/>
-                
-            </include>
-             <include file="$(find robot_framework_ros)/Systems/Navigation/Subsystems/NavigationExecutor/Nodes/TrajectoryController/launch/TrajectoryController_node.launch">
-                    <arg name="robot_namespace" value="$(arg robot_namespace)"/>
+                    <!-- Target frame you want the data to be expressed in -->
+                    <param name="target_frame" value="base_link"/>
+                </node>
+            </group>
+        </group>
+        <group ns="navigation">
+            <group ns="navigation_executor">
+                <group ns="drive_executor">
+                    <group  if="$(eval device_hostname == 'ComputeModule1')">
+                        <include file="$(find robot_framework_ros)/Systems/Navigation/Subsystems/NavigationExecutor/Nodes/DriveExecutor/TankDriveExecutorNode/launch/tankDriveExecutor_node.launch">
+                                <arg name="robot_namespace" value="$(arg robot_namespace)"/>
+                                <arg name="verbosity_level"       value="$(arg verbosity_level)"/>
+                                <!-- Input Topics -->
+                                <arg name="topic_command_throttle" value="$(arg topic_command_desired_throttle)"/> <!-- Change this to topic_command_throttle during AB#1815 -->
 
-                    <arg name="verbosity_level"       value="$(arg verbosity_level)"/>
-                    <!-- Input Topics -->
-                    <arg name="topic_pose_input" value="$(arg local_pose_topic)" />
-                    <arg name="topic_command_throttle_input" value="$(arg topic_command_desired_throttle)"/> 
+                                <!-- Output Topics -->
+                                <arg name="topic_left_drive" value="$(arg topic_left_drive)"/>
+                                <arg name="topic_right_drive" value="$(arg topic_right_drive)"/>
+                        </include>
+                    </group>
+                </group>
+                <group ns="trajectory_controller"> 
+                    <group  if="$(eval device_hostname == 'ComputeModule1')">
+                        <include file="$(find robot_framework_ros)/Systems/Navigation/Subsystems/NavigationExecutor/Nodes/TrajectoryController/launch/TrajectoryController_node.launch">
+                            <arg name="robot_namespace" value="$(arg robot_namespace)"/>
 
-                    <!-- Output Topics -->
-                    <arg name="topic_command_robot_output" value="$(arg topic_command_throttle)" />
-            </include>
-            <include file="$(find robot_framework_ros)/Systems/Navigation/Subsystems/NavigationExecutor/Nodes/DriveExecutor/TankDriveExecutorNode/launch/tankDriveExecutor_node.launch">
-                    <arg name="robot_namespace" value="$(arg robot_namespace)"/>
-                    <arg name="verbosity_level"       value="$(arg verbosity_level)"/>
-                    <!-- Input Topics -->
-                    <arg name="topic_command_throttle" value="$(arg topic_command_desired_throttle)"/> <!-- Change this to topic_command_throttle during AB#1815 -->
+                            <arg name="verbosity_level"       value="$(arg verbosity_level)"/>
+                            <!-- Input Topics -->
+                            <arg name="topic_pose_input" value="$(arg local_pose_topic)" />
+                            <arg name="topic_command_throttle_input" value="$(arg topic_command_desired_throttle)"/> 
 
-                    <!-- Output Topics -->
-                    <arg name="topic_left_drive" value="$(arg topic_left_drive)"/>
-                    <arg name="topic_right_drive" value="$(arg topic_right_drive)"/>
-            </include>
-
-            <include file="$(find robot_framework_ros)/Systems/Safety/Subsystems/ModeManager/Nodes/ArmedStateManager/launch/ArmedStateManager_node.launch">
-                <arg name="robot_namespace" value="$(arg robot_namespace)"/>
-                <arg name="verbosity_level"       value="$(arg verbosity_level)"/>
-            </include>
+                            <!-- Output Topics -->
+                            <arg name="topic_command_robot_output" value="$(arg topic_command_throttle)" />
+                        </include>
+                    </group>
+                </group>
+            </group>
+        </group>
+        <group ns="perception">
+        </group>
+        <group ns="safety">
+            <group ns="mode_manager">
+                <group ns="armed_state_manager">
+                    <group  if="$(eval device_hostname == 'ComputeModule1')">
+                        <include file="$(find robot_framework_ros)/Systems/Safety/Subsystems/ModeManager/Nodes/ArmedStateManager/launch/ArmedStateManager_node.launch">
+                            <arg name="robot_namespace" value="$(arg robot_namespace)"/>
+                            <arg name="verbosity_level"       value="$(arg verbosity_level)"/>
+                        </include>
+                    </group>
+                </group>
+            </group>
+        </group>
+        <group ns="terrain">
+        </group>
+        <group ns="user_interface">
+            <group ns="remote_control">
+                <group ns="teleop_control">
+                    <group  if="$(eval device_hostname == 'DevComputer2')">
+                        <node name="joy_node" pkg="joy" type="joy_node" output="screen" clear_params="true">
+                            <param name="autorepeat_rate" value="10.0"/>
+                        </node>
+                    </group>
+                </group>
+            </group>
         </group>
     </group>
-    
-        
-   
 </launch>
