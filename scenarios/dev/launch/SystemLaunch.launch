@@ -3,7 +3,7 @@
     <!-- User space typical config -->
     <arg name="verbosity_level" default="ERROR"/>
     <arg name="enable_visualization" value="true"/>
-    <arg name="enable_logging" value="true"/>
+    <arg name="enable_logging" value="false"/>
 
     <!-- Robot config -->
     <arg name="robot_namespace" value="/robot" />
@@ -95,7 +95,8 @@
         <group ns="pose">
             <group  if="$(eval device_hostname == 'ComputeModule1')">
                 <!-- Frames -->
-                <node pkg="tf2_ros" type="static_transform_publisher" name="link1_broadcaster" args="0.0635 0.00635 0 0 3.14159 0 base_link $(arg imu3_frame)" />
+                <node pkg="tf2_ros" type="static_transform_publisher" name="link_frontcam_broadcaster" args="0 0 0 0 0 0 base_link front_camera_link" />
+                <node pkg="tf2_ros" type="static_transform_publisher" name="link_imu3_broadcaster" args="0.0635 0.00635 0 0 3.14159 0 base_link $(arg imu3_frame)" />
                 <include file="$(find robot_framework_ros)/Systems/UserInterface/Subsystems/RemoteControl/Nodes/TeleopControl/BasicTeleopControlNode/launch/basicTeleopControl_node.launch">
                     <arg name="robot_namespace" value="$(arg robot_namespace)"/>
                     <arg name="verbosity_level"       value="$(arg verbosity_level)"/>
@@ -199,6 +200,16 @@
             </group>
         </group>
         <group ns="perception">
+            <group ns="perception_sensors">
+                <group ns="depth_camera">
+                    <group  if="$(eval device_hostname == 'DevComputer2')">
+                        <include file="$(find openni2_launch)/launch/openni2.launch">
+                            <arg name="camera" value="front_camera"/>
+                            <arg name="depth_registration" value="true"/>
+                        </include>
+                    </group>
+                </group>
+            </group>
         </group>
         <group ns="safety">
             <group ns="mode_manager">
