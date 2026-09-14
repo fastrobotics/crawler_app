@@ -84,15 +84,15 @@ source repo_config
 To sync software to other devices, run the following:
 
 ```bash
-cd ~/catkin_ws/src/crawler_app
-./scripts/sync/syncSoftware.py -s remote -d ControlModule1 -c scenarios/dev/
+cd ~/ros2_ws/src/crawler_app
+./scripts/sync/syncSoftware.py -s remote -d ControlModule1 -c scenarios/dev2/
 ```
 
 Note that after this, you will need to build the content on that device.  See [Build-Other Devices](#other-devices).
 
 # Execution
 To launch the main content, run the following (after following [Build](#build)).  Do this for every device required:
-- `ControlModule1
+- `ControlModule1`
 - `DevComputer2`
   
 ```bash
