@@ -9,13 +9,13 @@ CGREEN = '\33[32m'
 CBLUE = '\33[34m'
 CEND = '\033[0m'
 class Device():
-    def __init__(self,Name='',Parent='',ID=0,PartNumber='',Capability='',CatkinWS = '',Architecture='',Jobs=0):
+    def __init__(self,Name='',Parent='',ID=0,PartNumber='',Capability='',ROSWorkspace = '',Architecture='',Jobs=0):
         self.Name = Name
         self.Parent = Parent
         self.ID = ID
         self.PartNumber = PartNumber
         self.Capability = Capability
-        self.CatkinWS = CatkinWS
+        self.ROSWorkspace = ROSWorkspace
         self.Architecture = Architecture
         self.Jobs = Jobs
 class Folder(object):
@@ -64,7 +64,7 @@ def ReadDeviceList(file_path):
                 newDevice = Device()
                 newDevice.Name = device_name
                 newDevice.Capability = 'ROS'
-                newDevice.CatkinWS = obj['CatkinWS']
+                newDevice.ROSWorkspace = obj['ROSWorkspace']
                 newDevice.Architecture = obj['Architecture']
                 newDevice.Jobs = int(obj['Jobs'])
                 newDevice.DeviceType = obj['Type']

@@ -10,7 +10,7 @@
 | --------------------------------------------------------------------------- | ------------- |
 | [Network Switch (Netgear GS305)](#device-network-switch)                    | N/A           |
 | [Onboard WiFi Router](#device-wifi-router)                                  | 192.168.86.50 |
-| [`ComputeModule1`](../ComputeDesign/ComputeDesign.md#device-raspberry-pi-4) | 192.168.86.40 |
+| [`ControlModule1`](../ComputeDesign/ComputeDesign.md#device-raspberry-pi-4) | 192.168.86.40 |
 
 ## Device: Network Switch
 Model: Netgear GS305

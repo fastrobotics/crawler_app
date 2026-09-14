@@ -18,7 +18,7 @@
 
 # Devices
 ## Device: Raspberry Pi 4
-Hostname: `ComputeModule1`
+Hostname: `ControlModule1`
 Support: [Device Support-Raspberry Pi](../../DeviceSupport/RaspberriPi/RaspberryPi.md) 
 
 ## Device: Servo Hat

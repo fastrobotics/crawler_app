@@ -1,0 +1,15 @@
+#!/bin/bash
+echo "-----BOOTING ROBOT-----"
+sleep 10
+echo "Cleaning App"
+rm -rf /home/robot/var/log/output/*
+mkdir -p /home/robot/var/log/output/
+touch /home/robot/var/log/output/app_launch.out
+sleep 5 # Leave enough time for ROS to start
+echo "-----HARDWARE MODIFICATIONS-----"
+echo "-----LAUNCHING APPLICATION-----"
+cd /home/robot/ros2_ws/
+source /opt/ros/jazzy/setup.bash
+source install/setup.bash
+ros2 launch robot_framework_ros2 example_node.launch.xml > /dev/null 2> /home/robot/var/log/output/app_launch.out &
+echo "-----APP LAUNCH FINISHED-----"

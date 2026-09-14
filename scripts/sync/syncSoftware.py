@@ -70,10 +70,10 @@ def main():
         "-c",
         "--config_dir",
         dest="config_dir",
-        default=os.environ["HOME"] + "/catkin_ws/src/config/",
+        default=os.environ["HOME"] + "/ros2_ws/src/config/",
         help="Location where Config dir should be found. default="
         + os.environ["HOME"]
-        + "/catkin_ws/src/config",
+        + "/ros2_ws/src/config",
     )
     (opts, args) = parser.parse_args()
     if opts.syncmode == "remote":
