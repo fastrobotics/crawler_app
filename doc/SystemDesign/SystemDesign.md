@@ -26,7 +26,7 @@ The following list all applicable devices that are installed on the Crawler.
 | --------- | --------------------------- | ---------------------------------------------------------------------------------------- |
 | Comms     | Network Switch              | [Netgear GS305](NetworkDesign/NetworkDesign.md#device-network-switch)                    |
 | Comms     | Wireless Router             | [TP-Link  TL-WR902A](NetworkDesign/NetworkDesign.md#device-wifi-router)                  |
-| Compute   | Raspberry Pi Model 4        | [ComputeModule1](ComputeDesign/ComputeDesign.md#device-raspberry-pi-4)                   |
+| Compute   | Raspberry Pi Model 4        | [ControlModule1](ComputeDesign/ComputeDesign.md#device-raspberry-pi-4)                   |
 | Actuators | Motor Speed Controller (2x) | [Victor SPX](ElectricalDesign/ElectricalDesign.md#device-victor-spx-motor-controller)    |
 | Actuators | Drive Motor (2x)            | [Planetary Gear Motor](ElectricalDesign/ElectricalDesign.md#device-planetary-gear-motor) |
 | Actuators | Servo Hat                   | [Adafrit Servo/PWM Pi Hat](ComputeDesign/ComputeDesign.md#device-servo-hat)              |

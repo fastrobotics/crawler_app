@@ -7,6 +7,8 @@
 ## Build
 SSH into the Raspberry Pi and run:
 ```bash
-cd ~/catkin_ws/
-catkin_make -j2 -DCATKIN_ENABLE_TESTING=0 install --force-cmake
+cd ~/ros2_ws/
+colcon build --symlink-install --executor sequential --event-handlers console_direct+ --cmake-clean-cache
+# Or Use the alias:
+colcon_build
 ```
