@@ -1,0 +1,3 @@
+frames:
+  imu_frame1: imu_frame1
+  body_frame: base_link

@@ -1,0 +1,31 @@
+folders:
+  crawler_config:
+    folder_name: "robot_config/robot_bringup"
+    target: "ros2_ws/src/crawler_app/robot_config/robot_bringup"
+    supported_architectures:
+      - "x86_64"
+      - "aarmv7l"
+      - "aarch64"
+  robot_framework_ros2:
+    folder_name: "robot_framework_ros2"
+    target: "ros2_ws/src/robot_framework_ros2"
+    supported_architecture: 
+      - "x86_64"
+      - "aarmv7l"
+      - "aarch64"
+files:
+  crawler_app_root:
+    file_names:
+      - "CMakeLists.txt"
+      - "package.xml"
+    target: "ros2_ws/src/crawler_app"
+    supported_architectures:
+      - "x86_64"
+      - "aarmv7l"
+      - "aarch64"
+  boot_launch:
+    file_names:
+      - "robot_config/robot_bringup/boot/{host}/robot_launch.sh"
+    target: "robot_launch"
+    supported_architectures:
+      - "aarch64"

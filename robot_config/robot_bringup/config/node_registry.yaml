@@ -1,0 +1,26 @@
+infrastructure_configs:
+  frames:
+    package: "crawler_app"
+    relative_path: "config/infrastructure/tf_frames.yaml"
+  topics:
+    package: "crawler_app"
+    relative_path: "config/infrastructure/topics.yaml"
+
+node_registry:
+  example_node1:
+    package: "robot_framework_ros2"
+    executable: "example_node"
+
+  example_node2:
+    package: "robot_framework_ros2"
+    executable: "example_node"
+
+  imu_node1:
+    package: "robot_framework_ros2"
+    launch_file: "Systems/Pose/Subsystems/InertialSensor/Nodes/IMUNode/launch/imu_node.launch.xml"
+    parameters:
+      node_namespace: "pose/inertial_sensor/imu"
+      target_frame: "imu_frame1"
+      imu_topic: "imu1"
+      accel_topic: "accel1"
+      magnetic_topic: "magnetic1"

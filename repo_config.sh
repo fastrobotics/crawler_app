@@ -2,7 +2,7 @@
 # REPO Config
 ## General Config
 export REPO_NAME="crawler_app"
-export BUILD_TOOL="catkin" #cmake, ...
+export BUILD_TOOL="colcon" #cmake, ...
 
 ## Coverage Config
 export LINE_COVERAGE_THRESHOLD=50
