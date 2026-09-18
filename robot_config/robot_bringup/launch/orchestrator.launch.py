@@ -1,4 +1,5 @@
 import os
+import re
 import socket
 from copy import deepcopy
 from ament_index_python.packages import get_package_share_directory
@@ -15,12 +16,6 @@ def load_yaml_file(config_path, description):
 
     with open(config_path, 'r') as config_file:
         return yaml.safe_load(config_file) or {}
-
-
-def normalize_robot_namespace(namespace):
-    """Return a ROS namespace with exactly one leading slash, or root '/'."""
-    normalized_namespace = str(namespace or '').strip().strip('/')
-    return f'/{normalized_namespace}' if normalized_namespace else '/'
 
 
 def merge_named_lists(base_values, overlay_values):
@@ -123,11 +118,30 @@ def resolve_named_parameters(parameters, named_maps):
     return resolved_parameters
 
 
+def to_namespace_component(value):
+    snake_case = re.sub(r'(?<!^)(?=[A-Z])', '_', value).lower()
+    return snake_case.replace('-', '_')
+
+
+def namespace_from_launch_file(launch_file):
+    path_parts = launch_file.replace('\\', '/').split('/')
+    try:
+        systems_index = path_parts.index('Systems')
+        system = path_parts[systems_index + 1]
+        subsystems_index = path_parts.index('Subsystems', systems_index + 2)
+        subsystem = path_parts[subsystems_index + 1]
+    except (ValueError, IndexError):
+        return None
+
+    if subsystem != 'LocalPose':
+        return None
+
+    return '/'.join((to_namespace_component(system), to_namespace_component(subsystem)))
+
+
 def build_launch_actions(context):
     bringup_dir = get_package_share_directory('crawler_app')
     scenario_name = context.perform_substitution(LaunchConfiguration('scenario'))
-    robot_namespace = normalize_robot_namespace(
-        context.perform_substitution(LaunchConfiguration('robot_namespace')))
     scenario_directory = None
 
     if scenario_name and (os.path.sep in scenario_name or scenario_name in {'.', '..'}):
@@ -201,20 +215,26 @@ def build_launch_actions(context):
         deployment_node_params = node_item.get('parameters', {})
         node_params = {**registry_node_params, **deployment_node_params}
         resolved_node_params = resolve_named_parameters(node_params, named_maps)
-        node_package = node_def.get('package')
         
         # --- PATH A: THE REGISTRY DIRECTS THE ITEM TO AN XML LAUNCH BLUEPRINT ---
         if 'launch_file' in node_def:
+            node_package = node_def.get('package')
             if not node_package:
                 print(f"[ORCHESTRATOR ERROR]: Launch node '{target_name}' has no package")
                 continue
             node_package_dir = get_package_share_directory(node_package)
             xml_absolute_path = os.path.join(node_package_dir, node_def['launch_file'])
             
-            # Pass all dictionary parameters down directly as string launch arguments
+            # Pass all dictionary parameters down directly as string launch arguments.
+            # Do not override an XML default node_namespace with an empty value; that would
+            # collapse the config namespace to "" and make parameters resolve as ".imu_node.*".
             launch_args = {str(k): str(v) for k, v in resolved_node_params.items()}
-            launch_args.setdefault('robot_namespace', robot_namespace)
-            
+            launch_args['node_name'] = target_name
+            derived_namespace = namespace_from_launch_file(node_def['launch_file'])
+            if derived_namespace:
+                launch_args['node_namespace'] = derived_namespace
+            launch_args.setdefault('robot_namespace', LaunchConfiguration('robot_namespace'))
+
             included_xml_launch = IncludeLaunchDescription(
                 XMLLaunchDescriptionSource(xml_absolute_path),
                 launch_arguments=launch_args.items()
@@ -229,7 +249,7 @@ def build_launch_actions(context):
                 package=node_def['package'],
                 executable=node_def['executable'],
                 name=target_name,                         
-                namespace=robot_namespace,
+                namespace=LaunchConfiguration('robot_namespace'),
                 parameters=node_parameters, 
                 output='screen',      # Stream stdout directly to the console window
                 emulate_tty=True      # Prevent line buffering so logs show in real time
