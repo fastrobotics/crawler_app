@@ -1,0 +1,11 @@
+device_list:
+  DevComputer2:
+    parent: ""
+    type: "ComputeModule"
+    architecture: "x86_64"
+    ros_workspace: "~/ros2_ws"
+  ControlModule1:
+    parent: ""
+    type: "ControlModule"
+    architecture: "aarch64"
+    ros_workspace: "~/ros2_ws"

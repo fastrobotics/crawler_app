@@ -1,3 +1,4 @@
+# This file needs to be manually copied over.  Follow AutoLaunch.md
 [Unit]
 Description=Start Robot at Boot
 After=network.target

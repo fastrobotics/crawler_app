@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "-----BOOTING ROBOT-----"
+echo "-----BOOTING ROBOT ON ControlModule1 -----"
 sleep 10
 echo "Cleaning App"
 rm -rf /home/robot/var/log/output/*
@@ -11,5 +11,5 @@ echo "-----LAUNCHING APPLICATION-----"
 cd /home/robot/ros2_ws/
 source /opt/ros/jazzy/setup.bash
 source install/setup.bash
-ros2 launch robot_framework_ros2 example_node.launch.xml > /dev/null 2> /home/robot/var/log/output/app_launch.out &
+ros2 launch crawler_app orchestrator.launch.py robot_namespace:=robot > /dev/null 2> /home/robot/var/log/output/app_launch.out &
 echo "-----APP LAUNCH FINISHED-----"

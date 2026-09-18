@@ -62,14 +62,11 @@ For other Device Build information, see:
 | Device       | Build Instructions                                                       |
 | ------------ | ------------------------------------------------------------------------ |
 | Raspberry Pi | [Build Instructions](doc/DeviceSupport/RaspberriPi/BuildInstructions.md) |
-
+E
 ## Host (Plus Testing)
 To build on the host, run the following:
 ```bash
 cd <workspace>
-catkin_make
-catkin_make tests
-catkin_make run_tests
 ```
 
 # Generate Code Coverage (after running [Host Build and Unit Tests](#host-plus-testing))
@@ -85,7 +82,7 @@ To sync software to other devices, run the following:
 
 ```bash
 cd ~/ros2_ws/src/crawler_app
-./scripts/sync/syncSoftware.py -s remote -d ControlModule1 -c scenarios/dev2/
+./scripts/sync/syncSoftware.py -s remote -d ControlModule1 -c robot_config
 ```
 
 Note that after this, you will need to build the content on that device.  See [Build-Other Devices](#other-devices).
@@ -97,8 +94,8 @@ To launch the main content, run the following (after following [Build](#build)).
   
 ```bash
 cd <workspace>
-source devel/setup.bash
-roslaunch crawler_app SystemLaunch.launch
+source install/setup.bash
+ros2 launch crawler_app orchestrator.launch.py robot_namespac
 ```
 
 # Device Support

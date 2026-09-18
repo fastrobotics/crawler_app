@@ -1,0 +1,20 @@
+host_assignments:
+  DevComputer2:
+    sensors:
+      - name: "Fake_IMU_Device"
+    nodes:
+      - name: "imu_node1"
+        parameters:
+          sensor: "Fake_IMU_Device"
+          sensor_config_package: "crawler_app"
+          sensor_config_relative_path: "config/hardware/Fake_IMU_Device.yaml"
+  ControlModule1:
+    sensors:
+      - name: "IMU_RobotshopTM151_3435"
+    
+    nodes:
+      - name: "imu_node1"
+        parameters:
+          sensor: "IMU_RobotshopTM151_3435"
+          sensor_config_package: "crawler_app"
+          sensor_config_relative_path: "config/hardware/IMU_RobotshopTM151_3435.yaml"  
