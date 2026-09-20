@@ -7,6 +7,12 @@ infrastructure_configs:
     relative_path: "config/infrastructure/topics.yaml"
 
 node_registry:
+  armed_state_manager_node:
+    package: "robot_framework_ros2" 
+    launch_file: "Systems/Safety/Subsystems/ModeManager/Nodes/ArmedStateManagerNode/launch/armed_state_manager_node.launch.xml" #Path to Launch File
+    parameters:
+      topic_arm_command: "arm_command" # robot_framework_ros2/ArmCommand
+
   servo_hat_node:
     package: "robot_framework_ros2" 
     launch_file: "Systems/BaseMachine/Subsystems/BaseMachine/Nodes/ServoHatNode/launch/servo_hat_node.launch.xml" #Path to Launch File

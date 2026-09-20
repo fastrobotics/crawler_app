@@ -4,6 +4,7 @@ host_assignments:
       - name: "IMU_RobotshopTM151_3435"
     
     nodes:
+      - name: "armed_state_manager_node"
       - name: "servo_hat_node"
       - name: "imu_node1"
         parameters:
