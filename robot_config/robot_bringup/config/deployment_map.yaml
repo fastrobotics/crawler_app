@@ -1,4 +1,8 @@
 host_assignments:
+  DevComputer2:
+    nodes:
+      - name: "joy_node"
+
   ControlModule1:
     sensors:
       - name: "IMU_RobotshopTM151_3435"
