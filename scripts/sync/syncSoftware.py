@@ -14,20 +14,18 @@ import yaml
 LOGGER = logging.getLogger("syncSoftware")
 SYNC_FILE = "sync_config.yaml"
 DEVICE_FILE = "device_list.yaml"
-RSYNC_INCLUDES = (
-    "*/",
-    "*.yaml",
-    "*.py",
-    "*.launch",
-    "*.xml",
-    "*.msg",
-    "*.srv",
-    "package.xml",
-    "CMakeLists.txt",
-    "*.hpp",
-    "*.cpp",
-)
 RSYNC_EXCLUDES = (
+    "*.git/",
+    "*.github/",
+    ".vscode/",
+    "coverage/",
+    "html/",
+    "*doc/",
+    "*.png",
+    "*.puml",
+    "*.md",
+    "*.dox"
+
 )
 REFERENCE_EXAMPLES = """
 Examples:
@@ -118,13 +116,12 @@ def rsync_folder(source, target, device_name):
     destination, bootstrap_target = remote_path(target)
     command = [
         "rsync",
-        "-iart",
-        f"--rsync-path=mkdir -p {bootstrap_target} && rsync",
+        "-iartq",
+        f"--rsync-path=mkdir -p {bootstrap_target} && rsync -iartq",
         f"{source}/",
     ]
     command.extend(f"--exclude={pattern}" for pattern in RSYNC_EXCLUDES)
-    command.extend(f"--include={pattern}" for pattern in RSYNC_INCLUDES)
-    command.extend(["--exclude=*", f"robot@{device_name}:{destination}/"])
+    command.append(f"robot@{device_name}:{destination}/")
     LOGGER.debug("Synchronizing %s to %s", source, device_name)
     result = subprocess.run(command, check=False, text=True, capture_output=True)
     if result.stdout:
@@ -138,12 +135,12 @@ def rsync_file(source, target, device_name):
     destination, bootstrap_target = remote_path(target)
     command = [
         "rsync",
-        "-iart",
+        "-iartq",
         f"--rsync-path=mkdir -p {bootstrap_target} && rsync",
         str(source),
         f"robot@{device_name}:{destination}/",
     ]
-    LOGGER.debug("Synchronizing %s to %s", source, device_name)
+    #LOGGER.debug("Synchronizing %s to %s", source, device_name)
     result = subprocess.run(command, check=False, text=True, capture_output=True)
     if result.stdout:
         LOGGER.debug("%s", result.stdout.rstrip())

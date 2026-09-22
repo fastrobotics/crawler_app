@@ -57,12 +57,17 @@ pre-commit install
 ```
 
 # Build
+| Build Flags         | Description                                 | Usage                                         |
+| ------------------- | ------------------------------------------- | --------------------------------------------- |
+| `BUILD_TESTING`     | Enable(Default)/Disable Testing             | `colcon ... --cmake-args -DBUILD_TESTING=OFF` |
+| `CMAKE CLEAN CACHE` | Clean Cache (Default=Off) and repull repo's | `colcon ... -cmake-clean-cache`               |
+
 ## Other Devices
 For other Device Build information, see:
 | Device       | Build Instructions                                                       |
 | ------------ | ------------------------------------------------------------------------ |
 | Raspberry Pi | [Build Instructions](doc/DeviceSupport/RaspberriPi/BuildInstructions.md) |
-E
+
 ## Host (Plus Testing)
 To build on the host, run the following:
 ```bash
