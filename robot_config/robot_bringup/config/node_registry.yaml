@@ -11,6 +11,12 @@ node_registry:
     package: "joy"
     executable: "joy_node"
 
+  asus_xtion_cam:
+    package: "crawler_app"
+    launch_file: "config/hardware/AsusXtionCamera.launch.xml"
+    parameters:
+      sensor_name: "front_cam"
+
   armed_state_manager_node:
     package: "robot_framework_ros2" 
     launch_file: "Systems/Safety/Subsystems/ModeManager/Nodes/ArmedStateManagerNode/launch/armed_state_manager_node.launch.xml" #Path to Launch File

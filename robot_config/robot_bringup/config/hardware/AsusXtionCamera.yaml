@@ -1,0 +1,4 @@
+/**:
+  ros__parameters:
+    # This instructs ROS 2 to force a global namespace override on the nodes
+    -r __ns:=/asus

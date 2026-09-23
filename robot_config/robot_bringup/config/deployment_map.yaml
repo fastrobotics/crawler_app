@@ -1,7 +1,14 @@
 host_assignments:
   DevComputer2:
+    sensors:
+      - name: "AsusXtionCamera"
     nodes:
       - name: "joy_node"
+      - name: "asus_xtion_cam"
+        parameters:
+          sensor: "AsusXtionCamera"
+          sensor_config_package: "crawler_app"
+          sensor_config_relative_path: "config/hardware/AsusXtionCamera.yaml"  
 
   ControlModule1:
     sensors:

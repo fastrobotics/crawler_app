@@ -1,0 +1,18 @@
+<launch>
+    <arg name="robot_namespace" default="/robot"/>
+    <!-- Add the new argument for the sensor name -->
+    <arg name="sensor_name" default="asus"/>
+    
+    <group>
+        <!-- Push the base robot namespace (e.g., /robot) -->
+        <push-ros-namespace namespace="$(var robot_namespace)"/>
+        
+        <!-- Use the variable for the container namespace -->
+        <node_container pkg="rclcpp_components" exec="component_container" name="xtion_container" namespace="$(var sensor_name)" output="screen">
+            
+            <!-- Use the variable for the composable node namespace -->
+            <composable_node pkg="openni2_camera" plugin="openni2_wrapper::OpenNI2Driver" name="openni2_driver_node" namespace="$(var sensor_name)"/>
+            
+        </node_container>
+    </group>
+</launch>

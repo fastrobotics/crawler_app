@@ -5,6 +5,7 @@ from copy import deepcopy
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, OpaqueFunction
+from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 from launch_xml.launch_description_sources import XMLLaunchDescriptionSource
 from launch_ros.actions import Node
@@ -214,25 +215,35 @@ def build_launch_actions(context):
         node_params = {**registry_node_params, **deployment_node_params}
         resolved_node_params = resolve_named_parameters(node_params, named_maps)
         
-        # --- PATH A: THE REGISTRY DIRECTS THE ITEM TO AN XML LAUNCH BLUEPRINT ---
+        # --- PATH A: THE REGISTRY DIRECTS THE ITEM TO A LAUNCH FILE ---
         if 'launch_file' in node_def:
             launch_package = node_def.get('package', 'robot_framework_ros2')
             launch_package_share = get_package_share_directory(launch_package)
-            xml_absolute_path = os.path.join(launch_package_share, node_def['launch_file'])
+            launch_absolute_path = os.path.join(launch_package_share, node_def['launch_file'])
             
             # Pass all dictionary parameters down directly as string launch arguments.
             # Do not override an XML default node_namespace with an empty value; that would
             # collapse the config namespace to "" and make parameters resolve as ".imu_node.*".
-            launch_args = launch_argument_defaults(xml_absolute_path)
+            launch_file = node_def['launch_file']
+            if launch_file.endswith('.xml'):
+                launch_source = XMLLaunchDescriptionSource(launch_absolute_path)
+                launch_args = launch_argument_defaults(launch_absolute_path)
+            elif launch_file.endswith('.py'):
+                launch_source = PythonLaunchDescriptionSource(launch_absolute_path)
+                launch_args = {}
+            else:
+                print(f"[ORCHESTRATOR ERROR]: Unsupported launch file type: {launch_file}")
+                continue
+
             launch_args.update({str(k): str(v) for k, v in resolved_node_params.items()})
             launch_args['node_name'] = target_name
             launch_args['robot_namespace'] = LaunchConfiguration('robot_namespace')
 
-            included_xml_launch = IncludeLaunchDescription(
-                XMLLaunchDescriptionSource(xml_absolute_path),
+            included_launch = IncludeLaunchDescription(
+                launch_source,
                 launch_arguments=launch_args.items()
             )
-            launch_actions.append(included_xml_launch)
+            launch_actions.append(included_launch)
             
         # --- PATH B: THE REGISTRY DIRECTS THE ITEM TO A STANDALONE BINARY ---
         elif 'executable' in node_def:
