@@ -2,7 +2,8 @@
     <arg name="robot_namespace" default="/robot"/>
     <!-- Add the new argument for the sensor name -->
     <arg name="sensor_name" default="asus"/>
-    
+    <arg name="sensor_config_package" default="crawler_app"/>
+    <arg name="sensor_config_relative_path" default="config/hardware/AsusXtionCamera.yaml"/>
     <group>
         <!-- Push the base robot namespace (e.g., /robot) -->
         <push-ros-namespace namespace="$(var robot_namespace)"/>
@@ -11,7 +12,11 @@
         <node_container pkg="rclcpp_components" exec="component_container" name="xtion_container" namespace="$(var sensor_name)" output="screen">
             
             <!-- Use the variable for the composable node namespace -->
-            <composable_node pkg="openni2_camera" plugin="openni2_wrapper::OpenNI2Driver" name="openni2_driver_node" namespace="$(var sensor_name)"/>
+            <composable_node pkg="openni2_camera" plugin="openni2_wrapper::OpenNI2Driver" name="openni2_driver_node" namespace="$(var sensor_name)">
+                <param from="$(find-pkg-share $(var sensor_config_package))/$(var sensor_config_relative_path)"/>
+                <param name="auto_exposure" value="true"/>
+                <param name="auto_white_balance" value="true"/>
+            </composable_node>
             
         </node_container>
     </group>

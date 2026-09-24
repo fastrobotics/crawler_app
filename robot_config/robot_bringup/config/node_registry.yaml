@@ -16,6 +16,7 @@ node_registry:
     launch_file: "config/hardware/AsusXtionCamera.launch.xml"
     parameters:
       sensor_name: "front_cam"
+      #depth_registration: false
 
   armed_state_manager_node:
     package: "robot_framework_ros2" 
