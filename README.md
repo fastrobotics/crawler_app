@@ -100,7 +100,7 @@ To launch the main content, run the following (after following [Build](#build)).
 ```bash
 cd <workspace>
 source install/setup.bash
-ros2 launch crawler_app orchestrator.launch.py robot_namespac
+ros2 launch crawler_app orchestrator.launch.py robot_namespace:=robot
 ```
 
 # Device Support
