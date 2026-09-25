@@ -7,16 +7,23 @@ infrastructure_configs:
     relative_path: "config/infrastructure/topics.yaml"
 
 node_registry:
+  rviz_launch:
+    package: "rviz2"
+    executable: "rviz2"
+    arguments:
+      - "-d"
+      - package: "crawler_app"
+        relative_path: "config/visualization/rviz.rviz"
+
   joy_node:
     package: "joy"
     executable: "joy_node"
 
-  asus_xtion_cam:
+  asus_xtion_front_cam:
     package: "crawler_app"
     launch_file: "config/hardware/AsusXtionCamera.launch.xml"
     parameters:
       sensor_name: "front_cam"
-      #depth_registration: false
 
   armed_state_manager_node:
     package: "robot_framework_ros2" 

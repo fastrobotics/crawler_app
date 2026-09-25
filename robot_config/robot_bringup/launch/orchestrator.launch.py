@@ -6,9 +6,10 @@ from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, OpaqueFunction
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import LaunchConfiguration
+from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 from launch_xml.launch_description_sources import XMLLaunchDescriptionSource
 from launch_ros.actions import Node
+from launch_ros.substitutions import FindPackageShare
 import yaml
 
 def load_yaml_file(config_path, description):
@@ -117,6 +118,24 @@ def resolve_named_parameters(parameters, named_maps):
             resolved_parameters[parameter_name] = values[parameter_value]
 
     return resolved_parameters
+
+
+def resolve_node_arguments(arguments):
+    resolved_arguments = []
+
+    for argument in arguments or []:
+        if isinstance(argument, dict):
+            package = argument.get('package')
+            relative_path = argument.get('relative_path')
+            if not package or not relative_path:
+                raise RuntimeError(
+                    "File arguments require 'package' and 'relative_path'")
+            resolved_arguments.append(
+                PathJoinSubstitution([FindPackageShare(package), relative_path]))
+        else:
+            resolved_arguments.append(str(argument))
+
+    return resolved_arguments
 
 
 def launch_argument_defaults(xml_absolute_path):
@@ -248,6 +267,7 @@ def build_launch_actions(context):
         # --- PATH B: THE REGISTRY DIRECTS THE ITEM TO A STANDALONE BINARY ---
         elif 'executable' in node_def:
             node_parameters = [resolved_node_params] if resolved_node_params else []
+            node_arguments = resolve_node_arguments(node_def.get('arguments'))
             
             ros_node = Node(
                 package=node_def['package'],
@@ -255,6 +275,7 @@ def build_launch_actions(context):
                 name=target_name,                         
                 namespace=LaunchConfiguration('robot_namespace'),
                 parameters=node_parameters, 
+                arguments=node_arguments,
                 output='screen',      # Stream stdout directly to the console window
                 emulate_tty=True      # Prevent line buffering so logs show in real time
             )

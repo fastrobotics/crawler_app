@@ -3,12 +3,13 @@ host_assignments:
     sensors:
       - name: "AsusXtionCamera"
     nodes:
-      - name: "joy_node"
-      - name: "asus_xtion_cam"
+      - name: "rviz_launch"
+      # - name: "joy_node"
+      - name: "asus_xtion_front_cam"
         parameters:
           sensor: "AsusXtionCamera"
           sensor_config_package: "crawler_app"
-          sensor_config_relative_path: "config/hardware/AsusXtionCamera.yaml"  
+          sensor_config_relative_path: "config/hardware/FrontAsusXtionCamera.yaml"  
 
   ControlModule1:
     sensors:
