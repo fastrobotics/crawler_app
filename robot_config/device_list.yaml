@@ -9,3 +9,8 @@ device_list:
     type: "ControlModule"
     architecture: "aarch64"
     ros_workspace: "~/ros2_ws"
+  GPUModule1:
+    parent: ""
+    type: "GPUModule"
+    architecture: "aarch64"
+    ros_workspace: "~/ros2_ws"

@@ -88,6 +88,7 @@ To sync software to other devices, run the following:
 ```bash
 cd ~/ros2_ws/src/crawler_app
 ./scripts/sync/syncSoftware.py -s remote -d ControlModule1 -c robot_config
+./scripts/sync/syncSoftware.py -s remote -d GPUModule1 -c robot_config
 ```
 
 Note that after this, you will need to build the content on that device.  See [Build-Other Devices](#other-devices).
@@ -96,7 +97,8 @@ Note that after this, you will need to build the content on that device.  See [B
 To launch the main content, run the following (after following [Build](#build)).  Do this for every device required:
 - `ControlModule1`
 - `DevComputer2`
-  
+- `GPUModule1`
+    
 ```bash
 cd <workspace>
 source install/setup.bash

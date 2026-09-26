@@ -21,7 +21,7 @@ This guide currently supports the following Raspberry Pi Models:
 # Device Information 
 | Hostname       | Model Information              | Architecture | IP Address    | OS          | Serial Number    |
 | -------------- | ------------------------------ | ------------ | ------------- | ----------- | ---------------- |
-| ControlModule1 | Raspberry Pi 4 Model B Rev 1.5 | `armv7l`     | 192.168.86.46 | Raspbian 10 | 10000000359457da |
+| ControlModule1 | Raspberry Pi 4 Model B Rev 1.5 | `aarch64`    | 192.168.86.46 | Raspbian 10 | 10000000359457da |
 
 ![](artifacts/RaspberryPi4.png)
 
