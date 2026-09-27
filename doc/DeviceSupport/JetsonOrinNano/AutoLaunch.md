@@ -1,0 +1,37 @@
+[Jetson Orin Nano](./JetsonOrinNano.md)
+
+- [Auto Launch](#auto-launch)
+  - [Systemctl auto launch service](#systemctl-auto-launch-service)
+  - [Auto Launch Script](#auto-launch-script)
+- [Troubleshooting](#troubleshooting)
+  - [An error in the robot boot launch script](#an-error-in-the-robot-boot-launch-script)
+  - [An error in the ROS Launch file](#an-error-in-the-ros-launch-file)
+
+# Auto Launch
+The Jetson Orin Nano auto launches content at boot.  This is performed by the following:
+## Systemctl auto launch service
+A service is created on the Jetson Nano, see [robot_launch service](../../../robot_config/robot_bringup/boot/GPUModule1/robot_launch.service)
+
+To install this service on the Jetson Orin Nano, perform the following:
+1. Copy this file to `/etc/systemd/system/`
+2. Reload the daemon: `sudo systemctl daemon-reload`
+3. Ensure the service is enabled: `sudo systemctl enable robot_launch.service`
+4. Reboot the robot  
+
+All that this service will do is to run a user-space launch script, see [Auto Launch Script](#auto-launch-script).
+
+## Auto Launch Script
+An Auto Launch script is specified for a given scenario.  This is dictated by the Device Type.
+
+# Troubleshooting
+You can inspect the status of this launch by running: `journalctl -u robot_launch.service -f`
+
+Common Problems:
+
+## An error in the robot boot launch script
+A syntax error in the robot launch script will prevent the system from starting the application.  This can be seen by investigating the journal file with: `journalctl -u robot_launch.service -f`
+
+## An error in the ROS Launch file
+A syntax error in the launch file will prevent the system from starting the application.  This can be seen in by looking at the file: `~/var/log/output/app_launch.out`
+
+
