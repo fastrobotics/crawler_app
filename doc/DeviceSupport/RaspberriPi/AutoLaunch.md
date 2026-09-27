@@ -9,7 +9,7 @@
 # Auto Launch
 The Raspberry Pi auto launches content at boot.  This is performed by the following:
 ## Systemctl auto launch service
-A service is created on the raspberry pi, see [robot_launch service](artifacts/robot_launch.service)
+A service is created on the raspberry pi, see [robot_launch service](../../../robot_config/robot_bringup/boot/ControlModule1/robot_launch.service)
 
 To install this service on the Raspberry Pi, perform the following:
 1. Copy this file to `/etc/systemd/system/`
