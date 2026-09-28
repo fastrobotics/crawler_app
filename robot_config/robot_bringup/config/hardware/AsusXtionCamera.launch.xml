@@ -7,6 +7,9 @@
         <include file="$(find-pkg-share openni2_camera)/launch/camera_with_cloud.launch.py">
             <arg name="namespace" value="$(var sensor_name)"/>
             <arg name="sensor_name" value="$(var sensor_name)"/>
+            <arg name="device_id" value="#1"/>
+            <arg name="color_video_mode" value="5"/>
+            <arg name="depth_video_mode" value="5"/>
         </include>
     </group>
 </launch>
