@@ -7,6 +7,7 @@ mkdir -p /home/robot/var/log/output/
 touch /home/robot/var/log/output/app_launch.out
 sleep 5 # Leave enough time for ROS to start
 echo "-----HARDWARE MODIFICATIONS-----"
+export OPENNI2_REDIST=/usr/lib/aarch64-linux-gnu/OpenNI2/Drivers
 echo "-----LAUNCHING APPLICATION-----"
 cd /home/robot/ros2_ws/
 source /opt/ros/jazzy/setup.bash
