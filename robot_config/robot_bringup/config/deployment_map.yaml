@@ -13,6 +13,7 @@ host_assignments:
           sensor: "AsusXtionCamera"
           sensor_config_package: "crawler_app"
           sensor_config_relative_path: "config/hardware/FrontAsusXtionCamera.yaml"  
+      - name: "depthcamera_pipeline_node"
   ControlModule1:
     sensors:
       - name: "IMU_RobotshopTM151_3435"
