@@ -19,6 +19,10 @@ node_registry:
     package: "joy"
     executable: "joy_node"
 
+  data_logger:
+    package: "crawler_app"
+    launch_file: "config/hardware/BagRecorder.launch.xml"
+  
   asus_xtion_front_cam:
     package: "crawler_app"
     launch_file: "config/hardware/AsusXtionCamera.launch.xml"
