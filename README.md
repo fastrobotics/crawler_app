@@ -3,6 +3,7 @@
 # Crawler App
 
 - [Crawler App](#crawler-app)
+- [README FIRST!!!](#readme-first)
   - [Overview](#overview)
 - [Architecture](#architecture)
 - [System Design](#system-design)
@@ -17,9 +18,12 @@
 - [Execution](#execution)
 - [Device Support](#device-support)
 
+# README FIRST!!!
+The following lists important notes that should be remembered when using this application.
+1. Datalogging will only occur for a fixed duration of time from boot (minutes), and if the drive is full will NOT over-write older logs.
 
 ## Overview
-This repo serves as a template for a typical development app that uses eROS content.
+This repo serves as a template for a typical development app that uses the robot_framework content.
 
 # Architecture
 ![](Legend.png)

@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
-    <!-- Use a simple string path here -->
     <arg name="output_dir" default="/tmp/output" />
     <arg name="max_bag_size" default="3000000"/>
-
-    <!-- 
-      cwd: ROS 2 will change directory to /tmp/output cleanly before executing.
-      cmd: Runs the simple record command without any complex shell chaining operators.
-    -->
-    <executable cmd="ros2 bag record -a -s mcap --max-bag-size $(var max_bag_size)" cwd="$(var output_dir)" output="screen" />
+    <arg name="recording_duration" default="30m"/>
+    <executable cmd="timeout $(var recording_duration) ros2 bag record -a -s mcap --max-bag-size $(var max_bag_size)" cwd="$(var output_dir)" output="screen" />
 </launch>
