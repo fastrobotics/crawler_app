@@ -26,6 +26,7 @@ files:
   boot_launch:
     file_names:
       - "robot_config/robot_bringup/boot/{host}/robot_launch.sh"
+      - "robot_config/robot_bringup/boot/app_launch_helpers.sh"
     target: "robot_launch"
     supported_architectures:
       - "aarch64"
