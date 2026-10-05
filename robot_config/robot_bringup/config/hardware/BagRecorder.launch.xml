@@ -3,5 +3,5 @@
     <arg name="output_dir" default="/tmp/output" />
     <arg name="max_bag_size" default="3000000"/>
     <arg name="recording_duration" default="30m"/>
-    <executable cmd="timeout $(var recording_duration) ros2 bag record -a -s mcap --max-bag-size $(var max_bag_size)" cwd="$(var output_dir)" output="screen" />
+    <executable cmd="timeout $(var recording_duration) ros2 bag record -a -s mcap --max-bag-size $(var max_bag_size) --exclude-regex '.*(compressed|theora|zstd).*'" cwd="$(var output_dir)" output="screen" />
 </launch>
