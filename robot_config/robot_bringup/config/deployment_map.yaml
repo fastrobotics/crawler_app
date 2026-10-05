@@ -12,7 +12,7 @@ host_assignments:
         parameters:
           output_dir: "/mnt/usb_storage/datalogs"
           max_bag_size: 5368709120 # 5 GB
-          recording_duration: 30m # 30 minutes
+          recording_duration_sec: 1800 # 30 minutes
       - name: "asus_xtion_front_cam"
         parameters:
           sensor: "AsusXtionCamera"
