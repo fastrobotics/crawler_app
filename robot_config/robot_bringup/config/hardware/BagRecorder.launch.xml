@@ -1,7 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
+    <!-- Target directory for your data logs -->
     <arg name="output_dir" default="/tmp/output" />
+    
+    <!-- Preserved: System baseline config size (5 GB mapping) -->
     <arg name="max_bag_size" default="3000000"/>
-    <arg name="recording_duration" default="30m"/>
-    <executable cmd="timeout $(var recording_duration) ros2 bag record -a -s mcap --max-bag-size $(var max_bag_size)" cwd="$(var output_dir)" output="screen" />
+    
+    <!-- Native Timeout: 30 minutes expressed cleanly in seconds (1800) -->
+    <arg name="recording_duration_sec" default="1800"/>
+    
+    <!-- Cushion Layer: 100MB buffer to stop instantaneous SSD spikes -->
+    <arg name="max_cache_size" default="104857600"/>
+
+    <executable cmd="ros2 bag record 
+        -a 
+        -s mcap 
+        --max-bag-size $(var max_bag_size) 
+        --max-cache-size $(var max_cache_size)
+        --max-bag-duration $(var recording_duration_sec)
+        --exclude-regex '.*(compressed|theora|zstd).*'" 
+        cwd="$(var output_dir)" 
+        output="screen" />
 </launch>
