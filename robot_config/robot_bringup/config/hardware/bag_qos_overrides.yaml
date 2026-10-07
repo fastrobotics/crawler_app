@@ -1,0 +1,4 @@
+/robot/front_cam/depth_registered/points:
+  reliability: best_effort
+  history: keep_last
+  depth: 5

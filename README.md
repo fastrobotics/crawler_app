@@ -8,6 +8,7 @@
 - [Architecture](#architecture)
 - [System Design](#system-design)
 - [Troubleshooting](#troubleshooting)
+- [Log Analysis \& Playback](#log-analysis--playback)
 - [Features](#features)
 - [Setup](#setup)
 - [Build](#build)
@@ -33,6 +34,9 @@ This repo serves as a template for a typical development app that uses the robot
 
 # Troubleshooting
 [Troubleshooting](doc/Troubleshooting/Troubleshooting.md)
+
+# Log Analysis & Playback
+[Log Analysis](doc/LogAnalysis/LogAnalysis.md)
 
 
 # Features

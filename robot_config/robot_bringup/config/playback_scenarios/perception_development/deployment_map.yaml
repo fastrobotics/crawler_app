@@ -1,0 +1,10 @@
+host_assignments:
+  DevComputer2:
+    nodes:
+      - name: "rviz_launch"
+      - name: "depthcamera_pipeline_node"
+exclude_topics:
+# Depth Camera Pipeline Node
+  - "/robot/perception/depthcamerapipeline/depthcamera_pipeline_node/diagnostic"
+  - "/robot/perception/depthcamerapipeline/depthcamera_pipeline_node/heartbeat"
+  - "/robot/perception/depthcamerapipeline/depthcamera_pipeline_node/ready_to_arm"
