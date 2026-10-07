@@ -3,22 +3,21 @@
     <!-- Target directory for your data logs -->
     <arg name="output_dir" default="/tmp/output" />
     
-    <!-- Preserved: System baseline config size (5 GB mapping) -->
-    <arg name="max_bag_size" default="3000000"/>
+    <!-- Preserved: Max split bag size in bytes -->
+    <arg name="max_bag_size" default="3000000000"/>
     
-    <!-- Native Timeout: 30 minutes expressed cleanly in seconds (1800) -->
+    <!-- Native Timeout: 30 minutes in seconds -->
     <arg name="recording_duration_sec" default="1800"/>
-    
-    <!-- Cushion Layer: 100MB buffer to stop instantaneous SSD spikes -->
-    <arg name="max_cache_size" default="104857600"/>
 
     <executable cmd="ros2 bag record 
         -a 
         -s mcap 
+        --storage-preset-profile zstd_fast
+        --max-cache-size 536870912
+        --qos-profile-overrides-path $(find-pkg-share crawler_app)/config/hardware/bag_qos_overrides.yaml
         --max-bag-size $(var max_bag_size) 
-        --max-cache-size $(var max_cache_size)
         --max-bag-duration $(var recording_duration_sec)
-        --exclude-regex '.*(compressed|theora|zstd).*'" 
+        --exclude-regex '.*(compressed|theora|zstd|rgb/image_raw|depth_raw/image|depth_registered/image_raw|camera_info).*'"
         cwd="$(var output_dir)" 
         output="screen" />
 </launch>

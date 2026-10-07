@@ -1,10 +1,9 @@
 #!/bin/bash
+
 source "$(dirname "${BASH_SOURCE[0]}")/app_launch_helpers.sh"
 rm -rf /home/robot/var/log/output/*
 mkdir -p /home/robot/var/log/output/
 touch /home/robot/var/log/output/app_launch.out
-
-
 message "-----BOOTING ROBOT ON GPUModule1 -----"
 message "Sleeping to wait for Data Logger"
 sleep 60
@@ -16,7 +15,6 @@ fi
 
 message "-----HARDWARE MODIFICATIONS-----"
 export OPENNI2_REDIST=/usr/lib/aarch64-linux-gnu/OpenNI2/Drivers
-
 message "-----LAUNCHING APPLICATION-----"
 cd /home/robot/ros2_ws/
 source /opt/ros/jazzy/setup.bash

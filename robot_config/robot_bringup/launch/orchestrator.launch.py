@@ -4,11 +4,11 @@ import xml.etree.ElementTree as ElementTree
 from copy import deepcopy
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, OpaqueFunction
+from launch.actions import DeclareLaunchArgument, GroupAction, IncludeLaunchDescription, OpaqueFunction
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 from launch_xml.launch_description_sources import XMLLaunchDescriptionSource
-from launch_ros.actions import Node
+from launch_ros.actions import Node, SetParameter
 from launch_ros.substitutions import FindPackageShare
 import yaml
 
@@ -160,16 +160,32 @@ def get_host_assignment(host_assignments, current_host):
 def build_launch_actions(context):
     bringup_dir = get_package_share_directory('crawler_app')
     scenario_name = context.perform_substitution(LaunchConfiguration('scenario'))
+    playback_scenario_name = context.perform_substitution(LaunchConfiguration('playback_scenario'))
     scenario_directory = None
+    playback_scenario_directory = None
 
     if scenario_name and (os.path.sep in scenario_name or scenario_name in {'.', '..'}):
         print(f"[ORCHESTRATOR ERROR]: Invalid scenario name '{scenario_name}'")
+        return []
+
+    if playback_scenario_name and (
+            os.path.sep in playback_scenario_name or playback_scenario_name in {'.', '..'}):
+        print(f"[ORCHESTRATOR ERROR]: Invalid playback scenario name '{playback_scenario_name}'")
         return []
 
     if scenario_name:
         scenario_directory = os.path.join(bringup_dir, 'config', 'scenarios', scenario_name)
         if not os.path.isdir(scenario_directory):
             print(f"[ORCHESTRATOR ERROR]: Scenario '{scenario_name}' does not exist: {scenario_directory}")
+            return []
+
+    if playback_scenario_name:
+        playback_scenario_directory = os.path.join(
+            bringup_dir, 'config', 'playback_scenarios', playback_scenario_name)
+        if not os.path.isdir(playback_scenario_directory):
+            print(
+                f"[ORCHESTRATOR ERROR]: Playback scenario '{playback_scenario_name}' "
+                f"does not exist: {playback_scenario_directory}")
             return []
 
     # Automatically read the local computer's network name
@@ -199,6 +215,23 @@ def build_launch_actions(context):
         if os.path.exists(scenario_deployment_path):
             scenario_deployment_data = load_yaml_file(scenario_deployment_path, 'Scenario deployment map')
             deployed_data = merge_config(deployed_data, scenario_deployment_data)
+
+    if playback_scenario_directory:
+        playback_registry_path = os.path.join(playback_scenario_directory, 'node_registry.yaml')
+        playback_deployment_path = os.path.join(playback_scenario_directory, 'deployment_map.yaml')
+        if not os.path.exists(playback_deployment_path):
+            print(
+                f"[ORCHESTRATOR ERROR]: Playback scenario '{playback_scenario_name}' "
+                f"is missing deployment_map.yaml")
+            return []
+
+        if os.path.exists(playback_registry_path):
+            playback_registry_data = load_yaml_file(playback_registry_path, 'Playback scenario node registry')
+            validate_registry_overlay(node_registry_data, playback_registry_data)
+            node_registry_data = merge_config(node_registry_data, playback_registry_data)
+
+        # Playback maps define the complete deployment, not an overlay of live nodes.
+        deployed_data = load_yaml_file(playback_deployment_path, 'Playback scenario deployment map')
         
     node_registry = node_registry_data.get('node_registry', {})
     all_host_assignments = deployed_data.get('host_assignments', {})
@@ -281,6 +314,15 @@ def build_launch_actions(context):
             )
             launch_actions.append(ros_node)
             
+    if playback_scenario_name:
+        return [GroupAction(
+            actions=[
+                SetParameter(name='use_sim_time', value=True),
+                *launch_actions,
+            ],
+            scoped=True,
+        )]
+
     return launch_actions
 
 
@@ -289,6 +331,10 @@ def generate_launch_description():
         'scenario',
         default_value='',
         description='Optional scenario overlay; baseline configuration is used when omitted')
+    playback_scenario_arg = DeclareLaunchArgument(
+        'playback_scenario',
+        default_value='',
+        description='Optional playback deployment selected from config/playback_scenarios')
     robot_namespace_arg = DeclareLaunchArgument(
         'robot_namespace',
         default_value='',
@@ -296,6 +342,7 @@ def generate_launch_description():
 
     return LaunchDescription([
         scenario_arg,
+        playback_scenario_arg,
         robot_namespace_arg,
         OpaqueFunction(function=build_launch_actions),
     ])
