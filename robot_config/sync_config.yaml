@@ -6,6 +6,13 @@ folders:
       - "x86_64"
       - "aarmv7l"
       - "aarch64"
+  crawler_scripts:
+    folder_name: "scripts"
+    target: "ros2_ws/src/crawler_app/scripts"
+    supported_architectures:
+      - "x86_64"
+      - "aarmv7l"
+      - "aarch64"
   robot_framework_ros2:
     folder_name: "robot_framework_ros2"
     target: "ros2_ws/src/robot_framework_ros2"
