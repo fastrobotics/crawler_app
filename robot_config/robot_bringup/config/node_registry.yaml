@@ -73,5 +73,4 @@ node_registry:
     parameters:
       verbosity_level: "WARN"
       sensor1_depthcamera_topic: depthcamera1_topic
-      fused_depthcamera_topic: fused_depthcamera_topic
       target_frame: base_link

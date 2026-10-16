@@ -9,8 +9,6 @@ Panels:
         - /FrontDepthCamera1
         - /FrontDepthCamera1/Topic1
         - /FrontLidar1
-        - /FusedDepthCamera1
-        - /FusedDepthCamera1/Topic1
       Splitter Ratio: 0.2450980395078659
     Tree Height: 739
   - Class: rviz_common/Selection
@@ -30,7 +28,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: FusedDepthCamera
+    SyncSource: FrontDepthCamera
 Visualization Manager:
   Class: ""
   Displays:
@@ -100,7 +98,6 @@ Visualization Manager:
       Visibility:
         FrontDepthCamera: true
         FrontLidar: true
-        FusedDepthCamera: true
         Grid: true
         TF: true
         Value: true
@@ -117,7 +114,7 @@ Visualization Manager:
       Color: 255; 255; 255
       Color Transformer: RGB8
       Decay Time: 0
-      Enabled: false
+      Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
       Max Intensity: 4096
@@ -137,7 +134,7 @@ Visualization Manager:
         Value: /robot/front_cam/depth_registered/points
       Use Fixed Frame: true
       Use rainbow: true
-      Value: false
+      Value: true
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
@@ -171,39 +168,6 @@ Visualization Manager:
       Use Fixed Frame: true
       Use rainbow: true
       Value: false
-    - Alpha: 1
-      Autocompute Intensity Bounds: true
-      Autocompute Value Bounds:
-        Max Value: 10
-        Min Value: -10
-        Value: true
-      Axis: Z
-      Channel Name: intensity
-      Class: rviz_default_plugins/PointCloud2
-      Color: 255; 255; 255
-      Color Transformer: RGB8
-      Decay Time: 0
-      Enabled: true
-      Invert Rainbow: false
-      Max Color: 255; 255; 255
-      Max Intensity: 4096
-      Min Color: 0; 0; 0
-      Min Intensity: 0
-      Name: FusedDepthCamera
-      Position Transformer: XYZ
-      Selectable: true
-      Size (Pixels): 3
-      Size (m): 0.009999999776482582
-      Style: Flat Squares
-      Topic:
-        Depth: 5
-        Durability Policy: Volatile
-        History Policy: Keep Last
-        Reliability Policy: Best Effort
-        Value: /robot/depthcamera/fused
-      Use Fixed Frame: true
-      Use rainbow: true
-      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -259,7 +223,7 @@ Visualization Manager:
       Lock Camera: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.45020341873168945
+      Pitch: 0.45520341396331787
       Point towards: -z axis
       Position:
         X: -2.0550289154052734
@@ -267,7 +231,7 @@ Visualization Manager:
         Z: 3.0996451377868652
       Target Frame: <Fixed Frame>
       Value: FrameAligned (rviz_default_plugins)
-      Yaw: 6.071990013122559
+      Yaw: 6.096989631652832
     Saved: ~
 Window Geometry:
   Displays:
