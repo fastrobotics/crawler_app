@@ -6,9 +6,11 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
-        - /FrontDepthCamera1
         - /FrontDepthCamera1/Topic1
         - /FrontLidar1
+        - /FeaturePointCloud1
+        - /FeaturePointCloud1/Topic1
+        - /Detection3DArray1
       Splitter Ratio: 0.2450980395078659
     Tree Height: 739
   - Class: rviz_common/Selection
@@ -96,6 +98,7 @@ Visualization Manager:
         Value: /robot/front_cam/rgb/image_raw
       Value: false
       Visibility:
+        "": true
         FrontDepthCamera: true
         FrontLidar: true
         Grid: true
@@ -114,7 +117,7 @@ Visualization Manager:
       Color: 255; 255; 255
       Color Transformer: RGB8
       Decay Time: 0
-      Enabled: true
+      Enabled: false
       Invert Rainbow: false
       Max Color: 255; 255; 255
       Max Intensity: 4096
@@ -134,7 +137,7 @@ Visualization Manager:
         Value: /robot/front_cam/depth_registered/points
       Use Fixed Frame: true
       Use rainbow: true
-      Value: true
+      Value: false
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
@@ -168,6 +171,56 @@ Visualization Manager:
       Use Fixed Frame: true
       Use rainbow: true
       Value: false
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz_default_plugins/PointCloud2
+      Color: 255; 255; 255
+      Color Transformer: RGB8
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 4096
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: FeaturePointCloud
+      Position Transformer: XYZ
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.009999999776482582
+      Style: Flat Squares
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /robot/depthcamera/features
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
+    - Alpha: 1
+      Class: vision_msgs_rviz_plugins/Detection3DArray
+      ConfigPath: ""
+      Enabled: true
+      Line Width: 0.05000000074505806
+      Name: Detection3DArray
+      Namespaces:
+        bounding_box: true
+      Only Edge: false
+      Show Score: false
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /robot/depthcamera/detections
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -223,15 +276,15 @@ Visualization Manager:
       Lock Camera: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.45520341396331787
+      Pitch: 0.5752032995223999
       Point towards: -z axis
       Position:
-        X: -2.0550289154052734
-        Y: 1.7297731637954712
-        Z: 3.0996451377868652
+        X: -8.519691467285156
+        Y: 4.0207839012146
+        Z: 7.40279483795166
       Target Frame: <Fixed Frame>
       Value: FrameAligned (rviz_default_plugins)
-      Yaw: 6.096989631652832
+      Yaw: 6.006987571716309
     Saved: ~
 Window Geometry:
   Displays:

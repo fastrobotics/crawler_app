@@ -1,5 +1,7 @@
 topics:
   depthcamera1_topic: "front_cam/depth_registered/points"
+  objectdetections_depthcamera_topic: "depthcamera/detections"
+  feature_pointcloud_topic: "depthcamera/features"
   arm_command: "arm_command"  # robot_framework_ros2/ArmCommand
   left_drive: "leftdrive" # std_msgs/Float64
   right_drive: "rightdrive" # std_msgs/Float64
